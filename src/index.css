@@ -214,3 +214,21 @@
     height: auto !important;
   }
 }
+
+/* PDF Document Viewer Paper Styling (Prompt #23 & #51) */
+.wc-pdf-page {
+  background: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.06) !important;
+  border-radius: 4px !important;
+  margin: 0 auto 16px auto !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 768px) {
+  .wc-pdf-page {
+    width: 100% !important;
+    max-width: calc(100vw - 16px) !important;
+    border-radius: 2px !important;
+    margin: 0 auto 12px auto !important;
+  }
+}

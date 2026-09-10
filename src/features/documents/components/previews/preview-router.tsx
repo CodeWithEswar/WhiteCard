@@ -59,7 +59,10 @@ export function PreviewRouter({
         <PdfPreview
           document={doc}
           fileUrl={fileUrl || ''}
+          arrayBuffer={arrayBuffer}
+          isLoadingBytes={isLoadingBytes}
           zoom={zoom}
+          onFetchContent={() => onFetchContent('buffer')}
           onDownload={onDownload}
         />
       )

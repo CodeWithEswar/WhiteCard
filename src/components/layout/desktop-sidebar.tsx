@@ -62,7 +62,7 @@ export function DesktopSidebar({ onOpenUpload }: DesktopSidebarProps) {
 
         <div
           className={cn(
-            'relative h-16 flex items-center',
+            'relative h-[68px] flex items-center',
             isCollapsed ? 'justify-center px-0' : 'px-4'
           )}
         >
