@@ -84,7 +84,8 @@ export function MobileNavSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="left"
-        className="w-[235px] max-w-[78vw] p-0 flex flex-col justify-between bg-sidebar border-r border-sidebar-border text-foreground select-none"
+        style={{ width: '220px', maxWidth: '220px' }}
+        className="!w-[220px] !max-w-[220px] data-[side=left]:!w-[220px] data-[side=left]:!max-w-[220px] p-0 flex flex-col justify-between bg-sidebar border-r border-sidebar-border text-foreground select-none shadow-2xl"
       >
         {/* Top Header */}
         <SheetHeader className="p-3.5 pr-10 border-b border-sidebar-border/70 flex flex-row items-center justify-between space-y-0 shrink-0">
