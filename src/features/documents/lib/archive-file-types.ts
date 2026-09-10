@@ -19,6 +19,7 @@ export type ArchiveEntryKind =
   | 'csv'
   | 'image'
   | 'pdf'
+  | 'docx'
   | 'binary'
 
 export interface ArchiveFileTypeInfo {
@@ -81,8 +82,10 @@ const EXTENSION_MAP: Record<string, { kind: ArchiveEntryKind; label: string; bad
   env: { kind: 'text', label: 'Environment Config', badge: 'ENV', icon: File01Icon, mime: 'text/plain' },
   gitignore: { kind: 'text', label: 'Git Ignore', badge: 'GIT', icon: File01Icon, mime: 'text/plain' },
 
-  // PDF
+  // PDF & Office Documents
   pdf: { kind: 'pdf', label: 'PDF Document', badge: 'PDF', icon: Pdf01Icon, mime: 'application/pdf' },
+  docx: { kind: 'docx', label: 'Word Document', badge: 'DOCX', icon: File01Icon, mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' },
+  dotx: { kind: 'docx', label: 'Word Template', badge: 'DOCX', icon: File01Icon, mime: 'application/vnd.openxmlformats-officedocument.wordprocessingml.template' },
 
   // Images
   png: { kind: 'image', label: 'PNG Image', badge: 'PNG', icon: Image01Icon, mime: 'image/png' },

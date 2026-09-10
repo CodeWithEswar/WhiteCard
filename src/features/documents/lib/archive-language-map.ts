@@ -1,8 +1,36 @@
+import Prism from 'prismjs'
+
+// Import Prism core and common languages in safe dependency sequence
+import 'prismjs/components/prism-clike'
+import 'prismjs/components/prism-javascript'
+import 'prismjs/components/prism-typescript'
+import 'prismjs/components/prism-markup'
+import 'prismjs/components/prism-jsx'
+import 'prismjs/components/prism-tsx'
+import 'prismjs/components/prism-json'
+import 'prismjs/components/prism-css'
+import 'prismjs/components/prism-python'
+import 'prismjs/components/prism-c'
+import 'prismjs/components/prism-cpp'
+import 'prismjs/components/prism-csharp'
+import 'prismjs/components/prism-java'
+import 'prismjs/components/prism-sql'
+import 'prismjs/components/prism-bash'
+import 'prismjs/components/prism-yaml'
+import 'prismjs/components/prism-markdown'
+import 'prismjs/components/prism-go'
+import 'prismjs/components/prism-rust'
+
 export type CodeLanguage =
   | 'typescript'
   | 'javascript'
   | 'python'
   | 'java'
+  | 'c'
+  | 'cpp'
+  | 'csharp'
+  | 'go'
+  | 'rust'
   | 'html'
   | 'css'
   | 'json'
@@ -21,8 +49,17 @@ export const LANGUAGE_MAP: Record<string, CodeLanguage> = {
   cjs: 'javascript',
   py: 'python',
   java: 'java',
+  c: 'c',
+  h: 'c',
+  cpp: 'cpp',
+  hpp: 'cpp',
+  cs: 'csharp',
+  go: 'go',
+  rs: 'rust',
   html: 'html',
   htm: 'html',
+  xml: 'html',
+  svg: 'html',
   css: 'css',
   scss: 'css',
   sass: 'css',
@@ -39,6 +76,42 @@ export const LANGUAGE_MAP: Record<string, CodeLanguage> = {
   txt: 'plaintext',
   env: 'plaintext',
   gitignore: 'plaintext',
+  dockerfile: 'shell',
+}
+
+const EXTENSION_TO_PRISM: Record<string, string> = {
+  ts: 'typescript',
+  tsx: 'tsx',
+  js: 'javascript',
+  jsx: 'jsx',
+  mjs: 'javascript',
+  cjs: 'javascript',
+  py: 'python',
+  java: 'java',
+  c: 'c',
+  h: 'c',
+  cpp: 'cpp',
+  hpp: 'cpp',
+  cs: 'csharp',
+  go: 'go',
+  rs: 'rust',
+  html: 'markup',
+  htm: 'markup',
+  xml: 'markup',
+  svg: 'markup',
+  css: 'css',
+  scss: 'css',
+  sass: 'css',
+  less: 'css',
+  json: 'json',
+  sql: 'sql',
+  sh: 'bash',
+  bash: 'bash',
+  zsh: 'bash',
+  yaml: 'yaml',
+  yml: 'yaml',
+  md: 'markdown',
+  markdown: 'markdown',
 }
 
 export function resolveLanguageFromFilename(filename: string): CodeLanguage {
@@ -46,100 +119,198 @@ export function resolveLanguageFromFilename(filename: string): CodeLanguage {
   return LANGUAGE_MAP[ext] || 'plaintext'
 }
 
+export function resolvePrismGrammarKey(filename: string): string {
+  const ext = filename.trim().toLowerCase().split('.').pop() || ''
+  return EXTENSION_TO_PRISM[ext] || 'clike'
+}
+
+export interface CodeSpan {
+  type: string | null
+  text: string
+}
+
+export interface FormattedLine {
+  lineNumber: number
+  spans: CodeSpan[]
+}
+
+/**
+ * Backward-compatible single-line tokenizer
+ */
 export interface CodeToken {
   type: 'keyword' | 'string' | 'comment' | 'number' | 'function' | 'type' | 'text' | 'operator'
   value: string
 }
 
-const KEYWORDS = new Set([
-  'import', 'export', 'from', 'default', 'return', 'function', 'const', 'let', 'var',
-  'if', 'else', 'switch', 'case', 'break', 'continue', 'for', 'while', 'do',
-  'try', 'catch', 'finally', 'throw', 'new', 'class', 'extends', 'implements',
-  'interface', 'type', 'async', 'await', 'yield', 'typeof', 'instanceof', 'void',
-  'null', 'undefined', 'true', 'false', 'as', 'in', 'of', 'public', 'private',
-  'protected', 'static', 'readonly', 'def', 'self', 'lambda', 'print', 'package',
-  'SELECT', 'FROM', 'WHERE', 'INSERT', 'UPDATE', 'DELETE', 'JOIN', 'LEFT', 'RIGHT',
-])
+export function tokenizeLine(line: string, language: CodeLanguage): CodeToken[] {
+  const lines = tokenizeFullCode(line, `file.${language === 'typescript' ? 'ts' : 'js'}`)
+  if (lines.length === 0) return [{ type: 'text', value: '' }]
+  return lines[0].spans.map((s) => ({
+    type: (s.type as any) || 'text',
+    value: s.text,
+  }))
+}
 
 /**
- * High-performance, monochrome-first line tokenizer for read-only code viewing.
- * Provides subtle typographical emphasis rather than saturated rainbow IDE colors.
+ * Flattens Prism token trees into a linear stream of styled spans
  */
-export function tokenizeLine(line: string, _language: CodeLanguage): CodeToken[] {
-  if (!line) return [{ type: 'text', value: '' }]
-
-  const tokens: CodeToken[] = []
-  let i = 0
-  const len = line.length
-
-  while (i < len) {
-    // 1. Comments (// or # or --)
-    if (
-      (line[i] === '/' && line[i + 1] === '/') ||
-      line[i] === '#' ||
-      (line[i] === '-' && line[i + 1] === '-')
-    ) {
-      tokens.push({ type: 'comment', value: line.slice(i) })
-      break
+function flattenTokens(
+  token: string | Prism.Token | (string | Prism.Token)[],
+  parentType: string | null = null,
+  out: CodeSpan[] = []
+): CodeSpan[] {
+  if (typeof token === 'string') {
+    out.push({ type: parentType, text: token })
+  } else if (Array.isArray(token)) {
+    for (const item of token) {
+      flattenTokens(item, parentType, out)
     }
-
-    // 2. Strings ('...', "...", `...`)
-    const quote = line[i]
-    if (quote === '"' || quote === "'" || quote === '`') {
-      let end = i + 1
-      while (end < len && line[end] !== quote) {
-        if (line[end] === '\\') end++ // escape next char
-        end++
-      }
-      end = Math.min(len, end + 1)
-      tokens.push({ type: 'string', value: line.slice(i, end) })
-      i = end
-      continue
+  } else if (token && typeof token === 'object') {
+    const currentType = token.type || parentType
+    if (typeof token.content === 'string') {
+      out.push({ type: currentType, text: token.content })
+    } else {
+      flattenTokens(token.content, currentType, out)
     }
+  }
+  return out
+}
 
-    // 3. Numbers
-    if (/\d/.test(line[i]) && (i === 0 || /[\s,([{:+\-*/%=<>]/.test(line[i - 1]))) {
-      let end = i
-      while (end < len && /[\d.a-fA-FxX]/.test(line[end])) {
-        end++
-      }
-      tokens.push({ type: 'number', value: line.slice(i, end) })
-      i = end
-      continue
-    }
-
-    // 4. Words (Keywords, Types, Functions, Identifiers)
-    if (/[a-zA-Z_$]/.test(line[i])) {
-      let end = i
-      while (end < len && /[a-zA-Z0-9_$]/.test(line[end])) {
-        end++
-      }
-      const word = line.slice(i, end)
-
-      if (KEYWORDS.has(word) || KEYWORDS.has(word.toUpperCase())) {
-        tokens.push({ type: 'keyword', value: word })
-      } else if (/^[A-Z][a-zA-Z0-9]*$/.test(word)) {
-        tokens.push({ type: 'type', value: word })
-      } else if (end < len && line[end] === '(') {
-        tokens.push({ type: 'function', value: word })
-      } else {
-        tokens.push({ type: 'text', value: word })
-      }
-      i = end
-      continue
-    }
-
-    // 5. Operators & Punctuation
-    if (/[{}()[\].,;:+\-*/%=<>!&|^~?]/.test(line[i])) {
-      tokens.push({ type: 'operator', value: line[i] })
-      i++
-      continue
-    }
-
-    // 6. Whitespace and other characters
-    tokens.push({ type: 'text', value: line[i] })
-    i++
+/**
+ * High-performance full-file tokenizer powered by PrismJS.
+ * Correctly handles multi-line comments, template literals, JSX tags,
+ * regexes, and language-specific grammars with 100% line fidelity.
+ */
+export function tokenizeFullCode(code: string, filename: string): FormattedLine[] {
+  if (!code) {
+    return [{ lineNumber: 1, spans: [{ type: null, text: '' }] }]
   }
 
-  return tokens
+  const grammarKey = resolvePrismGrammarKey(filename)
+  const grammar = Prism.languages[grammarKey] || Prism.languages.clike
+
+  if (!grammar) {
+    return code.split(/\r?\n/).map((line, idx) => ({
+      lineNumber: idx + 1,
+      spans: [{ type: null, text: line }],
+    }))
+  }
+
+  const rawTokens = Prism.tokenize(code, grammar)
+  const flatSpans = flattenTokens(rawTokens)
+
+  const lines: FormattedLine[] = []
+  let currentSpans: CodeSpan[] = []
+  let currentLineNumber = 1
+
+  for (const span of flatSpans) {
+    const text = span.text
+    if (!text.includes('\n')) {
+      if (text.length > 0) {
+        currentSpans.push(span)
+      }
+      continue
+    }
+
+    // Split multi-line token across line boundaries
+    const parts = text.split(/\r?\n/)
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i]
+      if (part.length > 0) {
+        currentSpans.push({ type: span.type, text: part })
+      }
+
+      if (i < parts.length - 1) {
+        lines.push({
+          lineNumber: currentLineNumber++,
+          spans: currentSpans.length > 0 ? currentSpans : [{ type: null, text: '' }],
+        })
+        currentSpans = []
+      }
+    }
+  }
+
+  // Push trailing line
+  lines.push({
+    lineNumber: currentLineNumber,
+    spans: currentSpans.length > 0 ? currentSpans : [{ type: null, text: '' }],
+  })
+
+  return lines
+}
+
+/**
+ * Maps a Prism token type to White Card's monochrome-first semantic theme classes.
+ */
+export function getMonochromeTokenClassName(type: string | null): string {
+  if (!type) return 'text-foreground'
+
+  switch (type) {
+    // Control flow, imports, declarations
+    case 'keyword':
+    case 'atrule':
+    case 'rule':
+      return 'font-semibold text-primary/95'
+
+    // Multi-line and single-line comments, docstrings
+    case 'comment':
+    case 'prolog':
+    case 'doctype':
+    case 'cdata':
+      return 'italic text-muted-foreground/60'
+
+    // Strings, template literals
+    case 'string':
+    case 'char':
+    case 'attr-value':
+      return 'text-emerald-700 dark:text-emerald-300/90 font-normal'
+
+    // Numbers, constants, booleans
+    case 'number':
+    case 'boolean':
+    case 'constant':
+      return 'text-amber-700 dark:text-amber-300/90 font-normal'
+
+    // Functions and methods
+    case 'function':
+    case 'function-variable':
+      return 'font-medium text-foreground'
+
+    // Classes, interfaces, types, builtins
+    case 'class-name':
+    case 'builtin':
+      return 'font-medium text-foreground/90'
+
+    // HTML / JSX / XML tags
+    case 'tag':
+      return 'font-semibold text-primary/90'
+
+    // HTML / JSX attributes
+    case 'attr-name':
+      return 'text-muted-foreground font-normal'
+
+    // Operators and expressions
+    case 'operator':
+      return 'text-muted-foreground/90'
+
+    // Punctuation (braces, brackets, commas, semicolons)
+    case 'punctuation':
+      return 'text-muted-foreground/70'
+
+    // Regular expressions
+    case 'regex':
+    case 'important':
+      return 'text-rose-600 dark:text-rose-400 font-normal'
+
+    // Variables, properties, selectors
+    case 'variable':
+    case 'property':
+      return 'text-foreground'
+
+    case 'selector':
+      return 'font-medium text-primary'
+
+    default:
+      return 'text-foreground'
+  }
 }

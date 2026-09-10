@@ -6,6 +6,9 @@ import { extractEntryAsText } from '@/features/documents/lib/archive-parser'
 import { ArchiveCodePreview } from './archive-code-preview'
 import { ArchiveTextPreview } from './archive-text-preview'
 import { ArchiveImagePreview } from './archive-image-preview'
+import { ArchiveDocxPreview } from './archive-docx-preview'
+import { ArchivePdfPreview } from './archive-pdf-preview'
+import { ArchiveCsvPreview } from './archive-csv-preview'
 import { ArchiveCodeHeader } from './archive-code-header'
 import { useArchiveCodeViewer } from '@/features/documents/hooks/use-archive-code-viewer'
 import { AppIcon } from '@/components/icons/app-icon'
@@ -56,7 +59,7 @@ export function ArchiveFilePreviewRouter({
       .catch((err: any) => {
         if (!isMounted) return
         setIsLoadingContent(false)
-        if (err.message === 'ENTRY_TOO_LARGE') {
+        if (err?.message === 'ENTRY_TOO_LARGE') {
           setContentError('This file exceeds the 5 MB in-browser preview limit.')
         } else {
           setContentError('Could not decode file content.')
@@ -70,26 +73,32 @@ export function ArchiveFilePreviewRouter({
 
   const lineCount = textContent ? textContent.split(/\r?\n/).length : undefined
 
+  // Specialized viewers (DOCX, PDF, CSV, Image) manage their own visual frames,
+  // but we still provide a unified back-to-directory button
+  const handleDownload = () => downloadFile(node.path, node.name, typeInfo.mimeType)
+
   return (
     <div className="w-full flex-1 flex flex-col bg-surface overflow-hidden">
-      {/* Sticky Code / File Bar */}
-      <ArchiveCodeHeader
-        filename={node.name}
-        lineCount={lineCount}
-        formattedSize={node.formattedSize}
-        badgeText={typeInfo.badgeText}
-        isRaw={isRaw}
-        isWrapped={isWrapped}
-        hasCopied={hasCopied}
-        isDownloading={isDownloading}
-        onToggleRaw={toggleRaw}
-        onToggleWrap={toggleWrap}
-        onCopy={() => copyCode(textContent || '')}
-        onDownloadFile={() => downloadFile(node.path, node.name, typeInfo.mimeType)}
-        onBackToDirectory={onBackToDirectory}
-      />
+      {/* 1. Header Bar for Code and Text entries */}
+      {isTextual && typeInfo.kind !== 'csv' && (
+        <ArchiveCodeHeader
+          filename={node.name}
+          lineCount={lineCount}
+          formattedSize={node.formattedSize}
+          badgeText={typeInfo.badgeText}
+          isRaw={isRaw}
+          isWrapped={isWrapped}
+          hasCopied={hasCopied}
+          isDownloading={isDownloading}
+          onToggleRaw={toggleRaw}
+          onToggleWrap={toggleWrap}
+          onCopy={() => copyCode(textContent || '')}
+          onDownloadFile={handleDownload}
+          onBackToDirectory={onBackToDirectory}
+        />
+      )}
 
-      {/* Content Rendering Body */}
+      {/* 2. Content Body Router */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {isLoadingContent ? (
           <div className="flex-1 flex flex-col items-center justify-center p-8 text-center space-y-2 select-none">
@@ -110,18 +119,51 @@ export function ArchiveFilePreviewRouter({
             <Button
               variant="outline"
               size="sm"
-              onClick={() => downloadFile(node.path, node.name, typeInfo.mimeType)}
-              className="h-8 px-3 rounded-xl text-xs gap-1.5"
+              onClick={handleDownload}
+              className="h-8 px-3 rounded-xl text-xs gap-1.5 font-mono"
             >
               <AppIcon icon={Download01Icon} size={14} />
               <span>Download File</span>
             </Button>
           </div>
+        ) : typeInfo.kind === 'docx' ? (
+          /* DOCX Document Viewer */
+          <ArchiveDocxPreview
+            zip={zip}
+            path={node.path}
+            filename={node.name}
+            onDownload={handleDownload}
+          />
+        ) : typeInfo.kind === 'pdf' ? (
+          /* PDF Document Viewer */
+          <ArchivePdfPreview
+            zip={zip}
+            path={node.path}
+            filename={node.name}
+            onDownload={handleDownload}
+          />
+        ) : typeInfo.kind === 'csv' ? (
+          /* CSV / TSV Spreadsheet Viewer */
+          <ArchiveCsvPreview
+            filename={node.name}
+            content={textContent || ''}
+            onDownload={handleDownload}
+          />
         ) : typeInfo.kind === 'image' ? (
-          <ArchiveImagePreview zip={zip} path={node.path} filename={node.name} />
+          /* Image & SVG Viewer */
+          <ArchiveImagePreview
+            zip={zip}
+            path={node.path}
+            filename={node.name}
+          />
         ) : typeInfo.kind === 'text' ? (
-          <ArchiveTextPreview content={textContent || ''} isWrapped={isWrapped} />
+          /* Plaintext Viewer */
+          <ArchiveTextPreview
+            content={textContent || ''}
+            isWrapped={isWrapped}
+          />
         ) : isTextual ? (
+          /* Syntax-Aware Code Viewer */
           <ArchiveCodePreview
             filename={node.name}
             content={textContent || ''}
@@ -129,7 +171,7 @@ export function ArchiveFilePreviewRouter({
             isWrapped={isWrapped}
           />
         ) : (
-          // Unsupported Binary File Fallback
+          /* Unsupported Binary File Fallback */
           <div className="flex-1 flex flex-col items-center justify-center p-8 text-center space-y-3 select-none">
             <div className="size-14 rounded-2xl border border-border bg-surface-muted flex items-center justify-center text-muted-foreground shadow-2xs">
               <AppIcon icon={typeInfo.icon} size={26} />
@@ -140,15 +182,14 @@ export function ArchiveFilePreviewRouter({
                 {typeInfo.label} • {node.formattedSize}
               </p>
               <p className="text-xs text-muted-foreground pt-1">
-                This file cannot be rendered inside White Card.
+                This binary file cannot be rendered inside White Card.
               </p>
             </div>
             <Button
               variant="outline"
               size="sm"
-              disabled={isDownloading}
-              onClick={() => downloadFile(node.path, node.name, typeInfo.mimeType)}
-              className="h-9 px-4 rounded-xl text-xs font-medium gap-1.5 shadow-2xs"
+              onClick={handleDownload}
+              className="h-8 px-3.5 rounded-xl text-xs gap-1.5 font-mono shadow-2xs"
             >
               <AppIcon icon={Download01Icon} size={14} />
               <span>Download File</span>
