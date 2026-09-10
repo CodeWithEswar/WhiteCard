@@ -5,11 +5,10 @@ export function useSession() {
   return {
     session: auth.session,
     user: auth.user,
-    profile: auth.profile,
+    status: auth.status,
     sessionState: auth.sessionState,
     isAuthenticated: auth.isAuthenticated,
     isInitializing: auth.isInitializing,
     signOut: auth.signOut,
-    refreshProfile: auth.refreshProfile,
   }
 }

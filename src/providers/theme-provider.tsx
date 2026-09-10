@@ -15,11 +15,13 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 const THEME_KEY = 'whitecard_theme_preset'
+const THEME_KEY_ALT = 'white-card-theme'
 const APPEARANCE_KEY = 'whitecard_appearance_mode'
+const APPEARANCE_KEY_ALT = 'white-card-appearance'
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<ThemeId>(() => {
-    const saved = localStorage.getItem(THEME_KEY) as ThemeId | null
+    const saved = (localStorage.getItem(THEME_KEY_ALT) || localStorage.getItem(THEME_KEY)) as ThemeId | null
     if (saved && THEME_PRESETS.some((t) => t.id === saved)) {
       return saved
     }
@@ -27,7 +29,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   })
 
   const [appearance, setAppearanceState] = useState<AppearanceMode>(() => {
-    const saved = localStorage.getItem(APPEARANCE_KEY) as AppearanceMode | null
+    const saved = (localStorage.getItem(APPEARANCE_KEY_ALT) || localStorage.getItem(APPEARANCE_KEY)) as AppearanceMode | null
     if (saved && ['system', 'light', 'dark'].includes(saved)) {
       return saved
     }
@@ -72,11 +74,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const setTheme = (newTheme: ThemeId) => {
     setThemeState(newTheme)
     localStorage.setItem(THEME_KEY, newTheme)
+    localStorage.setItem(THEME_KEY_ALT, newTheme)
   }
 
   const setAppearance = (newMode: AppearanceMode) => {
     setAppearanceState(newMode)
     localStorage.setItem(APPEARANCE_KEY, newMode)
+    localStorage.setItem(APPEARANCE_KEY_ALT, newMode)
   }
 
   const themeConfig = getThemeConfig(theme)

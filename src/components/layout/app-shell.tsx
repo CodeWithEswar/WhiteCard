@@ -9,8 +9,11 @@ import { UploadDialog } from '../../features/upload/components/upload-dialog'
 import { CommandMenu } from './command-menu'
 import { GridBackground } from '../backgrounds/grid-background'
 
+import { useOnlineStatus } from '@/hooks/use-online-status'
+
 export function AppShell() {
   const [uploadOpen, setUploadOpen] = useState(false)
+  const isOnline = useOnlineStatus()
 
   return (
     <div className="relative flex min-h-screen w-full bg-background text-foreground">
@@ -32,6 +35,18 @@ export function AppShell() {
 
       {/* Main Content Column */}
       <div className="flex-1 flex flex-col min-w-0 z-10">
+        {/* Offline notification banner (Prompt #66 & #67) */}
+        {!isOnline && (
+          <div
+            role="status"
+            aria-live="polite"
+            className="bg-amber-500/10 border-b border-amber-500/20 px-4 py-1.5 text-center text-xs font-medium text-amber-800 dark:text-amber-300 flex items-center justify-center gap-2 select-none"
+          >
+            <span className="size-2 rounded-full bg-amber-500 animate-pulse shrink-0" />
+            <span>You're offline. Showing your last loaded data.</span>
+          </div>
+        )}
+
         {/* 3. Mobile Topbar (< 768px) */}
         <div className="block md:hidden">
           <MobileTopbar onOpenUpload={() => setUploadOpen(true)} />

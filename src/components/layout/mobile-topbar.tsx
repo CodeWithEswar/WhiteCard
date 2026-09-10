@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import {
   ArrowLeft01Icon,
@@ -14,9 +13,10 @@ import { WhiteCardLogo } from '../brand/white-card-logo'
 import { AppIcon } from '../icons/app-icon'
 import { Button } from '../ui/button'
 import { useTheme } from '@/providers/theme-provider'
-import { useProfile, getInitials } from '@/features/auth/hooks/use-profile'
+import { useCurrentUser } from '@/features/auth/hooks/use-current-user'
 import { useAuth } from '@/features/auth/auth-provider'
 import { getPageTitle } from '@/lib/navigation/route-labels'
+import { UserIdentity } from '../account/user-identity'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -35,12 +35,8 @@ export function MobileTopbar({ onOpenUpload }: MobileTopbarProps) {
   const pathname = location.pathname
   const searchParams = new URLSearchParams(location.search)
   const { isDark, setAppearance } = useTheme()
-  const { profile } = useProfile()
+  const { displayName, email, isBootstrapping } = useCurrentUser()
   const { signOut } = useAuth()
-
-  const userName = profile?.name || 'Personal Vault'
-  const userEmail = profile?.email || 'Private Account'
-  const userAvatar = profile?.avatar
 
   const isDeepRoute =
     pathname.startsWith('/app/document/') ||
@@ -53,6 +49,8 @@ export function MobileTopbar({ onOpenUpload }: MobileTopbarProps) {
     await signOut()
     navigate('/login')
   }
+
+  const renderedName = displayName || (email ? email.split('@')[0] : 'Account')
 
   return (
     <header
@@ -103,20 +101,24 @@ export function MobileTopbar({ onOpenUpload }: MobileTopbarProps) {
               <button
                 type="button"
                 aria-label="User profile options"
-                className="size-8 rounded-md bg-muted/70 border border-border/80 flex items-center justify-center font-bold text-[11px] text-foreground hover:border-foreground/20 transition-colors overflow-hidden outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+                className="rounded-md outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
               />
             }
           >
-            {userAvatar ? (
-              <img src={userAvatar} alt={userName} className="size-full object-cover rounded-md" />
-            ) : (
-              getInitials(userName)
-            )}
+            <UserIdentity compact={true} />
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" side="bottom" sideOffset={8} className="w-56 rounded-md p-1.5">
-            <div className="p-2 pb-1.5 space-y-0.5">
-              <p className="text-xs font-semibold text-foreground truncate">{userName}</p>
-              <p className="text-[10px] text-muted-foreground font-mono truncate">{userEmail}</p>
+          <DropdownMenuContent align="end" side="bottom" sideOffset={8} className="w-56 rounded-md p-1.5 select-none">
+            <div className="p-2 pb-1.5 space-y-1">
+              {isBootstrapping ? (
+                <div className="h-3.5 w-28 bg-muted/80 animate-pulse rounded" />
+              ) : (
+                <p className="text-xs font-semibold text-foreground truncate">
+                  {renderedName}
+                </p>
+              )}
+              {email && (
+                <p className="text-[10px] text-muted-foreground font-mono truncate">{email}</p>
+              )}
             </div>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => navigate('/app/settings')} className="text-xs gap-2 rounded-md">

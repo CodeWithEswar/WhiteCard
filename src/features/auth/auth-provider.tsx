@@ -1,48 +1,56 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
 import type { Session, User } from '@supabase/supabase-js'
 import { supabase, isSupabaseConfigured } from '@/lib/supabase'
-import { fetchUserProfile, type UserProfile } from './hooks/use-profile'
+import { executeSignOut } from './sign-out.service'
+import { queryClient } from '@/lib/query-client'
+import { queryKeys } from '@/lib/query-keys'
+import type { UserProfileData } from '@/features/settings/profile.api'
 
-export type SessionState = 'initializing' | 'unauthenticated' | 'authenticated' | 'error'
+export type AuthStatus = 'initializing' | 'unauthenticated' | 'authenticated' | 'error'
+export type SessionState = AuthStatus
 
 export interface AuthContextValue {
   session: Session | null
   user: User | null
-  profile: UserProfile | null
+  status: AuthStatus
   sessionState: SessionState
   isAuthenticated: boolean
   isInitializing: boolean
   signOut: () => Promise<void>
-  refreshProfile: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
+function seedOptimisticProfile(user: User) {
+  const metaFullName = user.user_metadata?.full_name?.trim()
+  const metaName = user.user_metadata?.name?.trim()
+  const fallbackName = metaFullName || metaName || (user.email ? user.email.split('@')[0] : '')
+  const avatar = user.user_metadata?.avatar_url || user.user_metadata?.picture || undefined
+
+  queryClient.setQueryData(
+    queryKeys.profile.me(user.id),
+    (current: UserProfileData | null | undefined) =>
+      current ?? {
+        id: user.id,
+        email: user.email || '',
+        name: fallbackName,
+        avatar,
+      }
+  )
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [user, setUser] = useState<User | null>(null)
-  const [profile, setProfile] = useState<UserProfile | null>(null)
-  const [sessionState, setSessionState] = useState<SessionState>('initializing')
-
-  const refreshProfile = async () => {
-    try {
-      const p = await fetchUserProfile()
-      setProfile(p)
-    } catch {
-      // Non-fatal
-    }
-  }
+  const [status, setStatus] = useState<AuthStatus>('initializing')
 
   const signOut = async () => {
     try {
-      if (supabase && isSupabaseConfigured) {
-        await supabase.auth.signOut()
-      }
+      await executeSignOut()
     } finally {
       setSession(null)
       setUser(null)
-      setProfile(null)
-      setSessionState('unauthenticated')
+      setStatus('unauthenticated')
     }
   }
 
@@ -53,7 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!isSupabaseConfigured || !supabase) {
         // Fallback for offline or local preview
         if (isMounted) {
-          setSessionState('authenticated')
+          setStatus('authenticated')
         }
         return
       }
@@ -62,7 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const { data, error } = await supabase.auth.getSession()
         if (error) {
           console.error('Session initialization error:', error)
-          if (isMounted) setSessionState('error')
+          if (isMounted) setStatus('error')
           return
         }
 
@@ -70,23 +78,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           if (isMounted) {
             setSession(data.session)
             setUser(data.session.user)
-            setSessionState('authenticated')
+            setStatus('authenticated')
           }
-          const p = await fetchUserProfile()
-          if (isMounted) {
-            setProfile(p)
-          }
+          seedOptimisticProfile(data.session.user)
         } else {
           if (isMounted) {
             setSession(null)
             setUser(null)
-            setProfile(null)
-            setSessionState('unauthenticated')
+            setStatus('unauthenticated')
           }
         }
       } catch (err) {
         console.error('Auth initialization error:', err)
-        if (isMounted) setSessionState('error')
+        if (isMounted) setStatus('error')
       }
     }
 
@@ -100,14 +104,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (newSession?.user) {
         setSession(newSession)
         setUser(newSession.user)
-        setSessionState('authenticated')
-        const p = await fetchUserProfile()
-        if (isMounted) setProfile(p)
+        setStatus('authenticated')
+        seedOptimisticProfile(newSession.user)
       } else {
         setSession(null)
         setUser(null)
-        setProfile(null)
-        setSessionState('unauthenticated')
+        setStatus('unauthenticated')
       }
     })
 
@@ -120,12 +122,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const value: AuthContextValue = {
     session,
     user,
-    profile,
-    sessionState,
-    isAuthenticated: sessionState === 'authenticated',
-    isInitializing: sessionState === 'initializing',
+    status,
+    sessionState: status,
+    isAuthenticated: status === 'authenticated',
+    isInitializing: status === 'initializing',
     signOut,
-    refreshProfile,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
@@ -137,12 +138,11 @@ export function useAuth(): AuthContextValue {
     return {
       session: null,
       user: null,
-      profile: null,
+      status: 'unauthenticated',
       sessionState: 'unauthenticated',
       isAuthenticated: false,
       isInitializing: false,
       signOut: async () => {},
-      refreshProfile: async () => {},
     }
   }
   return context

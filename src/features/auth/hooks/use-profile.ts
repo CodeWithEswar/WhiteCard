@@ -20,11 +20,11 @@ export async function fetchUserProfile(): Promise<UserProfile | null> {
     }
 
     const user = authData.user
-    const email = user.email || 'Private Account'
+    const email = user.email || ''
     let name =
       user.user_metadata?.full_name ||
       user.user_metadata?.name ||
-      (user.email ? user.email.split('@')[0] : 'Personal Vault')
+      (user.email ? user.email.split('@')[0] : '')
     let avatar: string | undefined =
       user.user_metadata?.avatar_url || user.user_metadata?.picture
 
@@ -149,7 +149,7 @@ export function useProfile() {
 }
 
 export function getInitials(name?: string): string {
-  if (!name || name === 'Personal Vault') return 'WC'
+  if (!name || !name.trim()) return ''
   const parts = name.trim().split(/\s+/)
   if (parts.length >= 2) {
     return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase()

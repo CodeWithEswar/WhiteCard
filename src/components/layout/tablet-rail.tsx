@@ -16,8 +16,9 @@ import { useAppReducedMotion } from '../../lib/motion'
 import { NAVIGATION_CONFIG } from '@/config/navigation'
 import { isParentRouteActive } from '@/lib/navigation/is-route-active'
 import { useVaultStats } from '@/features/documents/hooks/use-documents'
-import { useProfile, getInitials } from '@/features/auth/hooks/use-profile'
+import { useCurrentUser } from '@/features/auth/hooks/use-current-user'
 import { useAuth } from '@/features/auth/auth-provider'
+import { UserIdentity } from '../account/user-identity'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
 import {
   DropdownMenu,
@@ -40,12 +41,8 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
   const { isDark, setAppearance } = useTheme()
   const reduceMotion = useAppReducedMotion()
   const { expiringCount } = useVaultStats()
-  const { profile } = useProfile()
+  const { displayName, email, isBootstrapping } = useCurrentUser()
   const { signOut } = useAuth()
-
-  const userName = profile?.name || 'Personal Vault'
-  const userEmail = profile?.email || 'Private Account'
-  const userAvatar = profile?.avatar
 
   const vaultSpaces = NAVIGATION_CONFIG.find((g) => g.id === 'vault-spaces')?.items || []
   const expiringItem = NAVIGATION_CONFIG.find((g) => g.id === 'collections-alerts')?.items.find(
@@ -255,20 +252,24 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
               <button
                 type="button"
                 aria-label="User profile and preferences"
-                className="size-9 rounded-md bg-muted/60 border border-border/80 flex items-center justify-center font-semibold text-xs text-foreground hover:border-foreground/20 transition-colors overflow-hidden outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+                className="rounded-md outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
               />
             }
           >
-            {userAvatar ? (
-              <img src={userAvatar} alt={userName} className="size-full object-cover rounded-md" />
-            ) : (
-              getInitials(userName)
-            )}
+            <UserIdentity compact={true} />
           </DropdownMenuTrigger>
-          <DropdownMenuContent side="right" align="end" sideOffset={12} className="w-56 rounded-md p-1.5">
-            <div className="p-2 pb-1.5 space-y-0.5">
-              <p className="text-xs font-semibold text-foreground truncate">{userName}</p>
-              <p className="text-[10px] text-muted-foreground font-mono truncate">{userEmail}</p>
+          <DropdownMenuContent side="right" align="end" sideOffset={12} className="w-56 rounded-md p-1.5 select-none">
+            <div className="p-2 pb-1.5 space-y-1">
+              {isBootstrapping ? (
+                <div className="h-3.5 w-28 bg-muted/80 animate-pulse rounded" />
+              ) : (
+                <p className="text-xs font-semibold text-foreground truncate">
+                  {displayName || (email ? email.split('@')[0] : '')}
+                </p>
+              )}
+              {email && (
+                <p className="text-[10px] text-muted-foreground font-mono truncate">{email}</p>
+              )}
             </div>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => navigate('/app/settings')} className="text-xs gap-2 rounded-md">

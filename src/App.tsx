@@ -1,20 +1,37 @@
 import { BrowserRouter } from 'react-router-dom'
-import { QueryClientProvider } from '@tanstack/react-query'
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
 import { ThemeProvider } from './providers/theme-provider'
 import { AuthProvider } from './features/auth/auth-provider'
 import { AppRouter } from './app/router'
+import { AppBootstrap } from './app/app-bootstrap'
 import { queryClient } from './lib/query-client'
+import {
+  syncStoragePersister,
+  QUERY_CACHE_MAX_AGE,
+  QUERY_CACHE_BUSTER,
+  persistDehydrateOptions,
+} from './lib/query-persistence'
 
 export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
+    <ThemeProvider>
+      <PersistQueryClientProvider
+        client={queryClient}
+        persistOptions={{
+          persister: syncStoragePersister,
+          maxAge: QUERY_CACHE_MAX_AGE,
+          buster: QUERY_CACHE_BUSTER,
+          dehydrateOptions: persistDehydrateOptions,
+        }}
+      >
         <BrowserRouter>
           <AuthProvider>
-            <AppRouter />
+            <AppBootstrap>
+              <AppRouter />
+            </AppBootstrap>
           </AuthProvider>
         </BrowserRouter>
-      </ThemeProvider>
-    </QueryClientProvider>
+      </PersistQueryClientProvider>
+    </ThemeProvider>
   )
 }

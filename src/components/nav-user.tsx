@@ -29,6 +29,7 @@ import {
   Moon02Icon,
 } from "@hugeicons/core-free-icons"
 import { useTheme } from "@/providers/theme-provider"
+import { useAuth } from "@/features/auth/auth-provider"
 import { getInitials } from "@/features/auth/hooks/use-profile"
 import { cn } from "cn"
 
@@ -45,6 +46,12 @@ export function NavUser({
   const isCollapsed = state === "collapsed"
   const navigate = useNavigate()
   const { isDark, setAppearance } = useTheme()
+  const { signOut } = useAuth()
+
+  const handleSignOut = async () => {
+    await signOut()
+    navigate('/login')
+  }
 
   return (
     <SidebarMenu>
@@ -124,7 +131,7 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => navigate('/auth')}
+              onClick={handleSignOut}
               className="text-xs gap-2 text-destructive hover:text-destructive focus:text-destructive"
             >
               <HugeiconsIcon icon={Logout01Icon} strokeWidth={2} />

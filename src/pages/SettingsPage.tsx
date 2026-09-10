@@ -19,13 +19,33 @@ import { STANDARD_TAGS } from '../features/tags/components/tag-selector'
 import { TagChip } from '../features/tags/components/tag-chip'
 import { AppIcon } from '../components/icons/app-icon'
 import { Switch } from '../components/ui/switch'
-import { useProfile } from '@/features/auth/hooks/use-profile'
+import { Button } from '../components/ui/button'
+import { useCurrentUser } from '@/features/auth/hooks/use-current-user'
+import { useAuth } from '@/features/auth/auth-provider'
+import { purgePersistedQueryCache } from '@/lib/query-persistence'
+import { useQueryClient } from '@tanstack/react-query'
 
 export function SettingsPage() {
   const [autoRevoke, setAutoRevoke] = useState(true)
   const [checksumVerification, setChecksumVerification] = useState(true)
   const [localCaching, setLocalCaching] = useState(true)
-  const { profile } = useProfile()
+  const [cacheCleared, setCacheCleared] = useState(false)
+  
+  const { displayName, email, avatarUrl, initials, isBootstrapping } = useCurrentUser()
+  const { signOut } = useAuth()
+  const queryClient = useQueryClient()
+
+  const handleClearCache = () => {
+    purgePersistedQueryCache()
+    queryClient.invalidateQueries()
+    setCacheCleared(true)
+    setTimeout(() => setCacheCleared(false), 2500)
+  }
+
+  const handleSignOut = async () => {
+    await signOut()
+    window.location.href = '/login'
+  }
 
   return (
     <PageContainer maxWidth="reading" className="space-y-8 pb-12">
@@ -45,20 +65,24 @@ export function SettingsPage() {
         items={[
           {
             id: 'account-owner',
-            title: profile?.name || 'Vault Identity',
-            description: profile?.email
-              ? `Authenticated via Google Account (${profile.email})`
+            title: isBootstrapping ? 'Authenticating...' : (displayName || email || 'Vault Account'),
+            description: email
+              ? `Authenticated via Google Account (${email})`
               : 'Private account access authenticated via Google OAuth',
             icon: UserCircleIcon,
             action: (
               <div className="flex items-center gap-2">
-                {profile?.avatar && (
+                {avatarUrl ? (
                   <img
-                    src={profile.avatar}
-                    alt={profile.name}
+                    src={avatarUrl}
+                    alt={displayName || 'Avatar'}
                     className="size-6 rounded-md object-cover border border-border"
                   />
-                )}
+                ) : initials ? (
+                  <div className="size-6 rounded-md bg-muted border border-border flex items-center justify-center text-[10px] font-bold font-mono">
+                    {initials}
+                  </div>
+                ) : null}
                 <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
                   <AppIcon icon={CheckmarkBadge01Icon} size={13} />
                   Verified
@@ -158,6 +182,23 @@ export function SettingsPage() {
               />
             ),
           },
+          {
+            id: 'pref-clear-cache',
+            title: 'Clear Local Storage & Query Cache',
+            description: 'Purges persisted offline metadata queries. Your database documents remain intact.',
+            icon: FolderSecurityIcon,
+            action: (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleClearCache}
+                className="text-xs h-7 px-2.5 rounded-md"
+              >
+                {cacheCleared ? 'Cache Purged ✓' : 'Clear Cache'}
+              </Button>
+            ),
+          },
         ]}
       />
 
@@ -206,15 +247,14 @@ export function SettingsPage() {
 
       {/* 7. Sign Out */}
       <div className="pt-2">
-        <Link to="/auth">
-          <button
-            type="button"
-            className="w-full flex items-center justify-center gap-2 p-3.5 rounded-md border border-destructive/20 text-destructive bg-destructive/5 hover:bg-destructive/10 transition-colors text-xs font-semibold cursor-pointer"
-          >
-            <AppIcon icon={Logout01Icon} size={16} />
-            <span>Sign Out from Vault</span>
-          </button>
-        </Link>
+        <button
+          type="button"
+          onClick={handleSignOut}
+          className="w-full flex items-center justify-center gap-2 p-3.5 rounded-md border border-destructive/20 text-destructive bg-destructive/5 hover:bg-destructive/10 transition-colors text-xs font-semibold cursor-pointer"
+        >
+          <AppIcon icon={Logout01Icon} size={16} />
+          <span>Sign Out from Vault</span>
+        </button>
       </div>
     </PageContainer>
   )

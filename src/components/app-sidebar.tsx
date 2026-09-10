@@ -28,7 +28,7 @@ import {
 } from "@hugeicons/core-free-icons"
 import { WhiteCardLogo } from "@/components/brand/white-card-logo"
 import { useVaultStats } from "@/features/documents/hooks/use-documents"
-import { useProfile } from "@/features/auth/hooks/use-profile"
+import { useCurrentUser } from "@/features/auth/hooks/use-current-user"
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   onOpenUpload?: () => void
@@ -109,10 +109,11 @@ export function AppSidebar({ onOpenUpload, ...props }: AppSidebarProps) {
     },
   ]
 
-  const { profile } = useProfile()
-  const currentUser = profile || {
-    name: "Personal Vault",
-    email: "Private Account",
+  const { displayName, email, avatarUrl } = useCurrentUser()
+  const currentUser = {
+    name: displayName || '',
+    email: email || '',
+    avatar: avatarUrl || undefined,
   }
 
   return (

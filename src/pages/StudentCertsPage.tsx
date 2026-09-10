@@ -5,39 +5,62 @@ import { DocumentToolbar } from '../features/documents/components/document-toolb
 import { DocumentGrid } from '../features/documents/components/document-grid'
 import { UploadDialog } from '../features/upload/components/upload-dialog'
 import { ShareDialog } from '../features/sharing/components/share-dialog'
+import { DocumentGridSkeleton, DocumentListSkeleton } from '../components/feedback/page-skeleton'
 import {
   useDocuments,
   useDeleteDocument,
 } from '../features/documents/hooks/use-documents'
 import type { DocumentFilterOptions, VaultDocument } from '../types/document'
 
+const VIEW_MODE_KEY = 'whitecard_view_mode'
+
 export function StudentCertsPage() {
   const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const categoryParam = searchParams.get('category')
+  const tagParam = searchParams.get('tag')
+  const sortParam = searchParams.get('sort') as DocumentFilterOptions['sortBy'] | null
 
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
+  const [viewMode, setViewModeState] = useState<'grid' | 'list'>(() => {
+    try {
+      const saved = localStorage.getItem(VIEW_MODE_KEY)
+      return saved === 'list' ? 'list' : 'grid'
+    } catch {
+      return 'grid'
+    }
+  })
+
+  const setViewMode = (mode: 'grid' | 'list') => {
+    setViewModeState(mode)
+    try {
+      localStorage.setItem(VIEW_MODE_KEY, mode)
+    } catch {
+      // Ignore
+    }
+  }
+
   const [filters, setFilters] = useState<DocumentFilterOptions>({
     space: 'student',
     fileType: 'all',
-    tags: [],
+    tags: tagParam ? [tagParam] : [],
     search: categoryParam || '',
-    sortBy: 'updated_desc',
+    sortBy: sortParam || 'updated_desc',
   })
 
   useEffect(() => {
-    if (categoryParam) {
-      setFilters((prev) => ({ ...prev, search: categoryParam }))
-    } else {
-      setFilters((prev) => ({ ...prev, search: '' }))
-    }
-  }, [categoryParam])
+    setFilters((prev) => ({
+      ...prev,
+      search: categoryParam || '',
+      tags: tagParam ? [tagParam] : prev.tags,
+      sortBy: sortParam || prev.sortBy,
+    }))
+  }, [categoryParam, tagParam, sortParam])
 
   const [uploadOpen, setUploadOpen] = useState(false)
   const [shareDoc, setShareDoc] = useState<VaultDocument | null>(null)
   const deleteMutation = useDeleteDocument()
 
-  const { data: documents = [] } = useDocuments(filters)
+  const { data: documents = [], isPending } = useDocuments(filters)
 
   const handleResetFilters = () => {
     setFilters({
@@ -47,6 +70,7 @@ export function StudentCertsPage() {
       search: '',
       sortBy: 'updated_desc',
     })
+    setSearchParams({})
   }
 
   const handleDelete = (doc: VaultDocument) => {
@@ -87,19 +111,27 @@ export function StudentCertsPage() {
         showSpaceFilter={false}
       />
 
-      {/* Main Documents Grid / List */}
-      <DocumentGrid
-        documents={documents}
-        viewMode={viewMode}
-        space="student"
-        onSelect={(id) => navigate(`/app/documents/${id}`)}
-        onShare={(doc) => setShareDoc(doc)}
-        onDelete={handleDelete}
-        onDownload={handleDownload}
-        onUploadClick={() => setUploadOpen(true)}
-        isFiltered={isFiltered}
-        onClearFilters={handleResetFilters}
-      />
+      {/* Main Documents Grid / List (Cache-first: render skeleton only if no cache exists) */}
+      {isPending && documents.length === 0 ? (
+        viewMode === 'list' ? (
+          <DocumentListSkeleton count={6} />
+        ) : (
+          <DocumentGridSkeleton count={6} />
+        )
+      ) : (
+        <DocumentGrid
+          documents={documents}
+          viewMode={viewMode}
+          space="student"
+          onSelect={(id) => navigate(`/app/documents/${id}`)}
+          onShare={(doc) => setShareDoc(doc)}
+          onDelete={handleDelete}
+          onDownload={handleDownload}
+          onUploadClick={() => setUploadOpen(true)}
+          isFiltered={isFiltered}
+          onClearFilters={handleResetFilters}
+        />
+      )}
 
       {/* Upload Dialog */}
       <UploadDialog
