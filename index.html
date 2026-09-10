@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- 1. Character Encoding & Viewport -->
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+
+    <!-- 2. Primary Title & Core SEO Meta -->
+    <title>White Card — Secure Document Storage</title>
+    <meta
+      name="description"
+      content="Store government documents and student certificates in one private, organized digital space with White Card."
+    />
+    <meta name="application-name" content="White Card" />
+    <meta name="apple-mobile-web-app-title" content="White Card" />
+    <meta name="author" content="White Card" />
+    <meta
+      name="keywords"
+      content="document storage, government documents, student certificates, digital document wallet, secure file storage"
+    />
+    <meta name="robots" content="index,follow" />
+
+    <!-- 3. Appearance, Color Scheme & Mobile Browser Chrome -->
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="theme-color"
+      content="#fafafa"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#09090b"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!-- 4. Favicon & Web Icon Suite -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- 5. Open Graph (Social Previews & Messaging Cards) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="White Card" />
+    <meta property="og:title" content="White Card — Secure Document Storage" />
+    <meta
+      property="og:description"
+      content="Keep government documents and student certificates organized in one private digital space."
+    />
+    <meta property="og:url" content="https://whitecard.vault/" />
+    <meta property="og:image" content="https://whitecard.vault/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="White Card — secure document storage" />
+
+    <!-- 6. Twitter / X Card Meta -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="White Card — Secure Document Storage" />
+    <meta
+      name="twitter:description"
+      content="Keep government documents and student certificates organized in one private digital space."
+    />
+    <meta name="twitter:image" content="https://whitecard.vault/og-image.png" />
+
+    <!-- 7. Canonical URL -->
+    <link rel="canonical" href="https://whitecard.vault/" />
+
+    <!-- 8. Structured Data (Schema.org WebSite) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "White Card",
+        "alternateName": "White Card Vault",
+        "url": "https://whitecard.vault/",
+        "description": "Store government documents and student certificates in one private, organized digital space with White Card."
+      }
+    </script>
+
+    <!-- 9. Initial Theme Bootstrap (Zero-flash before React hydration) -->
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem('whitecard_theme_preset') || 'zinc';
+          var appearance = localStorage.getItem('whitecard_appearance_mode') || 'system';
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var isDark = appearance === 'dark' || (appearance === 'system' && prefersDark);
+          var root = document.documentElement;
+          root.setAttribute('data-theme', theme);
+          if (isDark) {
+            root.classList.add('dark');
+          } else {
+            root.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+
+  <body class="bg-background text-foreground antialiased min-h-screen">
+    <div id="root"></div>
+
+    <!-- No-JS Fallback -->
+    <noscript>
+      <div style="padding: 24px; text-align: center; font-family: sans-serif; color: #18181b;">
+        <h2>JavaScript Required</h2>
+        <p>White Card requires JavaScript to decrypt and access your personal document vault.</p>
+      </div>
+    </noscript>
+
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

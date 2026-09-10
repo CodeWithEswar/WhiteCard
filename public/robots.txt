@@ -1,0 +1,12 @@
+# White Card Vault Robots Configuration
+User-agent: *
+Allow: /
+Allow: /privacy
+Allow: /terms
+
+# Disallow private application views, authentication flows, and temporary direct share links
+Disallow: /app/
+Disallow: /auth/
+Disallow: /login
+Disallow: /signup
+Disallow: /share/

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <style>
+      .bg { fill: #09090b; }
+      .fold { fill: #71717a; }
+      .mark { stroke: #fafafa; }
+      .dot { fill: #fafafa; }
+      @media (prefers-color-scheme: light) {
+        .bg { fill: #18181b; }
+        .fold { fill: #a1a1aa; }
+        .mark { stroke: #ffffff; }
+        .dot { fill: #ffffff; }
+      }
+    </style>
+  </defs>
+  <!-- Card Silhouette -->
+  <rect x="6" y="8" width="52" height="48" rx="12" class="bg" />
+  <!-- Folded Corner Accent -->
+  <path d="M42 8L58 24H47C44.2386 24 42 21.7614 42 19V8Z" class="fold" />
+  <!-- Minimalist Geometric "W" Card Slot Monogram -->
+  <path d="M17 26L22.5 38L27 28L31.5 38L37 26" class="mark" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Precision Vault Status Index -->
+  <circle cx="48" cy="38" r="3.5" class="dot" />
+</svg>
