@@ -17,11 +17,13 @@ import { DashboardEmptyState } from '../components/dashboard-empty-state'
 import { UploadDialog } from '@/features/upload/components/upload-dialog'
 import { ShareDialog } from '@/features/sharing/components/share-dialog'
 import { useAppReducedMotion } from '@/lib/motion'
+import { useDocumentDownload } from '@/features/documents/hooks/use-documents'
 import type { VaultDocument, DocumentSpace } from '@/types/document'
 
 export function DashboardPage() {
   const reduceMotion = useAppReducedMotion()
   const { data, isPending, isError, error, refetch } = useDashboardSummary()
+  const { download } = useDocumentDownload()
 
   const [uploadOpen, setUploadOpen] = useState(false)
   const [defaultSpace, setDefaultSpace] = useState<DocumentSpace>('government')
@@ -33,14 +35,7 @@ export function DashboardPage() {
   }
 
   const handleDownload = (doc: VaultDocument) => {
-    if (doc.fileUrl && doc.fileUrl !== '#') {
-      const a = document.createElement('a')
-      a.href = doc.fileUrl
-      a.download = doc.originalFilename
-      a.click()
-    } else {
-      alert(`Downloading original file: ${doc.originalFilename}`)
-    }
+    download(doc)
   }
 
   // Section 60 & 61: Skeleton ONLY on initial cold load when no cached data exists

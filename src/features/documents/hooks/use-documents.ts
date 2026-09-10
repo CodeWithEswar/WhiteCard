@@ -10,6 +10,9 @@ import {
   createShareLinkInSupabase,
   revokeShareLinkInSupabase,
   fetchDocumentByShareTokenFromSupabase,
+  recordDocumentView,
+  recordDocumentDownload,
+  executeDocumentDownload,
 } from '../documents.api'
 import type {
   VaultDocument,
@@ -243,3 +246,104 @@ export function useVaultStats() {
     totalBytes,
   }
 }
+
+export function useRecordDocumentView() {
+  const queryClient = useQueryClient()
+  const { user } = useAuth()
+  const userId = user?.id || 'anon'
+
+  return useMutation({
+    mutationFn: async (documentId: string) => {
+      return await recordDocumentView(documentId, userId)
+    },
+    onSuccess: (newCount, documentId) => {
+      // 1. Optimistically update all document list & detail queries in cache
+      queryClient.setQueriesData(
+        { queryKey: ['documents'] },
+        (oldData: any) => {
+          if (Array.isArray(oldData)) {
+            return oldData.map((doc: VaultDocument) =>
+              doc.id === documentId ? { ...doc, viewCount: newCount } : doc
+            )
+          }
+          if (oldData && typeof oldData === 'object' && oldData.id === documentId) {
+            return { ...oldData, viewCount: newCount }
+          }
+          return oldData
+        }
+      )
+      // 2. Explicitly update detail query for user
+      queryClient.setQueryData(
+        queryKeys.documents.detail(userId, documentId),
+        (oldDoc: VaultDocument | null | undefined) => {
+          if (!oldDoc) return oldDoc
+          return { ...oldDoc, viewCount: newCount }
+        }
+      )
+      // 3. Invalidate dashboard summary
+      queryClient.invalidateQueries({ queryKey: queryKeys.dashboard.summary(userId) })
+    },
+  })
+}
+
+export function useRecordDocumentDownload() {
+  const queryClient = useQueryClient()
+  const { user } = useAuth()
+  const userId = user?.id || 'anon'
+
+  return useMutation({
+    mutationFn: async (documentId: string) => {
+      return await recordDocumentDownload(documentId, userId)
+    },
+    onSuccess: (newCount, documentId) => {
+      // 1. Optimistically update all document list & detail queries in cache
+      queryClient.setQueriesData(
+        { queryKey: ['documents'] },
+        (oldData: any) => {
+          if (Array.isArray(oldData)) {
+            return oldData.map((doc: VaultDocument) =>
+              doc.id === documentId ? { ...doc, clickCount: newCount } : doc
+            )
+          }
+          if (oldData && typeof oldData === 'object' && oldData.id === documentId) {
+            return { ...oldData, clickCount: newCount }
+          }
+          return oldData
+        }
+      )
+      // 2. Explicitly update detail query for user
+      queryClient.setQueryData(
+        queryKeys.documents.detail(userId, documentId),
+        (oldDoc: VaultDocument | null | undefined) => {
+          if (!oldDoc) return oldDoc
+          return { ...oldDoc, clickCount: newCount }
+        }
+      )
+      // 3. Invalidate dashboard summary
+      queryClient.invalidateQueries({ queryKey: queryKeys.dashboard.summary(userId) })
+    },
+  })
+}
+
+export function useDocumentDownload() {
+  const recordDownload = useRecordDocumentDownload()
+  const { user } = useAuth()
+  const userId = user?.id || 'anon'
+
+  const download = async (doc: VaultDocument) => {
+    try {
+      // 1. Trigger the download immediately
+      await executeDocumentDownload(doc, userId)
+      // 2. Increment download count in database and cache
+      recordDownload.mutate(doc.id)
+    } catch (err) {
+      console.error('Download execution error:', err)
+    }
+  }
+
+  return {
+    download,
+    isDownloading: recordDownload.isPending,
+  }
+}
+

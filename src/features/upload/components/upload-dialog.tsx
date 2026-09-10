@@ -1,22 +1,23 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import {
-  Tick02Icon,
-  Upload01Icon,
   ArrowRight01Icon,
   ArrowLeft01Icon,
-  CheckmarkBadge01Icon,
+  Upload01Icon,
+  Alert02Icon,
 } from '@hugeicons/core-free-icons'
-import { ResponsiveDialog } from '../../../components/layout/responsive-dialog'
+import { ResponsiveDialog } from '@/components/layout/responsive-dialog'
+import { AppIcon } from '@/components/icons/app-icon'
+import { Button } from '@/components/ui/button'
+import { useUploadController } from '../hooks/use-upload-controller'
+import { UploadStageIndicator } from './upload-stage-indicator'
 import { UploadDropzone } from './upload-dropzone'
 import { UploadQueue } from './upload-queue'
-import type { UploadQueueItem } from './upload-item'
-import { DocumentMetadataForm, type DocumentMetadataValues } from './document-metadata-form'
-import { AppIcon } from '../../../components/icons/app-icon'
-import { Button } from '../../../components/ui/button'
-import { useUploadDocument } from '../../documents/hooks/use-documents'
-import type { DocumentSpace } from '../../../types/document'
+import { UploadMetadataForm } from './upload-metadata-form'
+import { UploadCompleteState } from './upload-complete-state'
+import { useNavigate } from 'react-router-dom'
+import type { DocumentSpace } from '@/types/document'
 
-interface UploadDialogProps {
+export interface UploadDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   defaultSpace?: DocumentSpace
@@ -27,190 +28,231 @@ export function UploadDialog({
   onOpenChange,
   defaultSpace = 'government',
 }: UploadDialogProps) {
-  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1)
-  const [queue, setQueue] = useState<UploadQueueItem[]>([])
-  const [metadata, setMetadata] = useState<DocumentMetadataValues>({
-    space: defaultSpace,
-    title: '',
-    category: '',
-    tags: [],
-    expiryDate: '',
-    notes: '',
-  })
+  const navigate = useNavigate()
+  const {
+    stage,
+    setStage,
+    selectedFileId,
+    setSelectedFileId,
+    validationErrors,
+    clearValidationErrors,
+    isSubmitting,
+    queue,
+    handleFilesAdded,
+    startBatchUpload,
+    retrySingle,
+    resetAll,
+  } = useUploadController(defaultSpace)
 
-  const uploadMutation = useUploadDocument()
+  // Reset state when closing dialog
+  useEffect(() => {
+    if (!open) {
+      const timer = setTimeout(() => {
+        resetAll()
+      }, 200)
+      return () => clearTimeout(timer)
+    }
+  }, [open, resetAll])
 
-  const resetState = () => {
-    setStep(1)
-    setQueue([])
-    setMetadata({
-      space: defaultSpace,
-      title: '',
-      category: '',
-      tags: [],
-      expiryDate: '',
-      notes: '',
-    })
+  const selectedItem =
+    queue.items.find((it) => it.id === selectedFileId) || queue.items[0] || null
+
+  const hasFiles = queue.items.length > 0
+
+  const handleClose = () => {
+    onOpenChange(false)
   }
 
-  const handleOpenChange = (newOpen: boolean) => {
-    if (!newOpen) {
-      setTimeout(resetState, 200)
-    }
-    onOpenChange(newOpen)
+  const handleViewDocuments = () => {
+    onOpenChange(false)
+    const targetSpace = selectedItem?.metadata.space || defaultSpace
+    navigate(`/app/${targetSpace}`)
   }
 
-  const handleFilesSelected = (files: File[]) => {
-    const newItems: UploadQueueItem[] = files.map((f, i) => ({
-      id: `${Date.now()}-${i}`,
-      file: f,
-      progress: 0,
-      status: 'queued',
-    }))
-
-    setQueue((prev) => [...prev, ...newItems])
-    // Auto-populate title from first file if blank
-    if (!metadata.title && files[0]) {
-      const cleanTitle = files[0].name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ')
-      setMetadata((prev) => ({ ...prev, title: cleanTitle }))
-    }
-    setStep(2)
-  }
-
-  const handleRemoveItem = (id: string) => {
-    const updated = queue.filter((it) => it.id !== id)
-    setQueue(updated)
-    if (updated.length === 0) {
-      setStep(1)
-    }
-  }
-
-  const handleStartUpload = async () => {
-    setStep(4)
-
-    // Simulate animated upload progress for realistic feedback
-    for (let i = 0; i < queue.length; i++) {
-      const item = queue[i]
-      setQueue((prev) =>
-        prev.map((it) => (it.id === item.id ? { ...it, status: 'uploading' } : it))
-      )
-
-      for (let p = 20; p <= 100; p += 30) {
-        setQueue((prev) =>
-          prev.map((it) => (it.id === item.id ? { ...it, progress: p } : it))
-        )
-        await new Promise((r) => setTimeout(r, 60))
-      }
-
-      await uploadMutation.mutateAsync({
-        file: item.file,
-        title: queue.length === 1 ? metadata.title : undefined,
-        space: metadata.space,
-        category: metadata.category,
-        tags: metadata.tags,
-        expiryDate: metadata.expiryDate ? new Date(metadata.expiryDate).toISOString() : null,
-        notes: metadata.notes,
-      })
-
-      setQueue((prev) =>
-        prev.map((it) =>
-          it.id === item.id ? { ...it, status: 'completed', progress: 100 } : it
-        )
-      )
-    }
-
-    setStep(5)
+  const handleUploadMore = () => {
+    queue.resetQueue()
+    setStage('files')
   }
 
   return (
     <ResponsiveDialog
       open={open}
-      onOpenChange={handleOpenChange}
+      onOpenChange={(newOpen) => {
+        if (!isSubmitting) {
+          onOpenChange(newOpen)
+        }
+      }}
+      maxWidth="2xl"
+      className="max-w-3xl md:max-w-4xl"
       title={
-        step === 5
-          ? 'Deposit Complete'
-          : step === 4
-            ? 'Depositing to Vault...'
-            : 'Deposit Important Document'
+        <div className="space-y-1">
+          <div className="flex items-center justify-between gap-4">
+            <h2 className="text-base sm:text-lg font-bold text-foreground tracking-tight">
+              {stage === 'complete' ? 'Upload Summary' : 'Upload Documents'}
+            </h2>
+            <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider hidden sm:inline">
+              Private Document Vault
+            </span>
+          </div>
+          <p className="text-xs text-muted-foreground font-normal">
+            {stage === 'files'
+              ? 'Select official identity files or certificates to add to your vault.'
+              : stage === 'metadata'
+              ? 'Review titles, categories, tags, and renewal dates before saving.'
+              : 'Your documents have been securely committed to White Card.'}
+          </p>
+        </div>
       }
-      description={
-        step === 1
-          ? 'Add files to your personal vault'
-          : step === 2
-            ? 'Review your selected files'
-            : step === 3
-              ? 'Configure space and details'
-              : step === 4
-                ? 'Encrypting and saving original files'
-                : 'Your documents are safely stored in White Card'
-      }
-      maxWidth="lg"
     >
-      <div className="space-y-4">
-        {/* Step Indicator */}
-        {step <= 3 && (
-          <div className="flex items-center justify-between pb-3 border-b border-border/60 text-[11px] text-muted-foreground font-mono">
-            <span className={step === 1 ? 'font-bold text-foreground' : ''}>
-              1. Choose
-            </span>
-            <span className="text-border-strong">→</span>
-            <span className={step === 2 ? 'font-bold text-foreground' : ''}>
-              2. Review ({queue.length})
-            </span>
-            <span className="text-border-strong">→</span>
-            <span className={step === 3 ? 'font-bold text-foreground' : ''}>
-              3. Metadata
-            </span>
+      <div className="space-y-5">
+        {/* Stage Indicator */}
+        <UploadStageIndicator currentStage={stage} />
+
+        {/* Validation Errors Notice if any */}
+        {validationErrors.length > 0 && (
+          <div className="p-3 rounded-xl border border-destructive/30 bg-destructive/5 text-destructive text-xs space-y-1">
+            <div className="flex items-center justify-between font-semibold">
+              <span className="flex items-center gap-1.5">
+                <AppIcon icon={Alert02Icon} size={14} />
+                Some files could not be added:
+              </span>
+              <button
+                type="button"
+                onClick={clearValidationErrors}
+                className="text-[11px] underline hover:opacity-80"
+              >
+                Dismiss
+              </button>
+            </div>
+            <ul className="list-disc list-inside text-[11px] space-y-0.5 opacity-90 pl-1">
+              {validationErrors.map((err, i) => (
+                <li key={i}>
+                  <span className="font-medium">{err.filename}:</span> {err.reason}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
 
-        {/* Step 1: Dropzone */}
-        {step === 1 && (
-          <UploadDropzone onFilesSelected={handleFilesSelected} />
-        )}
-
-        {/* Step 2: Queue Review */}
-        {step === 2 && (
+        {/* ================= STAGE 1: FILES ================= */}
+        {stage === 'files' && (
           <div className="space-y-4">
-            <UploadQueue items={queue} onRemove={handleRemoveItem} />
+            {!hasFiles ? (
+              <UploadDropzone
+                onFilesSelected={(files) => handleFilesAdded(files, defaultSpace)}
+                disabled={isSubmitting}
+              />
+            ) : (
+              <>
+                <UploadDropzone
+                  onFilesSelected={(files) => handleFilesAdded(files, defaultSpace)}
+                  compact
+                  disabled={isSubmitting}
+                />
+                <UploadQueue
+                  items={queue.items}
+                  onRemove={queue.removeItem}
+                  onCancel={queue.cancelItem}
+                  onRetry={retrySingle}
+                  selectedId={selectedFileId}
+                  onSelect={setSelectedFileId}
+                />
+              </>
+            )}
 
-            <div className="pt-2 flex items-center justify-between">
+            {/* Stage 1 Footer Actions */}
+            <div className="pt-3 border-t border-border flex items-center justify-between gap-3">
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setStep(1)}
-                className="text-xs h-9 px-3 rounded-xl border-border gap-1.5"
+                onClick={handleClose}
+                disabled={isSubmitting}
+                className="text-xs h-9 rounded-xl border-border"
               >
-                <AppIcon icon={ArrowLeft01Icon} size={14} />
-                <span>Add More</span>
+                Cancel
               </Button>
 
-              <Button
-                size="sm"
-                onClick={() => setStep(3)}
-                className="text-xs h-9 px-4 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 gap-1.5"
-              >
-                <span>Continue</span>
-                <AppIcon icon={ArrowRight01Icon} size={14} />
-              </Button>
+              {hasFiles && (
+                <Button
+                  size="sm"
+                  onClick={() => setStage('metadata')}
+                  className="text-xs h-9 px-4 rounded-xl gap-1.5 bg-primary text-primary-foreground hover:bg-primary/90 transition-all"
+                >
+                  <span>Next: Details</span>
+                  <AppIcon icon={ArrowRight01Icon} size={14} />
+                </Button>
+              )}
             </div>
           </div>
         )}
 
-        {/* Step 3: Metadata Form */}
-        {step === 3 && (
+        {/* ================= STAGE 2: METADATA ================= */}
+        {stage === 'metadata' && (
           <div className="space-y-4">
-            <DocumentMetadataForm
-              values={metadata}
-              onChange={setMetadata}
-            />
+            {queue.items.length === 1 && selectedItem ? (
+              // Single file metadata form
+              <UploadMetadataForm
+                metadata={selectedItem.metadata}
+                originalFilename={selectedItem.file.name}
+                onChange={(updates) => queue.updateItemMetadata(selectedItem.id, updates)}
+                disabled={isSubmitting}
+              />
+            ) : (
+              // Multi-file: Desktop split view (Left list, Right form)
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
+                <div className="md:col-span-5 space-y-2">
+                  <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider block px-0.5">
+                    Select File to Edit ({queue.items.length})
+                  </span>
+                  <div className="max-h-[360px] overflow-y-auto space-y-2 pr-1">
+                    {queue.items.map((it) => {
+                      const isCur = it.id === selectedFileId
+                      return (
+                        <button
+                          key={it.id}
+                          type="button"
+                          onClick={() => setSelectedFileId(it.id)}
+                          className={`w-full p-2.5 rounded-xl border text-left text-xs transition-all flex items-center justify-between gap-2 ${
+                            isCur
+                              ? 'border-primary bg-primary/10 text-foreground font-semibold shadow-xs ring-1 ring-primary/30'
+                              : 'border-border bg-card text-muted-foreground hover:text-foreground hover:bg-muted/40'
+                          }`}
+                        >
+                          <span className="truncate flex-1">{it.metadata.title || it.file.name}</span>
+                          <span className="text-[10.5px] font-mono shrink-0 capitalize text-muted-foreground">
+                            {it.metadata.space}
+                          </span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
 
-            <div className="pt-4 flex items-center justify-between border-t border-border/60">
+                <div className="md:col-span-7">
+                  {selectedItem ? (
+                    <UploadMetadataForm
+                      metadata={selectedItem.metadata}
+                      originalFilename={selectedItem.file.name}
+                      onChange={(updates) => queue.updateItemMetadata(selectedItem.id, updates)}
+                      disabled={isSubmitting}
+                    />
+                  ) : (
+                    <div className="p-8 text-center text-xs text-muted-foreground border border-dashed rounded-xl">
+                      Select a file on the left to edit its details.
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Stage 2 Footer Actions */}
+            <div className="pt-3 border-t border-border flex items-center justify-between gap-3">
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setStep(2)}
-                className="text-xs h-9 px-3 rounded-xl border-border gap-1.5"
+                onClick={() => setStage('files')}
+                disabled={isSubmitting}
+                className="text-xs h-9 rounded-xl border-border gap-1.5"
               >
                 <AppIcon icon={ArrowLeft01Icon} size={14} />
                 <span>Back</span>
@@ -218,52 +260,32 @@ export function UploadDialog({
 
               <Button
                 size="sm"
-                onClick={handleStartUpload}
-                className="text-xs h-9 px-5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 gap-1.5 shadow-xs"
+                onClick={startBatchUpload}
+                disabled={isSubmitting || queue.items.length === 0}
+                className="text-xs h-9 px-5 rounded-xl gap-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-all font-medium"
               >
                 <AppIcon icon={Upload01Icon} size={15} />
-                <span>Deposit Document</span>
+                <span>
+                  {isSubmitting
+                    ? 'Saving details…'
+                    : queue.items.length === 1
+                    ? 'Upload Document'
+                    : `Upload ${queue.items.length} Documents`}
+                </span>
               </Button>
             </div>
           </div>
         )}
 
-        {/* Step 4: Upload Progress */}
-        {step === 4 && (
-          <div className="py-6 space-y-4">
-            <UploadQueue items={queue} onRemove={() => { }} />
-            <p className="text-center text-xs text-muted-foreground animate-pulse">
-              Encrypting bytes and verifying checksum integrity...
-            </p>
-          </div>
-        )}
-
-        {/* Step 5: Done Confirmation */}
-        {step === 5 && (
-          <div className="py-8 text-center space-y-4">
-            <div className="size-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center shadow-sm">
-              <AppIcon icon={CheckmarkBadge01Icon} size={32} />
-            </div>
-
-            <div className="space-y-1 max-w-sm mx-auto">
-              <h4 className="text-base font-bold text-foreground tracking-tight">
-                Deposit Successful
-              </h4>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                {queue.length} file{queue.length > 1 ? 's' : ''} stored securely in your {metadata.space === 'government' ? 'Government' : 'Student'} space.
-              </p>
-            </div>
-
-            <div className="pt-4 flex justify-center gap-2">
-              <Button
-                onClick={() => handleOpenChange(false)}
-                className="h-10 px-6 rounded-xl font-medium text-xs gap-1.5 bg-primary text-primary-foreground hover:bg-primary/90 shadow-xs"
-              >
-                <AppIcon icon={Tick02Icon} size={15} />
-                <span>View in Vault</span>
-              </Button>
-            </div>
-          </div>
+        {/* ================= STAGE 3: COMPLETE ================= */}
+        {stage === 'complete' && (
+          <UploadCompleteState
+            items={queue.items}
+            onViewDocuments={handleViewDocuments}
+            onUploadMore={handleUploadMore}
+            onDone={handleClose}
+            onRetryFailed={retrySingle}
+          />
         )}
       </div>
     </ResponsiveDialog>

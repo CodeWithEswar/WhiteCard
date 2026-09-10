@@ -15,7 +15,8 @@ import {
 import { WhiteCardLogo } from '../components/brand/white-card-logo'
 import { AppIcon } from '../components/icons/app-icon'
 import { RadialGridBackground } from '../components/backgrounds/radial-grid-background'
-import { vaultStore, isSupabaseConfigured } from '../lib/supabase'
+import { vaultStore, isSupabaseConfigured, supabase } from '../lib/supabase'
+import { fetchDocumentByShareTokenFromSupabase } from '@/features/documents/documents.api'
 import { PageMeta } from '../components/seo/page-meta'
 
 interface ResolvedShareData {
@@ -51,34 +52,47 @@ export function PublicSharePage() {
       setErrorStatus(null)
 
       try {
-        // 1. If Supabase edge function is deployed and live, try invoking it
-        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-        if (isSupabaseConfigured && supabaseUrl) {
+        // 1. Try resolving share token directly via Supabase if configured
+        if (isSupabaseConfigured && supabase) {
           try {
-            const res = await fetch(`${supabaseUrl}/functions/v1/resolve-share`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ token }),
-            })
+            const supabaseDoc = await fetchDocumentByShareTokenFromSupabase(token)
+            if (supabaseDoc) {
+              if (
+                supabaseDoc.sharedDirectLink?.expiresAt &&
+                new Date(supabaseDoc.sharedDirectLink.expiresAt).getTime() <= Date.now()
+              ) {
+                setErrorStatus('LINK_EXPIRED')
+                setLoading(false)
+                return
+              }
 
-            if (res.ok) {
-              const result = await res.json()
+              // Safely increment share view count
+              try {
+                await supabase.rpc('increment_share_view', { p_token_hash: token })
+              } catch {}
+
+              const newViewCount =
+                (supabaseDoc.sharedDirectLink?.viewCount || supabaseDoc.viewCount || 0) + 1
+
               setData({
-                title: result.document.title,
-                originalName: result.document.originalName,
-                mimeType: result.document.mimeType || 'application/pdf',
-                sizeBytes: result.document.sizeBytes || 1024,
-                sizeFormatted: `${((result.document.sizeBytes || 1024) / (1024 * 1024)).toFixed(1)} MB`,
-                fileUrl: result.fileUrl,
-                expiresAt: result.expiresAt,
-                viewCount: result.viewCount || 1,
-                clickCount: result.clickCount || 0,
+                title: supabaseDoc.title,
+                originalName: supabaseDoc.originalFilename,
+                mimeType: supabaseDoc.mimeType,
+                sizeBytes: supabaseDoc.sizeBytes,
+                sizeFormatted: supabaseDoc.sizeFormatted,
+                category: supabaseDoc.category,
+                space: supabaseDoc.space,
+                fileUrl: supabaseDoc.fileUrl || '#',
+                expiresAt: supabaseDoc.sharedDirectLink?.expiresAt || '',
+                viewCount: newViewCount,
+                clickCount:
+                  supabaseDoc.sharedDirectLink?.clickCount || supabaseDoc.clickCount || 0,
               })
               setLoading(false)
               return
             }
           } catch (e) {
-            // Fallback to local vault resolution below
+            console.warn('Supabase share token resolution failed:', e)
           }
         }
 
@@ -129,13 +143,18 @@ export function PublicSharePage() {
     if (!data) return
     setDownloading(true)
 
-    // Update click count locally
+    // Update click count in Supabase and locally
     if (token) {
+      if (isSupabaseConfigured && supabase) {
+        Promise.resolve(supabase.rpc('increment_share_click', { p_token_hash: token }))
+          .then(() => {})
+          .catch(() => {})
+      }
       const localDoc = vaultStore.getDocumentByShareToken(token)
       if (localDoc) {
         vaultStore.incrementClickCount(localDoc.id)
-        setData((prev) => (prev ? { ...prev, clickCount: prev.clickCount + 1 } : null))
       }
+      setData((prev) => (prev ? { ...prev, clickCount: prev.clickCount + 1 } : null))
     }
 
     // Trigger download

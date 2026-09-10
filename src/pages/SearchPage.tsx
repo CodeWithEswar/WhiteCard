@@ -15,6 +15,7 @@ import { AppIcon } from '../components/icons/app-icon'
 import {
   useDocuments,
   useDeleteDocument,
+  useDocumentDownload,
 } from '../features/documents/hooks/use-documents'
 import type { VaultDocument } from '../types/document'
 
@@ -26,6 +27,7 @@ export function SearchPage() {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const deleteMutation = useDeleteDocument()
+  const { download } = useDocumentDownload()
 
   useEffect(() => {
     inputRef.current?.focus()
@@ -38,10 +40,11 @@ export function SearchPage() {
   })
 
   const popularTags = [
-    'Identity',
+    'Passport',
+    'Driving',
     'Education',
-    'Travel',
-    'Vehicle',
+    'Degree',
+    'Identity',
     'Renewal',
     'Personal',
   ]
@@ -53,12 +56,7 @@ export function SearchPage() {
   }
 
   const handleDownload = (doc: VaultDocument) => {
-    if (doc.fileUrl && doc.fileUrl !== '#') {
-      const a = document.createElement('a')
-      a.href = doc.fileUrl
-      a.download = doc.originalFilename
-      a.click()
-    }
+    download(doc)
   }
 
   return (

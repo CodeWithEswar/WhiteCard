@@ -14,6 +14,7 @@ import { Button } from '../components/ui/button'
 import {
   useDocuments,
   useDeleteDocument,
+  useDocumentDownload,
 } from '../features/documents/hooks/use-documents'
 import type { DocumentFilterOptions, VaultDocument } from '../types/document'
 
@@ -66,6 +67,7 @@ export function GovernmentDocsPage() {
 
   const { data: documents = [], isPending } = useDocuments(filters)
   const deleteMutation = useDeleteDocument()
+  const { download } = useDocumentDownload()
 
   const handleResetFilters = () => {
     setFilters({
@@ -85,14 +87,7 @@ export function GovernmentDocsPage() {
   }
 
   const handleDownload = (doc: VaultDocument) => {
-    if (doc.fileUrl && doc.fileUrl !== '#') {
-      const a = document.createElement('a')
-      a.href = doc.fileUrl
-      a.download = doc.originalFilename
-      a.click()
-    } else {
-      alert(`Downloading file: ${doc.originalFilename}`)
-    }
+    download(doc)
   }
 
   const isFiltered = Boolean(

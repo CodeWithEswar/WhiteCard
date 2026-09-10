@@ -5,6 +5,7 @@ import {
   Share03Icon,
   Delete02Icon,
   Alert02Icon,
+  ViewIcon,
 } from '@hugeicons/core-free-icons'
 import type { VaultDocument } from '../../../types/document'
 import { DocumentTypeIcon } from './document-type-icon'
@@ -90,6 +91,16 @@ export function DocumentListRow({
             <span>{doc.category}</span>
             <span className="text-border-strong">•</span>
             <span className="font-mono">{doc.sizeFormatted}</span>
+            <span className="text-border-strong">•</span>
+            <span className="flex items-center gap-1 font-sans text-[10px]" title={`${doc.viewCount ?? 0} views`}>
+              <AppIcon icon={ViewIcon} size={11} className="opacity-70" />
+              {doc.viewCount ?? 0}
+            </span>
+            <span className="text-border-strong/60">•</span>
+            <span className="flex items-center gap-1 font-sans text-[10px]" title={`${doc.clickCount ?? 0} downloads`}>
+              <AppIcon icon={Download01Icon} size={11} className="opacity-70" />
+              {doc.clickCount ?? 0}
+            </span>
             <span className="md:hidden text-border-strong">•</span>
             <span className="md:hidden">{formatDate(doc.updatedAt)}</span>
           </div>

@@ -7,6 +7,7 @@ import {
   Delete02Icon,
   Calendar03Icon,
   Alert02Icon,
+  ViewIcon,
 } from '@hugeicons/core-free-icons'
 import type { VaultDocument } from '../../../types/document'
 import { DocumentTypeIcon } from './document-type-icon'
@@ -167,15 +168,23 @@ export function DocumentCard({
         )}
       </div>
 
-      {/* Card Footer: File Size, Views & Update Date */}
+      {/* Card Footer: File Size, Views, Downloads & Update Date */}
       <div className="flex items-center justify-between pt-3 mt-4 border-t border-border/50 text-[11px] text-muted-foreground/90 font-mono">
         <div className="flex items-center gap-2">
           <span>{doc.sizeFormatted}</span>
           {(doc.viewCount !== undefined || doc.clickCount !== undefined) && (
             <>
               <span className="text-border-strong">•</span>
-              <span className="flex items-center gap-1 font-sans text-[10px] text-muted-foreground" title={`${doc.viewCount ?? 0} views, ${doc.clickCount ?? 0} clicks`}>
-                {doc.viewCount ?? 0} views
+              <span className="flex items-center gap-1.5 font-sans text-[10px] text-muted-foreground">
+                <span className="flex items-center gap-0.5" title={`${doc.viewCount ?? 0} views`}>
+                  <AppIcon icon={ViewIcon} size={11} className="opacity-70" />
+                  {doc.viewCount ?? 0}
+                </span>
+                <span className="text-border-strong/60">•</span>
+                <span className="flex items-center gap-0.5" title={`${doc.clickCount ?? 0} downloads`}>
+                  <AppIcon icon={Download01Icon} size={11} className="opacity-70" />
+                  {doc.clickCount ?? 0}
+                </span>
               </span>
             </>
           )}

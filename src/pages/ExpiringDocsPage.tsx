@@ -16,6 +16,7 @@ import { ShareDialog } from '../features/sharing/components/share-dialog'
 import {
   useDocuments,
   useDeleteDocument,
+  useDocumentDownload,
 } from '../features/documents/hooks/use-documents'
 import type { VaultDocument } from '../types/document'
 import { PageMeta } from '../components/seo/page-meta'
@@ -23,6 +24,7 @@ import { PageMeta } from '../components/seo/page-meta'
 export function ExpiringDocsPage() {
   const navigate = useNavigate()
   const { data: documents = [] } = useDocuments()
+  const { download } = useDocumentDownload()
   const [uploadOpen, setUploadOpen] = useState(false)
   const [shareDoc, setShareDoc] = useState<VaultDocument | null>(null)
   const deleteMutation = useDeleteDocument()
@@ -46,14 +48,7 @@ export function ExpiringDocsPage() {
   }
 
   const handleDownload = (doc: VaultDocument) => {
-    if (doc.fileUrl && doc.fileUrl !== '#') {
-      const a = document.createElement('a')
-      a.href = doc.fileUrl
-      a.download = doc.originalFilename
-      a.click()
-    } else {
-      alert(`Downloading file: ${doc.originalFilename}`)
-    }
+    download(doc)
   }
 
   return (
