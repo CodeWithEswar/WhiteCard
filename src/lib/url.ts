@@ -6,7 +6,7 @@ export function absoluteUrl(path = '/'): string {
   const envUrl = import.meta.env.VITE_APP_URL
   const fallback = typeof window !== 'undefined' && window.location.origin
     ? window.location.origin
-    : 'https://whitecard.vault'
+    : 'https://whitecard-in.vercel.app'
 
   const base = envUrl && envUrl.trim() !== '' ? envUrl.trim() : fallback
 

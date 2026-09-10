@@ -42,7 +42,7 @@ export function HeroProductComposition() {
             <div className="size-3 rounded-full bg-amber-500/60" />
             <div className="size-3 rounded-full bg-emerald-500/60" />
             <span className="ml-3 text-[11px] font-mono text-muted-foreground hidden sm:inline">
-              vault.whitecard.app
+              whitecard-in.vercel.app
             </span>
           </div>
 

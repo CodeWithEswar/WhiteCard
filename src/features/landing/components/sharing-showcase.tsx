@@ -105,7 +105,7 @@ export function SharingShowcase() {
                   </label>
                   <div className="flex items-center gap-2">
                     <div className="flex-1 bg-muted/50 border border-border/70 rounded-xl px-3 py-2 text-xs font-mono text-muted-foreground truncate">
-                      whitecard.app/share/e4f7a912b…
+                      whitecard-in.vercel.app/share/e4f7a912b…
                     </div>
                     <Button
                       type="button"

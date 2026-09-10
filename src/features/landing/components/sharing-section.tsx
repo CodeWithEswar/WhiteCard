@@ -82,7 +82,7 @@ export function SharingSection() {
                   </label>
                   <div className="flex items-center gap-2">
                     <div className="flex-1 bg-muted/50 border border-border/70 rounded-xl px-3 py-2 text-xs font-mono text-muted-foreground truncate">
-                      https://whitecard.app/share/e4f7a912b…
+                      https://whitecard-in.vercel.app/share/e4f7a912b…
                     </div>
                     <Button
                       type="button"
