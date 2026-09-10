@@ -4,7 +4,7 @@ import { AppShell } from '../components/layout/app-shell'
 import { DashboardPage } from '../pages/DashboardPage'
 import { GovernmentDocsPage } from '../pages/GovernmentDocsPage'
 import { StudentCertsPage } from '../pages/StudentCertsPage'
-import { SearchPage } from '../pages/SearchPage'
+import { SearchVaultPage } from '../features/search/pages/search-vault-page'
 import { RecentDocsPage } from '../pages/RecentDocsPage'
 import { ExpiringDocsPage } from '../pages/ExpiringDocsPage'
 import { DocumentDetailPage } from '../pages/DocumentDetailPage'
@@ -59,7 +59,7 @@ export function AppRouter() {
           <Route path="student/transcripts" element={<Navigate to="/app/student?category=transcript" replace />} />
 
           {/* Cross-space Search, Recent, and Expiring Views */}
-          <Route path="search" element={<SearchPage />} />
+          <Route path="search" element={<SearchVaultPage />} />
           <Route path="recent" element={<RecentDocsPage />} />
           <Route path="expiring" element={<ExpiringDocsPage />} />
 
