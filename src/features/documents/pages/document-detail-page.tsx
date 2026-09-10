@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   ArrowLeft02Icon,
@@ -23,6 +23,18 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/components/ui/dialog'
+import { DatePicker } from '@/components/ui/date-picker'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import {
+  GOVERNMENT_CATEGORIES,
+  STUDENT_CATEGORIES,
+} from '@/features/upload/upload.constants'
 import {
   useDocument,
   useUpdateDocument,
@@ -61,6 +73,16 @@ export function DocumentDetailPage() {
   const [editCategory, setEditCategory] = useState('')
   const [editNotes, setEditNotes] = useState('')
   const [editExpiry, setEditExpiry] = useState('')
+
+  // Categories list based on document space
+  const categories = useMemo(() => {
+    const baseList = document?.space === 'student' ? STUDENT_CATEGORIES : GOVERNMENT_CATEGORIES
+    const all = [...baseList]
+    if (editCategory && !all.includes(editCategory as any)) {
+      return [editCategory, ...all]
+    }
+    return all
+  }, [document?.space, editCategory])
 
   // Quick notes state
   const [isEditingNotes, setIsEditingNotes] = useState(false)
@@ -302,7 +324,7 @@ export function DocumentDetailPage() {
           <div className="space-y-3.5 py-2 text-xs">
             {/* Title */}
             <div>
-              <label className="text-[11px] font-medium text-muted-foreground mb-1 block">
+              <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">
                 Display Title
               </label>
               <input
@@ -310,48 +332,73 @@ export function DocumentDetailPage() {
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
                 placeholder="Document display title"
-                className="w-full h-9 px-3 rounded-xl border border-border bg-muted/20 text-foreground text-xs focus:ring-1 focus:ring-ring outline-none"
+                className="w-full h-9 px-3 rounded-xl border border-border bg-card text-foreground text-xs focus:ring-1 focus:ring-ring outline-none"
               />
             </div>
 
             {/* Category */}
             <div>
-              <label className="text-[11px] font-medium text-muted-foreground mb-1 block">
+              <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">
                 Category
               </label>
-              <input
-                type="text"
+              <Select
                 value={editCategory}
-                onChange={(e) => setEditCategory(e.target.value)}
-                placeholder="e.g. Identity, Academic Degree, Insurance"
-                className="w-full h-9 px-3 rounded-xl border border-border bg-muted/20 text-foreground text-xs focus:ring-1 focus:ring-ring outline-none"
-              />
+                onValueChange={(val) => {
+                  if (val) setEditCategory(val)
+                }}
+              >
+                <SelectTrigger className="w-full h-9 px-3 rounded-xl border-border bg-card text-foreground text-xs focus-visible:ring-2 focus-visible:ring-ring select-none">
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
+                <SelectContent className="z-50 rounded-xl shadow-xl border border-border/80 bg-popover">
+                  {categories.map((cat) => (
+                    <SelectItem key={cat} value={cat} className="text-xs cursor-pointer py-1.5">
+                      {cat}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Expiry Date */}
             <div>
-              <label className="text-[11px] font-medium text-muted-foreground mb-1 block">
-                Expiry Date (Optional)
-              </label>
-              <input
-                type="date"
+              <div className="flex items-center justify-between mb-1.5 h-4">
+                <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
+                  <span>Expiry Date</span>
+                  {document?.space === 'government' && (
+                    <span className="text-amber-600 dark:text-amber-400 font-medium text-[10px] lowercase tracking-normal">
+                      • renewal
+                    </span>
+                  )}
+                </label>
+                <span className="text-[10px] font-normal lowercase text-muted-foreground/75">
+                  (optional)
+                </span>
+              </div>
+              <DatePicker
                 value={editExpiry}
-                onChange={(e) => setEditExpiry(e.target.value)}
-                className="w-full h-9 px-3 rounded-xl border border-border bg-muted/20 text-foreground text-xs focus:ring-1 focus:ring-ring outline-none font-mono"
+                onChange={setEditExpiry}
+                placeholder="Select expiry date"
+                isRenewal={document?.space === 'government' && !!editExpiry}
               />
             </div>
 
             {/* Private Notes */}
             <div>
-              <label className="text-[11px] font-medium text-muted-foreground mb-1 block">
-                Notes
-              </label>
+              <div className="flex items-center justify-between mb-1.5 h-4">
+                <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                  Notes
+                </label>
+                <span className="text-[10px] font-normal lowercase text-muted-foreground/75">
+                  (optional)
+                </span>
+              </div>
               <textarea
                 rows={3}
                 value={editNotes}
                 onChange={(e) => setEditNotes(e.target.value)}
                 placeholder="Private reminders, policy numbers, or remarks..."
-                className="w-full p-2.5 rounded-xl border border-border bg-muted/20 text-foreground text-xs focus:ring-1 focus:ring-ring outline-none"
+                className="w-full p-2.5 rounded-xl border border-border bg-card text-foreground text-xs focus:ring-1 focus:ring-ring outline-none resize-none"
               />
             </div>
           </div>

@@ -6,6 +6,14 @@ import {
 } from '@hugeicons/core-free-icons'
 import { AppIcon } from '@/components/icons/app-icon'
 import { TagChip } from '@/features/tags/components/tag-chip'
+import { DatePicker } from '@/components/ui/date-picker'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import {
   GOVERNMENT_CATEGORIES,
   STUDENT_CATEGORIES,
@@ -126,49 +134,66 @@ export function UploadMetadataForm({
           <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
             Category
           </label>
-          <select
+          <Select
             value={metadata.category}
-            onChange={(e) => onChange({ category: e.target.value })}
+            onValueChange={(val) => {
+              if (val) onChange({ category: val })
+            }}
             disabled={disabled}
-            className="w-full h-9 px-3 rounded-xl border border-border bg-card text-foreground text-xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring transition-all"
           >
-            {categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger className="w-full h-9 px-3 rounded-xl border-border bg-card text-foreground text-xs focus-visible:ring-2 focus-visible:ring-ring select-none">
+              <SelectValue placeholder="Select category" />
+            </SelectTrigger>
+            <SelectContent className="z-50 rounded-xl shadow-xl border border-border/80 bg-popover">
+              {categories.map((cat) => (
+                <SelectItem key={cat} value={cat} className="text-xs cursor-pointer py-1.5">
+                  {cat}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
       {/* Issued & Expiry Dates: 2-column on desktop, 1-column on mobile */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
         <div className="space-y-1.5">
-          <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
-            Issue Date <span className="font-normal lowercase text-muted-foreground/80">(optional)</span>
-          </label>
-          <input
-            type="date"
-            value={metadata.issuedDate || ''}
-            onChange={(e) => onChange({ issuedDate: e.target.value })}
+          <div className="flex items-center justify-between h-4">
+            <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+              Issue Date
+            </label>
+            <span className="text-[10px] font-normal lowercase text-muted-foreground/75">
+              (optional)
+            </span>
+          </div>
+          <DatePicker
+            value={metadata.issuedDate}
+            onChange={(val) => onChange({ issuedDate: val })}
+            placeholder="Select issue date"
             disabled={disabled}
-            className="w-full h-9 px-3 rounded-xl border border-border bg-card text-foreground text-xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring transition-all"
           />
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider flex items-center justify-between">
-            <span>Expiry Date {isGov && <span className="text-amber-600 dark:text-amber-400 font-semibold">• renewal</span>}</span>
-            <span className="font-normal lowercase text-muted-foreground/80">(optional)</span>
-          </label>
-          <input
-            type="date"
-            value={metadata.expiryDate || ''}
-            onChange={(e) => onChange({ expiryDate: e.target.value })}
+          <div className="flex items-center justify-between h-4">
+            <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
+              <span>Expiry Date</span>
+              {isGov && (
+                <span className="text-amber-600 dark:text-amber-400 font-medium text-[10px] lowercase tracking-normal">
+                  • renewal
+                </span>
+              )}
+            </label>
+            <span className="text-[10px] font-normal lowercase text-muted-foreground/75">
+              (optional)
+            </span>
+          </div>
+          <DatePicker
+            value={metadata.expiryDate}
+            onChange={(val) => onChange({ expiryDate: val })}
+            placeholder="Select expiry date"
             disabled={disabled}
-            className={`w-full h-9 px-3 rounded-xl border text-foreground text-xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring transition-all bg-card ${
-              isGov && metadata.expiryDate ? 'border-amber-500/40 ring-1 ring-amber-500/20' : 'border-border'
-            }`}
+            isRenewal={isGov && !!metadata.expiryDate}
           />
         </div>
       </div>

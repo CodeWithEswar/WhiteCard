@@ -2,6 +2,7 @@ import type { DocumentSpace } from '../../../types/document'
 import { TagSelector } from '../../tags/components/tag-selector'
 import { Passport01Icon, Certificate01Icon } from '@hugeicons/core-free-icons'
 import { AppIcon } from '../../../components/icons/app-icon'
+import { DatePicker } from '@/components/ui/date-picker'
 
 export interface DocumentMetadataValues {
   space: DocumentSpace
@@ -131,11 +132,10 @@ export function DocumentMetadataForm({
           <span>Expiry or Renewal Date</span>
           <span className="text-[10px] text-muted-foreground font-normal">Optional</span>
         </label>
-        <input
-          type="date"
+        <DatePicker
           value={values.expiryDate}
-          onChange={(e) => onChange({ ...values, expiryDate: e.target.value })}
-          className="w-full h-10 px-3 text-xs rounded-xl bg-surface border border-border focus:border-ring focus:ring-1 focus:ring-ring outline-none text-foreground transition-all"
+          onChange={(val) => onChange({ ...values, expiryDate: val })}
+          placeholder="Select expiry date"
         />
       </div>
 

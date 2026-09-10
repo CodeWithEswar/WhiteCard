@@ -127,11 +127,12 @@ export function DocumentCard({
                   <>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
+                      variant="destructive"
                       onClick={() => onDelete(doc)}
-                      className="gap-2 text-xs text-destructive hover:text-destructive focus:text-destructive"
+                      className="gap-2 text-xs font-medium text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400 focus:bg-red-500/10 dark:focus:bg-red-500/15 cursor-pointer rounded-lg py-1.5 transition-colors"
                     >
-                      <AppIcon icon={Delete02Icon} size={14} />
-                      Delete Document
+                      <AppIcon icon={Delete02Icon} size={14} className="text-red-600 dark:text-red-400 shrink-0" />
+                      <span className="text-red-600 dark:text-red-400">Delete Document</span>
                     </DropdownMenuItem>
                   </>
                 )}

@@ -100,11 +100,12 @@ export function DocumentActionsMenu({
             <DropdownMenuSeparator className="my-1" />
 
             <DropdownMenuItem
+              variant="destructive"
               onClick={() => setDeleteDialogOpen(true)}
-              className="gap-2 text-xs text-destructive focus:text-destructive focus:bg-destructive/10 cursor-pointer rounded-lg py-2"
+              className="gap-2 text-xs font-medium text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400 focus:bg-red-500/10 dark:focus:bg-red-500/15 cursor-pointer rounded-lg py-2 transition-colors"
             >
-              <AppIcon icon={Delete02Icon} size={14} />
-              <span>Delete document</span>
+              <AppIcon icon={Delete02Icon} size={14} className="text-red-600 dark:text-red-400 shrink-0" />
+              <span className="text-red-600 dark:text-red-400">Delete document</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
