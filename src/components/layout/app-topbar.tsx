@@ -75,14 +75,10 @@ export function AppTopbar({ onOpenUpload }: AppTopbarProps) {
       <div className="flex items-center gap-3 min-w-0">
         <Tooltip>
           <TooltipTrigger
-            render={
-              <button
-                type="button"
-                onClick={toggleCollapsed}
-                aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-                className="p-1.5 -ml-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring shrink-0"
-              />
-            }
+            type="button"
+            onClick={toggleCollapsed}
+            aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            className="p-1.5 -ml-1 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring shrink-0 cursor-pointer"
           >
             <AppIcon
               icon={SidebarLeft01Icon}
@@ -137,7 +133,7 @@ export function AppTopbar({ onOpenUpload }: AppTopbarProps) {
           type="button"
           onClick={handleOpenSearch}
           aria-label={`Search White Card (${shortcutText})`}
-          className="hidden sm:flex items-center gap-3 h-9 px-3 rounded-md bg-muted/50 hover:bg-muted/80 border border-border/80 text-muted-foreground hover:text-foreground text-xs font-normal transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+          className="hidden sm:flex items-center gap-3 h-9 px-3 rounded-xl bg-muted/50 hover:bg-muted/80 border border-border/80 text-muted-foreground hover:text-foreground text-xs font-normal transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
         >
           <div className="flex items-center gap-2">
             <AppIcon icon={Search01Icon} size={15} className="text-muted-foreground" />
@@ -151,7 +147,7 @@ export function AppTopbar({ onOpenUpload }: AppTopbarProps) {
         {/* Quick Upload CTA */}
         <Button
           onClick={onOpenUpload}
-          className="h-9 px-3.5 rounded-md font-medium text-xs gap-2 bg-primary text-primary-foreground hover:bg-primary/90 shadow-2xs transition-all active:scale-[0.98]"
+          className="h-9 px-3.5 rounded-xl font-medium text-xs gap-2 bg-primary text-primary-foreground hover:bg-primary/90 shadow-2xs transition-all active:scale-[0.98]"
         >
           <AppIcon icon={Upload01Icon} size={15} />
           <span>Upload</span>
@@ -162,7 +158,7 @@ export function AppTopbar({ onOpenUpload }: AppTopbarProps) {
           type="button"
           onClick={() => setAppearance(isDark ? 'light' : 'dark')}
           aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-          className="size-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/60 flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+          className="size-9 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted/60 flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
         >
           <AppIcon icon={isDark ? Sun01Icon : Moon02Icon} size={17} />
         </button>
@@ -174,13 +170,13 @@ export function AppTopbar({ onOpenUpload }: AppTopbarProps) {
               <button
                 type="button"
                 aria-label="User profile options"
-                className="rounded-md outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+                className="rounded-xl outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
               />
             }
           >
             <UserIdentity compact={true} />
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" side="bottom" sideOffset={8} className="w-56 rounded-md p-1.5 select-none">
+          <DropdownMenuContent align="end" side="bottom" sideOffset={8} className="w-56 rounded-xl p-1.5 select-none">
             <div className="p-2 pb-1.5 space-y-1">
               {isBootstrapping ? (
                 <div className="h-3.5 w-28 bg-muted/80 animate-pulse rounded" />
@@ -194,29 +190,29 @@ export function AppTopbar({ onOpenUpload }: AppTopbarProps) {
               )}
             </div>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => navigate('/app/settings')} className="text-xs gap-2 rounded-md">
+            <DropdownMenuItem onClick={() => navigate('/app/settings')} className="text-xs gap-2 rounded-xl">
               <AppIcon icon={Settings02Icon} size={15} />
               Vault Settings & Themes
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => setAppearance(isDark ? 'light' : 'dark')}
-              className="text-xs gap-2 rounded-md"
+              className="text-xs gap-2 rounded-xl"
             >
               <AppIcon icon={isDark ? Sun01Icon : Moon02Icon} size={15} />
               {isDark ? 'Light Appearance' : 'Dark Appearance'}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate('/privacy')} className="text-xs gap-2 rounded-md">
+            <DropdownMenuItem onClick={() => navigate('/privacy')} className="text-xs gap-2 rounded-xl">
               <AppIcon icon={Shield01Icon} size={15} />
               Privacy Policy
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate('/terms')} className="text-xs gap-2 rounded-md">
+            <DropdownMenuItem onClick={() => navigate('/terms')} className="text-xs gap-2 rounded-xl">
               <AppIcon icon={HelpCircleIcon} size={15} />
               Terms of Service
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={handleSignOut}
-              className="text-xs gap-2 rounded-md text-destructive hover:text-destructive focus:text-destructive"
+              className="text-xs gap-2 rounded-xl text-destructive hover:text-destructive focus:text-destructive"
             >
               <AppIcon icon={Logout01Icon} size={15} />
               Sign Out

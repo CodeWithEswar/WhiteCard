@@ -3,7 +3,6 @@ import { Outlet } from 'react-router-dom'
 import { DesktopSidebar } from './desktop-sidebar'
 import { TabletRail } from './tablet-rail'
 import { MobileTopbar } from './mobile-topbar'
-import { MobileBottomNav } from './mobile-bottom-nav'
 import { AppTopbar } from './app-topbar'
 import { UploadDialog } from '../../features/upload/components/upload-dialog'
 import { CommandMenu } from './command-menu'
@@ -58,14 +57,9 @@ export function AppShell() {
         </div>
 
         {/* Dynamic Page Content Canvas */}
-        <main className="flex-1 min-w-0 w-full max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 pb-28 md:pb-12">
+        <main className="flex-1 min-w-0 w-full max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 pb-8 md:pb-12">
           <Outlet />
         </main>
-
-        {/* 5. Mobile Floating Bottom Navigation (< 768px) */}
-        <div className="block md:hidden">
-          <MobileBottomNav />
-        </div>
       </div>
 
       {/* Global Responsive Upload Modal */}
