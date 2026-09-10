@@ -164,3 +164,53 @@
 .sidebar-scroll::-webkit-scrollbar-button {
   display: none !important;
 }
+
+/* DOCX Document Viewer Paper Styling (Prompt #34 & #51) */
+.docx-wrapper {
+  background: transparent !important;
+  padding: 16px 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 16px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.docx-wrapper > section.wc-docx-page {
+  background: #ffffff !important;
+  color: #1a1a1a !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.06) !important;
+  border-radius: 4px !important;
+  margin: 0 auto 16px auto !important;
+  padding: 40px 48px !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-x: auto !important;
+}
+
+@media (max-width: 768px) {
+  .docx-wrapper {
+    padding: 8px 0 !important;
+    gap: 10px !important;
+  }
+  .docx-wrapper > section.wc-docx-page {
+    width: 100% !important;
+    max-width: calc(100vw - 16px) !important;
+    padding: 20px 14px !important;
+    border-radius: 2px !important;
+    font-size: 13px !important;
+    overflow-x: auto !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+  }
+  .docx-wrapper > section.wc-docx-page table {
+    display: block !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+  }
+  .docx-wrapper > section.wc-docx-page img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}

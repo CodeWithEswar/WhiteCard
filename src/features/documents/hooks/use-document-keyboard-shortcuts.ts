@@ -8,6 +8,9 @@ interface KeyboardShortcutsProps {
   onZoomOut?: () => void
   onResetZoom?: () => void
   onToggleFocus?: () => void
+  onExitFocus?: () => void
+  isFocusMode?: boolean
+  isDetailsOpen?: boolean
   enabled?: boolean
 }
 
@@ -19,6 +22,9 @@ export function useDocumentKeyboardShortcuts({
   onZoomOut,
   onResetZoom,
   onToggleFocus,
+  onExitFocus,
+  isFocusMode = false,
+  isDetailsOpen = false,
   enabled = true,
 }: KeyboardShortcutsProps) {
   useEffect(() => {
@@ -44,7 +50,13 @@ export function useDocumentKeyboardShortcuts({
 
       switch (e.key) {
         case 'Escape':
-          onCloseDetails?.()
+          if (isDetailsOpen) {
+            onCloseDetails?.()
+          } else if (isFocusMode) {
+            onExitFocus?.()
+          } else {
+            onCloseDetails?.()
+          }
           break
 
         case 'i':
@@ -98,5 +110,8 @@ export function useDocumentKeyboardShortcuts({
     onZoomOut,
     onResetZoom,
     onToggleFocus,
+    onExitFocus,
+    isFocusMode,
+    isDetailsOpen,
   ])
 }

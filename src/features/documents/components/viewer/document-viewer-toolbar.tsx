@@ -2,8 +2,8 @@ import {
   ZoomInAreaIcon,
   ZoomOutAreaIcon,
   RotateRight01Icon,
-  Maximize02Icon,
-  Minimize02Icon,
+  FullScreenIcon,
+  MinimizeScreenIcon,
   FitToScreenIcon,
   TextWrapIcon,
 } from '@hugeicons/core-free-icons'
@@ -148,7 +148,9 @@ export function DocumentViewerToolbar({
         {/* Fullscreen / Focus Mode Control */}
         {capabilities.canFullscreen && (
           <>
-            <div className="w-px h-4 bg-border/60 mx-0.5" />
+            {(capabilities.canZoom || capabilities.canRotate || capabilities.canWrap) && (
+              <div className="w-px h-4 bg-border/60 mx-0.5" />
+            )}
             <Tooltip>
               <TooltipTrigger
                 render={
@@ -160,7 +162,7 @@ export function DocumentViewerToolbar({
                   />
                 }
               >
-                <AppIcon icon={isFocusMode ? Minimize02Icon : Maximize02Icon} size={15} />
+                <AppIcon icon={isFocusMode ? MinimizeScreenIcon : FullScreenIcon} size={16} />
               </TooltipTrigger>
               <TooltipContent side="top">
                 {isFocusMode ? 'Exit Focus Mode (F)' : 'Focus Mode (F)'}

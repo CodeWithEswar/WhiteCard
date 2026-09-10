@@ -5,6 +5,7 @@ import {
   Link01Icon,
   Passport01Icon,
   Certificate01Icon,
+  Minimize02Icon,
 } from '@hugeicons/core-free-icons'
 import { AppIcon } from '@/components/icons/app-icon'
 import { Button } from '@/components/ui/button'
@@ -89,6 +90,19 @@ export function DocumentViewerHeader({
 
       {/* Right: Primary Actions + Details + More */}
       <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        {isFocusMode && (
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={onToggleFocusMode}
+            className="h-8.5 px-2.5 rounded-xl text-xs gap-1.5 border-border/80 bg-muted/60 text-foreground hover:bg-muted shadow-2xs"
+            title="Exit Focus Mode (Esc or F)"
+          >
+            <AppIcon icon={Minimize02Icon} size={14} />
+            <span className="hidden sm:inline font-medium">Exit Focus</span>
+          </Button>
+        )}
         {onDownload && (
           <Button
             type="button"

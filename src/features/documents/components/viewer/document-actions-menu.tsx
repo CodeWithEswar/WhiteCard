@@ -3,8 +3,8 @@ import {
   Edit01Icon,
   Download01Icon,
   Link01Icon,
-  Maximize02Icon,
-  Minimize02Icon,
+  FullScreenIcon,
+  MinimizeScreenIcon,
   Delete02Icon,
 } from '@hugeicons/core-free-icons'
 import { AppIcon } from '@/components/icons/app-icon'
@@ -71,7 +71,7 @@ export function DocumentActionsMenu({
         </DropdownMenuItem>
 
         <DropdownMenuItem onClick={onToggleFocusMode} className="gap-2 text-xs">
-          <AppIcon icon={isFocusMode ? Minimize02Icon : Maximize02Icon} size={14} className="text-muted-foreground" />
+          <AppIcon icon={isFocusMode ? MinimizeScreenIcon : FullScreenIcon} size={14} className="text-muted-foreground" />
           <span>{isFocusMode ? 'Exit Focus Mode' : 'Enter Focus Mode'}</span>
         </DropdownMenuItem>
 

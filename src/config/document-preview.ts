@@ -139,7 +139,7 @@ export const PREVIEW_CAPABILITIES: Record<PreviewStrategy, PreviewCapability> = 
   office: {
     strategy: 'office',
     label: 'Office Document',
-    canZoom: false,
+    canZoom: true,
     canRotate: false,
     canPaginate: false,
     canSearch: false,

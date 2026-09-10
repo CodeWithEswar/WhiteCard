@@ -97,6 +97,9 @@ export function DocumentViewerPage() {
     onZoomOut: zoom.zoomOut,
     onResetZoom: zoom.resetZoom,
     onToggleFocus: viewer.toggleFocusMode,
+    onExitFocus: () => viewer.setFocusMode(false),
+    isFocusMode: viewer.isFocusMode,
+    isDetailsOpen: viewer.isDetailsOpen,
     enabled: Boolean(document),
   })
 

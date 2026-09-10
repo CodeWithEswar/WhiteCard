@@ -8,6 +8,7 @@ import { CsvPreview } from './csv-preview'
 import { SpreadsheetPreview } from './spreadsheet-preview'
 import { ArchivePreview } from './archive-preview'
 import { OfficeDocumentPreview } from './office-document-preview'
+import { DocxPreview } from './docx-preview'
 import { AudioPreview } from './audio-preview'
 import { VideoPreview } from './video-preview'
 import { CodePreview } from './code-preview'
@@ -124,13 +125,32 @@ export function PreviewRouter({
         />
       )
 
-    case 'office':
+    case 'office': {
+      const isDocx =
+        doc.originalFilename.toLowerCase().endsWith('.docx') ||
+        doc.mimeType ===
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+
+      if (isDocx) {
+        return (
+          <DocxPreview
+            document={doc}
+            arrayBuffer={arrayBuffer}
+            isLoading={isLoadingBytes}
+            zoom={zoom}
+            onFetchContent={() => onFetchContent('buffer')}
+            onDownload={onDownload}
+          />
+        )
+      }
+
       return (
         <OfficeDocumentPreview
           document={doc}
           onDownload={onDownload}
         />
       )
+    }
 
     case 'audio':
       return (
