@@ -4,6 +4,7 @@ import type {
   TagSummary,
   FileTypeDistributionItem,
   VaultHealthSummary,
+  VaultTimelineItem,
 } from './dashboard.types'
 import { resolveTagColor } from '@/config/tag-colors'
 
@@ -60,6 +61,32 @@ export async function fetchDashboardSummary(userId?: string): Promise<DashboardS
     expiringCount: expiringDocsCount,
     expiredCount: expiredDocsCount,
     healthPercentage,
+  }
+
+  // Vault timeline over past 6 months
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const timeline: VaultTimelineItem[] = []
+  const currentMonthIdx = now.getMonth()
+  const currentYear = now.getFullYear()
+
+  let runningTotal = 0
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(currentYear, currentMonthIdx - i, 1)
+    const mLabel = monthNames[d.getMonth()]
+    const targetYear = d.getFullYear()
+    const targetMonth = d.getMonth()
+
+    const countInMonth = allDocs.filter((doc) => {
+      const docDate = new Date(doc.createdAt)
+      return docDate.getFullYear() === targetYear && docDate.getMonth() === targetMonth
+    }).length
+
+    runningTotal += countInMonth
+    timeline.push({
+      month: mLabel,
+      count: countInMonth,
+      cumulative: runningTotal,
+    })
   }
 
   // Recent documents: sorted by updatedAt/createdAt descending (6-8 items)
@@ -148,5 +175,6 @@ export async function fetchDashboardSummary(userId?: string): Promise<DashboardS
     totalCount: allDocs.length,
     fileTypes,
     health,
+    timeline,
   }
 }

@@ -29,6 +29,12 @@ export interface VaultHealthSummary {
   healthPercentage: number
 }
 
+export interface VaultTimelineItem {
+  month: string
+  count: number
+  cumulative: number
+}
+
 export interface DashboardSummary {
   government: SpaceSummary
   student: SpaceSummary
@@ -39,4 +45,5 @@ export interface DashboardSummary {
   totalCount: number
   fileTypes: FileTypeDistributionItem[]
   health: VaultHealthSummary
+  timeline: VaultTimelineItem[]
 }
