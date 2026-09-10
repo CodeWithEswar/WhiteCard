@@ -1,0 +1,3 @@
+-- White Card Local Seed Data
+-- Standard tags for testing
+-- Real user data is provisioned via the on_auth_user_created trigger
