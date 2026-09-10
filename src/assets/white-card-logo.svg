@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none">
+  <title>White Card mark</title>
+  <defs>
+    <linearGradient id="white-card-left" x1="22" y1="22" x2="62" y2="102" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.52" stop-color="#EEF1FF"/>
+      <stop offset="1" stop-color="#7C93FF"/>
+    </linearGradient>
+    <linearGradient id="white-card-right" x1="76" y1="21" x2="91" y2="105" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="0.56" stop-color="#91A5FF"/>
+      <stop offset="1" stop-color="#D59BFF"/>
+    </linearGradient>
+    <linearGradient id="white-card-fold" x1="106" y1="18" x2="123" y2="38" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5F3FF"/>
+      <stop offset="1" stop-color="#D8B4FE"/>
+    </linearGradient>
+  </defs>
+  <g id="white-card-mark" transform="translate(79 119) scale(6.25)">
+    <path id="white-card-left-path" d="M16 35C12.5 28 17.5 22 26 22H40C46 22 50 25 53 30L74 64L57 94C52 103 40 103 35 94Z" fill="url(#white-card-left)"/>
+    <path id="white-card-right-path" d="M58 58L75 30C78 25 82 22 88 22H96L94 40C93 48 93 54 94 58C95 63 100 64 103 60C105 57 106 53 106 47V19H111L124 32V59C124 64 122 69 119 74L98 101C92 109 80 109 74 100Z" fill="url(#white-card-right)"/>
+    <path id="white-card-fold-path" d="M111 19L124 32H117C113.7 32 111 29.3 111 26Z" fill="url(#white-card-fold)"/>
+    <path id="white-card-detail-path" d="M108 45H118M108 54H118" stroke="#151827" stroke-width="3.2" stroke-linecap="round"/>
+  </g>
+</svg>

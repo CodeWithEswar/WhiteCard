@@ -1,0 +1,79 @@
+/* White Card Architectural Patterns */
+
+/* Base Grid: 28px spacing with CSS variables */
+.pattern-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Micro Grid: 16px spacing for dropzones / thumbnails */
+.pattern-grid-micro {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* Radial Mask for subtle edge-fade */
+.mask-radial {
+  mask-image: radial-gradient(
+    ellipse at center,
+    black 35%,
+    transparent 80%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    black 35%,
+    transparent 80%
+  );
+}
+
+.mask-radial-subtle {
+  mask-image: radial-gradient(
+    ellipse at center,
+    black 50%,
+    transparent 90%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    black 50%,
+    transparent 90%
+  );
+}
+
+/* Dot Background */
+.pattern-dots {
+  background-image: radial-gradient(
+    var(--grid-line) 1.2px,
+    transparent 1.2px
+  );
+  background-size: 24px 24px;
+}
+
+/* Subtle accent glow */
+.accent-glow {
+  background: radial-gradient(
+    circle at 50% 0%,
+    color-mix(in oklch, var(--accent) 12%, transparent),
+    transparent 65%
+  );
+}
+
+/* Cross Pattern coordinates */
+.pattern-crosses {
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  position: relative;
+}
+
+/* Safe area padding helper */
+.pb-safe {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+}
+.bottom-dock-safe {
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+}
