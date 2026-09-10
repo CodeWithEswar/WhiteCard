@@ -27,6 +27,10 @@ export const queryKeys = {
     summary: (userId: string) => ['vault-stats', userId] as const,
   },
 
+  dashboard: {
+    summary: (userId: string) => ['dashboard', userId, 'summary'] as const,
+  },
+
   tags: {
     all: (userId: string) => ['tags', userId] as const,
   },
