@@ -1,7 +1,16 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { vaultStore } from '../../../lib/supabase'
 import { queryKeys } from '@/lib/query-keys'
 import { useAuth } from '@/features/auth/auth-provider'
+import {
+  fetchUserDocuments,
+  fetchDocumentById,
+  uploadDocumentToSupabase,
+  updateDocumentInSupabase,
+  deleteDocumentFromSupabase,
+  createShareLinkInSupabase,
+  revokeShareLinkInSupabase,
+  fetchDocumentByShareTokenFromSupabase,
+} from '../documents.api'
 import type {
   VaultDocument,
   DocumentFilterOptions,
@@ -14,10 +23,10 @@ export function useDocuments(filters: DocumentFilterOptions = {}) {
 
   return useQuery({
     queryKey: queryKeys.documents.list(userId, filters),
-    staleTime: 60 * 1000, // 60 seconds fresh metadata
+    staleTime: 30 * 1000,
     gcTime: 24 * 60 * 60 * 1000,
     queryFn: async (): Promise<VaultDocument[]> => {
-      const allDocs = vaultStore.getDocuments()
+      const allDocs = await fetchUserDocuments(userId)
 
       return allDocs
         .filter((doc) => {
@@ -75,12 +84,11 @@ export function useDocument(id?: string) {
 
   return useQuery({
     queryKey: queryKeys.documents.detail(userId, id || ''),
-    staleTime: 60 * 1000,
+    staleTime: 30 * 1000,
     gcTime: 24 * 60 * 60 * 1000,
     queryFn: async (): Promise<VaultDocument | null> => {
       if (!id) return null
-      const doc = vaultStore.getDocumentById(id)
-      return doc || null
+      return await fetchDocumentById(id, userId)
     },
     enabled: Boolean(id),
   })
@@ -93,8 +101,7 @@ export function useDocumentByShareToken(token?: string) {
     gcTime: 1000 * 60 * 10,
     queryFn: async (): Promise<VaultDocument | null> => {
       if (!token) return null
-      const doc = vaultStore.getDocumentByShareToken(token)
-      return doc || null
+      return await fetchDocumentByShareTokenFromSupabase(token)
     },
     enabled: Boolean(token),
   })
@@ -107,7 +114,7 @@ export function useUploadDocument() {
 
   return useMutation({
     mutationFn: async (payload: UploadDocumentPayload) => {
-      return await vaultStore.addDocument(payload)
+      return await uploadDocumentToSupabase(payload, userId)
     },
     onSuccess: (newDoc) => {
       if (newDoc) {
@@ -131,7 +138,7 @@ export function useUpdateDocument() {
       id: string
       updates: Partial<Omit<VaultDocument, 'id' | 'createdAt'>>
     }) => {
-      const updated = vaultStore.updateDocument(id, updates)
+      const updated = await updateDocumentInSupabase(id, updates, userId)
       if (!updated) throw new Error('Document not found')
       return updated
     },
@@ -149,7 +156,7 @@ export function useDeleteDocument() {
 
   return useMutation({
     mutationFn: async (id: string) => {
-      return vaultStore.deleteDocument(id)
+      return await deleteDocumentFromSupabase(id, userId)
     },
     onSuccess: (_, deletedId) => {
       queryClient.setQueriesData(
@@ -171,7 +178,7 @@ export function useCreateShareLink() {
 
   return useMutation({
     mutationFn: async ({ id, daysValid }: { id: string; daysValid?: number }) => {
-      const res = vaultStore.createShareLink(id, daysValid)
+      const res = await createShareLinkInSupabase(id, userId, daysValid)
       if (!res) throw new Error('Failed to create direct share link')
       return res
     },
@@ -189,7 +196,7 @@ export function useRevokeShareLink() {
 
   return useMutation({
     mutationFn: async (id: string) => {
-      return vaultStore.revokeShareLink(id)
+      return await revokeShareLinkInSupabase(id, userId)
     },
     onSuccess: (_, id) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.documents.all(userId) })
