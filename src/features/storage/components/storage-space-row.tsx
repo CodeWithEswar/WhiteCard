@@ -12,6 +12,7 @@ interface StorageSpaceRowProps {
   icon: IconSvgElement
   colorClass: string
   meterColor: string
+  dotClass?: string
   href: string
 }
 
@@ -23,6 +24,7 @@ export function StorageSpaceRow({
   icon,
   colorClass,
   meterColor,
+  dotClass = 'bg-foreground',
   href,
 }: StorageSpaceRowProps) {
   const countLabel = count === 1 ? '1 document' : `${count} documents`
@@ -38,10 +40,13 @@ export function StorageSpaceRow({
             <AppIcon icon={icon} size={16} />
           </div>
           <div className="min-w-0">
-            <h4 className="text-xs font-semibold text-foreground truncate group-hover:text-primary transition-colors">
-              {label}
-            </h4>
-            <span className="text-[11px] font-mono text-muted-foreground">
+            <div className="flex items-center gap-1.5">
+              <span className={`size-2 rounded-full shrink-0 ${dotClass}`} aria-hidden="true" />
+              <h4 className="text-xs font-semibold text-foreground truncate group-hover:text-primary transition-colors">
+                {label}
+              </h4>
+            </div>
+            <span className="text-[11px] font-mono text-muted-foreground pl-3.5">
               {countLabel}
             </span>
           </div>

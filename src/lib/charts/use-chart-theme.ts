@@ -44,20 +44,20 @@ export function useChartTheme(): ChartThemeColors {
   }))
 
   useEffect(() => {
-    // Re-resolve colors on theme or appearance update
+    // Re-resolve colors on theme or appearance update (Monochrome palette)
     const resolved: ChartThemeColors = {
-      primary: getComputedCssVar('--primary', 'currentColor'),
-      secondary: getComputedCssVar('--secondary', 'currentColor'),
-      government: getComputedCssVar('--space-government', '#3b82f6'),
-      governmentMuted: getComputedCssVar('--space-government-muted', 'rgba(59, 130, 246, 0.12)'),
-      student: getComputedCssVar('--space-student', '#8b5cf6'),
-      studentMuted: getComputedCssVar('--space-student-muted', 'rgba(139, 92, 246, 0.12)'),
-      muted: getComputedCssVar('--muted-foreground', '#71717a'),
-      border: getComputedCssVar('--border', '#27272a'),
-      popover: getComputedCssVar('--popover', '#18181b'),
-      popoverForeground: getComputedCssVar('--popover-foreground', '#f4f4f5'),
-      track: getComputedCssVar('--muted', '#27272a'),
-      grid: getComputedCssVar('--border', '#27272a'),
+      primary: getComputedCssVar('--foreground', isDark ? '#fafafa' : '#09090b'),
+      secondary: getComputedCssVar('--muted-foreground', isDark ? '#a1a1aa' : '#71717a'),
+      government: getComputedCssVar('--foreground', isDark ? '#fafafa' : '#09090b'),
+      governmentMuted: getComputedCssVar('--muted', isDark ? '#27272a' : '#f4f4f5'),
+      student: getComputedCssVar('--muted-foreground', isDark ? '#a1a1aa' : '#71717a'),
+      studentMuted: getComputedCssVar('--muted', isDark ? '#27272a' : '#f4f4f5'),
+      muted: getComputedCssVar('--muted-foreground', isDark ? '#a1a1aa' : '#71717a'),
+      border: getComputedCssVar('--border', isDark ? '#27272a' : '#e4e4e7'),
+      popover: getComputedCssVar('--popover', isDark ? '#18181b' : '#ffffff'),
+      popoverForeground: getComputedCssVar('--popover-foreground', isDark ? '#fafafa' : '#09090b'),
+      track: getComputedCssVar('--muted', isDark ? '#27272a' : '#f4f4f5'),
+      grid: getComputedCssVar('--border', isDark ? '#27272a' : '#e4e4e7'),
     }
     setColors(resolved)
   }, [theme, appearance, isDark])

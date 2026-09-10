@@ -32,19 +32,6 @@ export function StorageInsightStrip({ insights }: StorageInsightStripProps) {
     }
   }
 
-  const getColorClass = (type: StorageInsight['iconType']) => {
-    switch (type) {
-      case 'government':
-        return 'bg-blue-500/10 text-blue-600 dark:text-blue-400'
-      case 'student':
-        return 'bg-purple-500/10 text-purple-600 dark:text-purple-400'
-      case 'archive':
-        return 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
-      default:
-        return 'bg-primary/10 text-primary'
-    }
-  }
-
   return (
     <div className="p-5 sm:p-6 rounded-2xl border border-border/80 bg-card shadow-xs space-y-4">
       <div className="space-y-0.5">
@@ -62,7 +49,6 @@ export function StorageInsightStrip({ insights }: StorageInsightStripProps) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
         {insights.map((insight) => {
           const IconComponent = getIcon(insight.iconType)
-          const colorClass = getColorClass(insight.iconType)
 
           return (
             <div
@@ -70,7 +56,7 @@ export function StorageInsightStrip({ insights }: StorageInsightStripProps) {
               className="p-4 rounded-xl border border-border/70 bg-muted/15 flex flex-col justify-between space-y-3"
             >
               <div className="flex items-center justify-between gap-2">
-                <div className={`size-8 rounded-lg flex items-center justify-center shrink-0 ${colorClass}`}>
+                <div className="size-8 rounded-lg bg-muted/70 border border-border/80 flex items-center justify-center shrink-0 text-foreground">
                   <AppIcon icon={IconComponent} size={16} />
                 </div>
                 <span className="font-mono text-xs font-bold text-foreground">

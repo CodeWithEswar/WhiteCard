@@ -32,8 +32,9 @@ export function StorageSpaceBreakdown({ government, student }: StorageSpaceBreak
           bytes={government.bytes}
           percentage={government.percentage}
           icon={Passport01Icon}
-          colorClass="bg-blue-500/10 text-blue-600 dark:text-blue-400"
-          meterColor="var(--space-government, #3b82f6)"
+          colorClass="bg-muted/70 border border-border/80 text-foreground"
+          meterColor="var(--foreground)"
+          dotClass="bg-foreground"
           href="/app/government"
         />
 
@@ -43,8 +44,9 @@ export function StorageSpaceBreakdown({ government, student }: StorageSpaceBreak
           bytes={student.bytes}
           percentage={student.percentage}
           icon={Certificate01Icon}
-          colorClass="bg-purple-500/10 text-purple-600 dark:text-purple-400"
-          meterColor="var(--space-student, #8b5cf6)"
+          colorClass="bg-muted/70 border border-border/80 text-muted-foreground"
+          meterColor="var(--muted-foreground)"
+          dotClass="bg-muted-foreground/60 border border-border"
           href="/app/student"
         />
       </div>

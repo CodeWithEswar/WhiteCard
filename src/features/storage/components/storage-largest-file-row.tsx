@@ -81,8 +81,9 @@ export function StorageLargestFileRow({
               <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground truncate">
                 <span
                   className={`size-1.5 rounded-full shrink-0 ${
-                    isGov ? 'bg-blue-500' : 'bg-purple-500'
+                    isGov ? 'bg-foreground' : 'bg-muted-foreground/70'
                   }`}
+                  aria-hidden="true"
                 />
                 <span className="capitalize">{doc.space}</span>
                 {doc.category && (

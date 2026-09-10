@@ -77,7 +77,7 @@ export function StorageSummaryHero({ data }: StorageSummaryHeroProps) {
               className="group p-3 rounded-xl border border-border/70 bg-muted/20 hover:bg-muted/40 hover:border-border transition-all flex items-center justify-between"
             >
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="size-8 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                <div className="size-8 rounded-lg bg-muted/70 border border-border/80 text-foreground flex items-center justify-center shrink-0 group-hover:bg-muted transition-colors">
                   <AppIcon icon={Passport01Icon} size={15} />
                 </div>
                 <div className="min-w-0 truncate">
@@ -107,7 +107,7 @@ export function StorageSummaryHero({ data }: StorageSummaryHeroProps) {
               className="group p-3 rounded-xl border border-border/70 bg-muted/20 hover:bg-muted/40 hover:border-border transition-all flex items-center justify-between"
             >
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="size-8 rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
+                <div className="size-8 rounded-lg bg-muted/70 border border-border/80 text-foreground flex items-center justify-center shrink-0 group-hover:bg-muted transition-colors">
                   <AppIcon icon={Certificate01Icon} size={15} />
                 </div>
                 <div className="min-w-0 truncate">
