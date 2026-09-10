@@ -10,13 +10,13 @@ import { StaggerGroup, StaggerItem } from '../../../components/motion/stagger-gr
 const trustPillars = [
   {
     icon: ShieldCheckIcon,
-    title: 'Private by default',
+    title: 'Private storage',
     desc: 'Scoped to your authenticated account',
   },
   {
     icon: GoogleIcon,
     title: 'Google sign-in',
-    desc: 'Direct OAuth without separate passwords',
+    desc: 'Direct authentication without new passwords',
   },
   {
     icon: Link01Icon,
@@ -26,7 +26,7 @@ const trustPillars = [
   {
     icon: File01Icon,
     title: 'Original files preserved',
-    desc: 'Stored as uploaded, no OCR or alteration',
+    desc: 'Exact byte-for-byte retention as uploaded',
   },
 ] as const
 
@@ -34,7 +34,7 @@ export function TrustStrip() {
   return (
     <section
       id="trust-strip"
-      aria-label="Core Trust Pillars"
+      aria-label="Core Trust Signals"
       className="border-y border-border/70 bg-muted/20 py-6 sm:py-8"
     >
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
@@ -42,17 +42,18 @@ export function TrustStrip() {
           {trustPillars.map((item, index) => (
             <StaggerItem
               key={item.title}
-              className={`flex items-center gap-3.5 py-4 sm:py-2 ${index % 2 === 1 ? 'pl-4 sm:pl-6' : 'pr-4 sm:pr-6'
-                } md:px-6`}
+              className={`flex items-center gap-3.5 py-4 sm:py-2 ${
+                index % 2 === 1 ? 'pl-4 sm:pl-6' : 'pr-4 sm:pr-6'
+              } md:px-6`}
             >
               <div className="p-2.5 rounded-xl bg-background border border-border/70 text-foreground shrink-0 shadow-2xs">
                 <AppIcon icon={item.icon} size={18} />
               </div>
-              <div className="text-left">
-                <h3 className="text-xs sm:text-sm font-semibold text-foreground tracking-tight">
+              <div className="text-left min-w-0">
+                <h3 className="text-xs sm:text-sm font-semibold text-foreground tracking-tight truncate">
                   {item.title}
                 </h3>
-                <p className="text-[11px] text-muted-foreground mt-0.5 line-clamp-1">
+                <p className="text-[11px] text-muted-foreground mt-0.5 truncate">
                   {item.desc}
                 </p>
               </div>

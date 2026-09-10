@@ -1,9 +1,10 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight01Icon, ShieldCheckIcon } from '@hugeicons/core-free-icons'
+import { ArrowRight01Icon, GoogleIcon } from '@hugeicons/core-free-icons'
 import { AppIcon } from '../../../components/icons/app-icon'
 import { Button } from '../../../components/ui/button'
 import { RadialGridBackground } from '../../../components/backgrounds/radial-grid-background'
+import { ThemeGlow } from '../../../components/backgrounds/theme-glow'
 import { ParallaxLayer } from '../../../components/motion/parallax-layer'
 import { Reveal } from '../../../components/motion/reveal'
 
@@ -30,38 +31,47 @@ export function FinalCta() {
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6">
         <Reveal>
           <div className="rounded-3xl border border-border/80 bg-card p-8 sm:p-14 text-center space-y-6 relative overflow-hidden shadow-xl">
-            {/* Subtle glow */}
-            <div
-              className="absolute -top-24 left-1/2 -translate-x-1/2 size-72 rounded-full bg-primary/15 blur-3xl pointer-events-none"
-              aria-hidden="true"
-            />
+            {/* Subtle theme-aware atmospheric glow */}
+            <ThemeGlow position="top" opacity="opacity-40" />
 
             <div className="relative z-10 space-y-3 max-w-xl mx-auto">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-border/70 bg-muted/50 text-xs font-medium text-muted-foreground">
-                <AppIcon icon={ShieldCheckIcon} size={14} className="text-foreground" />
-                <span>Private • Authenticated • Original Files</span>
-              </div>
               <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground leading-tight">
                 Keep the documents that matter in one place.
               </h2>
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                Create your White Card and organize your government documents and student certificates from one account.
+                Create your White Card and organize government documents and student certificates from one account.
               </p>
             </div>
 
-            <div className="relative z-10 flex items-center justify-center pt-2">
+            {/* CTAs: Primary + Secondary */}
+            <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <Button
                 size="lg"
-                render={<Link to="/auth" />}
+                render={<Link to="/signup" />}
                 className="w-full sm:w-auto h-11 px-7 rounded-xl font-semibold text-sm gap-2 shadow-xs"
               >
-                <span>Get Started with Google</span>
+                <span>Create your White Card</span>
                 <AppIcon icon={ArrowRight01Icon} size={16} />
+              </Button>
+
+              <Button
+                variant="outline"
+                size="lg"
+                render={<Link to="/login" />}
+                className="w-full sm:w-auto h-11 px-6 rounded-xl font-medium text-sm border-border/80 hover:bg-muted text-foreground"
+              >
+                <span>Sign in</span>
               </Button>
             </div>
 
-            <div className="pt-2 text-[11px] text-muted-foreground">
-              Zero OCR extraction • Scoped object storage • Free personal vault
+            {/* Factual Trust Line */}
+            <div className="relative z-10 pt-2 text-xs text-muted-foreground flex items-center justify-center gap-2 font-medium">
+              <span className="flex items-center gap-1.5">
+                <AppIcon icon={GoogleIcon} size={13} />
+                Google sign-in
+              </span>
+              <span>•</span>
+              <span>No separate White Card password</span>
             </div>
           </div>
         </Reveal>

@@ -1,186 +1,288 @@
-import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import {
+  Passport01Icon,
+  Certificate01Icon,
   Pdf01Icon,
-  Image01Icon,
+  Search01Icon,
   Zip01Icon,
+  File01Icon,
   Shield01Icon,
-  Tick02Icon,
+  CheckmarkCircle01Icon,
   LockKeyIcon,
 } from '@hugeicons/core-free-icons'
 import { AppIcon } from '../../../components/icons/app-icon'
-import { TagChip } from '../../tags/components/tag-chip'
-import { useAppReducedMotion } from '../../../lib/motion'
+import { motionEase } from '../../../lib/motion'
 
 export function HeroDocumentStack() {
-  const reduceMotion = useAppReducedMotion()
-  const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 })
+  const containerRef = useRef<HTMLDivElement>(null)
+  const reduceMotion = useReducedMotion()
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (reduceMotion) return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width - 0.5
-    const y = (e.clientY - rect.top) / rect.height - 0.5
-    setMouseOffset({ x: x * 14, y: y * 14 })
-  }
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'end start'],
+  })
 
-  const handleMouseLeave = () => {
-    setMouseOffset({ x: 0, y: 0 })
-  }
+  // Suggested motion ranges:
+  // grid: 20px total travel
+  // back visual layer: 30px total travel
+  // front document layer: 16px total travel
+  const gridY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [10, -10])
+  const backLayerY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [15, -15])
+  const frontLayerY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [8, -8])
 
   return (
     <div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="relative w-full max-w-[540px] mx-auto py-8 sm:py-12 select-none"
+      ref={containerRef}
+      className="relative w-full max-w-5xl mx-auto mt-10 sm:mt-14 px-2 sm:px-4 select-none"
     >
-      {/* Subtle Glow behind stack */}
-      <div
-        className="absolute inset-0 -top-10 bg-accent/15 blur-3xl rounded-full opacity-40 pointer-events-none"
+      {/* Decorative Grid Layer with Parallax */}
+      <motion.div
+        style={{ y: gridY }}
+        className="absolute -inset-4 sm:-inset-6 pointer-events-none rounded-3xl border border-border/30 pattern-grid-micro opacity-40"
         aria-hidden="true"
       />
 
-      <div className="relative space-y-3 sm:space-y-4">
-        {/* Layer 1: Top Floating Zip Archive */}
-        <motion.div
-          animate={
-            reduceMotion
-              ? {}
-              : {
-                x: mouseOffset.x * 0.4,
-                y: mouseOffset.y * 0.4,
-              }
-          }
-          transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-          className="ml-auto w-11/12 p-3.5 sm:p-4 rounded-2xl border border-border/80 bg-surface/85 backdrop-blur-xl shadow-md flex items-center justify-between"
-        >
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="size-9 rounded-xl bg-surface-muted border border-border flex items-center justify-center text-foreground shrink-0">
-              <AppIcon icon={Zip01Icon} size={18} />
-            </div>
-            <div className="min-w-0">
-              <p className="text-xs font-semibold text-foreground truncate">
-                Semester-6-Marks-Archive.zip
-              </p>
-              <p className="text-[11px] text-muted-foreground font-mono">
-                14.2 MB • Verified Checksum
-              </p>
-            </div>
-          </div>
-          <TagChip label="Education" variant="compact" />
-        </motion.div>
+      {/* Back Visual Atmosphere Layer with Parallax */}
+      <motion.div
+        style={{ y: backLayerY }}
+        className="absolute inset-x-1/4 -top-8 h-44 bg-primary/10 blur-3xl pointer-events-none rounded-full"
+        aria-hidden="true"
+      />
 
-        {/* Layer 2: Main Highlight Passport Card (Centerpiece) */}
-        <motion.div
-          animate={
-            reduceMotion
-              ? {}
-              : {
-                x: mouseOffset.x * 0.8,
-                y: mouseOffset.y * 0.8,
-              }
-          }
-          transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-          className="relative z-20 w-full p-4 sm:p-5 rounded-2xl border border-border bg-surface shadow-xl flex flex-col gap-3.5"
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="size-9 rounded-xl bg-primary text-primary-foreground flex items-center justify-center shadow-xs">
-                <AppIcon icon={Shield01Icon} size={18} />
-              </div>
-              <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground font-semibold">
-                  Government Vault
-                </span>
-                <h4 className="text-sm font-bold text-foreground">
-                  Passport_Republic_of_India.pdf
-                </h4>
-              </div>
-            </div>
-            <span className="text-[11px] font-mono text-muted-foreground">
-              2.3 MB
-            </span>
-          </div>
-
-          <div className="flex items-center justify-between pt-2 border-t border-border/60">
-            <div className="flex items-center gap-1.5">
-              <TagChip label="Identity" variant="compact" />
-              <TagChip label="Travel" variant="compact" />
-            </div>
-            <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium flex items-center gap-1">
-              <AppIcon icon={Tick02Icon} size={13} />
-              Encrypted & Ready
-            </span>
-          </div>
-        </motion.div>
-
-        {/* Layer 3: Degree Certificate with Upload Progress Simulator */}
-        <motion.div
-          animate={
-            reduceMotion
-              ? {}
-              : {
-                x: mouseOffset.x * 0.5,
-                y: mouseOffset.y * 0.5,
-              }
-          }
-          transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-          className="w-11/12 p-3.5 sm:p-4 rounded-2xl border border-border/80 bg-surface/90 backdrop-blur-xl shadow-md space-y-2.5"
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3 min-w-0">
-              <div className="size-8 rounded-xl bg-surface-muted border border-border flex items-center justify-center text-foreground shrink-0">
-                <AppIcon icon={Pdf01Icon} size={16} />
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs font-semibold text-foreground truncate">
-                  Bachelor_of_Technology_Degree.pdf
-                </p>
-                <p className="text-[10.5px] text-muted-foreground">
-                  Student Certificates • 3.1 MB
-                </p>
-              </div>
-            </div>
-            <TagChip label="Education" variant="compact" />
-          </div>
-
-          {/* Upload Progress Simulation */}
-          <div className="space-y-1">
-            <div className="flex justify-between text-[10px] font-mono text-muted-foreground">
-              <span>Syncing to vault</span>
-              <span className="text-primary font-bold">100%</span>
-            </div>
-            <div className="h-1 w-full bg-surface-muted rounded-full overflow-hidden">
-              <div className="h-full bg-primary rounded-full w-full" />
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Layer 4: National Identification Bottom Tab */}
-        <motion.div
-          animate={
-            reduceMotion
-              ? {}
-              : {
-                x: mouseOffset.x * 0.25,
-                y: mouseOffset.y * 0.25,
-              }
-          }
-          transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-          className="ml-auto w-10/12 p-3 px-4 rounded-xl border border-border/60 bg-surface-muted/60 text-xs text-muted-foreground flex items-center justify-between"
-        >
+      {/* Main Vault Application Frame */}
+      <motion.div
+        style={{ y: frontLayerY }}
+        className="relative rounded-2xl sm:rounded-3xl border border-border/80 bg-background/95 shadow-2xl backdrop-blur-xl overflow-hidden text-left"
+      >
+        {/* Top Product Window Chrome */}
+        <div className="flex items-center justify-between border-b border-border/70 px-4 sm:px-6 py-3 bg-muted/40">
           <div className="flex items-center gap-2">
-            <AppIcon icon={Image01Icon} size={15} />
-            <span className="truncate font-medium text-foreground">
-              Smart_Card_Driving_Licence.png
+            <div className="size-2.5 sm:size-3 rounded-full bg-red-500/60" />
+            <div className="size-2.5 sm:size-3 rounded-full bg-amber-500/60" />
+            <div className="size-2.5 sm:size-3 rounded-full bg-emerald-500/60" />
+            <span className="ml-3 text-[11px] font-mono text-muted-foreground hidden sm:inline">
+              vault.whitecard.app
             </span>
           </div>
-          <span className="flex items-center gap-1 font-mono text-[10px]">
-            <AppIcon icon={LockKeyIcon} size={12} />
-            Private
-          </span>
-        </motion.div>
-      </div>
+
+          {/* Subtle Search Field */}
+          <div className="flex items-center gap-2 bg-background/80 border border-border/60 rounded-xl px-3 py-1.5 text-xs text-muted-foreground w-48 sm:w-72">
+            <AppIcon icon={Search01Icon} size={14} className="text-muted-foreground" />
+            <span className="truncate">Search documents, tags, or dates…</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="size-2 rounded-full bg-emerald-500" />
+            <span className="text-[11px] font-medium text-muted-foreground hidden sm:inline">
+              Authenticated
+            </span>
+          </div>
+        </div>
+
+        {/* Space Navigation & Tag Filtering Header */}
+        <div className="p-4 sm:p-6 space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/50 pb-4">
+            {/* Vault Spaces Switcher */}
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-primary text-primary-foreground text-xs font-semibold shadow-xs">
+                <AppIcon icon={Passport01Icon} size={15} />
+                <span>Government Documents</span>
+                <span className="ml-1 px-1.5 py-0.2 rounded-full bg-primary-foreground/20 text-[10px]">
+                  5
+                </span>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-muted text-muted-foreground hover:text-foreground text-xs font-medium transition-colors">
+                <AppIcon icon={Certificate01Icon} size={15} />
+                <span className="hidden xs:inline">Student Certificates</span>
+                <span className="xs:hidden">Student</span>
+                <span className="ml-1 px-1.5 py-0.2 rounded-full bg-background text-[10px]">
+                  3
+                </span>
+              </div>
+            </div>
+
+            {/* Tags with Text */}
+            <div className="hidden sm:flex items-center gap-1.5 text-[11px]">
+              <span className="px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 font-medium">
+                Identity
+              </span>
+              <span className="px-2 py-0.5 rounded-md bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 font-medium">
+                Academic
+              </span>
+              <span className="px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 font-medium">
+                Vehicle
+              </span>
+              <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-medium">
+                Insurance
+              </span>
+            </div>
+          </div>
+
+          {/* Layered Document Rows Stack */}
+          {/* Back Layer Entrance: opacity 0 -> 1, y 16 -> 0 */}
+          {/* Middle Layer Entrance: opacity 0 -> 1, y 12 -> 0 */}
+          {/* Front Layer Entrance: opacity 0 -> 1, y 8 -> 0 */}
+          <div className="space-y-3">
+            {/* Front Layer: Identity Document.pdf */}
+            <motion.div
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.38, delay: 0.1, ease: motionEase }}
+              className="group p-3.5 sm:p-4 rounded-2xl border border-border/80 bg-card hover:border-border transition-colors shadow-xs flex items-center justify-between gap-4"
+            >
+              <div className="flex items-center gap-3.5 min-w-0">
+                <div className="size-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 flex items-center justify-center shrink-0">
+                  <AppIcon icon={Pdf01Icon} size={20} />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-sm font-semibold text-foreground truncate">
+                      Identity Document.pdf
+                    </h3>
+                    <span className="text-[10px] font-mono px-2 py-0.2 rounded bg-muted text-muted-foreground hidden xs:inline">
+                      Government
+                    </span>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5 font-mono">
+                    2.4 MB • Issued 2023 • Expires 2033
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                <span className="hidden sm:inline-flex px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 text-[11px] font-medium">
+                  Identity
+                </span>
+                <span className="inline-flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+                  <AppIcon icon={CheckmarkCircle01Icon} size={14} />
+                  <span className="hidden xs:inline">Verified</span>
+                </span>
+              </div>
+            </motion.div>
+
+            {/* Middle Layer 1: Degree Certificate.pdf */}
+            <motion.div
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.16, ease: motionEase }}
+              className="group p-3.5 sm:p-4 rounded-2xl border border-border/70 bg-card/90 hover:border-border transition-colors shadow-2xs flex items-center justify-between gap-4"
+            >
+              <div className="flex items-center gap-3.5 min-w-0">
+                <div className="size-10 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 flex items-center justify-center shrink-0">
+                  <AppIcon icon={Pdf01Icon} size={20} />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-sm font-semibold text-foreground truncate">
+                      Degree Certificate.pdf
+                    </h3>
+                    <span className="text-[10px] font-mono px-2 py-0.2 rounded bg-muted text-muted-foreground hidden xs:inline">
+                      Student
+                    </span>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5 font-mono">
+                    3.8 MB • Bachelor of Technology • 2024
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                <span className="hidden sm:inline-flex px-2 py-0.5 rounded-md bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 text-[11px] font-medium">
+                  Academic
+                </span>
+                <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground font-mono">
+                  <AppIcon icon={LockKeyIcon} size={12} />
+                  Private
+                </span>
+              </div>
+            </motion.div>
+
+            {/* Middle Layer 2: Insurance.pdf */}
+            <motion.div
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.22, ease: motionEase }}
+              className="group p-3.5 sm:p-4 rounded-2xl border border-border/70 bg-card/90 hover:border-border transition-colors shadow-2xs flex items-center justify-between gap-4"
+            >
+              <div className="flex items-center gap-3.5 min-w-0">
+                <div className="size-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center justify-center shrink-0">
+                  <AppIcon icon={Shield01Icon} size={20} />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-sm font-semibold text-foreground truncate">
+                      Insurance.pdf
+                    </h3>
+                    <span className="text-[10px] font-mono px-2 py-0.2 rounded bg-muted text-muted-foreground hidden xs:inline">
+                      Government
+                    </span>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5 font-mono">
+                    1.2 MB • Comprehensive Policy • Active
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                <span className="hidden sm:inline-flex px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[11px] font-medium">
+                  Insurance
+                </span>
+                <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground font-mono">
+                  <AppIcon icon={LockKeyIcon} size={12} />
+                  Private
+                </span>
+              </div>
+            </motion.div>
+
+            {/* Back Layer: Semester Records.zip */}
+            <motion.div
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.42, delay: 0.28, ease: motionEase }}
+              className="group p-3.5 sm:p-4 rounded-2xl border border-border/60 bg-card/75 hover:border-border transition-colors shadow-2xs flex items-center justify-between gap-4"
+            >
+              <div className="flex items-center gap-3.5 min-w-0">
+                <div className="size-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 flex items-center justify-center shrink-0">
+                  <AppIcon icon={Zip01Icon} size={20} />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-sm font-semibold text-foreground truncate">
+                      Semester Records.zip
+                    </h3>
+                    <span className="text-[10px] font-mono px-2 py-0.2 rounded bg-muted text-muted-foreground hidden xs:inline">
+                      Student
+                    </span>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5 font-mono">
+                    14.6 MB • 8 Semesters Marksheets & Transcripts
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                <span className="hidden sm:inline-flex px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-[11px] font-medium">
+                  Archive
+                </span>
+                <span className="inline-flex items-center gap-1 text-[11px] text-muted-foreground font-mono">
+                  <AppIcon icon={LockKeyIcon} size={12} />
+                  Private
+                </span>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Recent Document Status Row */}
+          <div className="pt-2 border-t border-border/60 flex items-center justify-between text-xs text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <AppIcon icon={File01Icon} size={14} />
+              <span>Original binary files preserved</span>
+            </div>
+            <span className="font-mono text-[11px]">4 of 8 items shown</span>
+          </div>
+        </div>
+      </motion.div>
     </div>
   )
 }

@@ -5,6 +5,8 @@ import {
   Moon02Icon,
   Sun01Icon,
   ArrowRight01Icon,
+  PaintBoardIcon,
+  SecurityCheckIcon,
 } from '@hugeicons/core-free-icons'
 import { WhiteCardLogo } from '../../../components/brand/white-card-logo'
 import { AppIcon } from '../../../components/icons/app-icon'
@@ -18,24 +20,32 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '../../../components/ui/sheet'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../../../components/ui/dropdown-menu'
 import { useTheme } from '../../../providers/theme-provider'
+import type { ThemeId } from '../../../types/theme'
 
 const navItems = [
   { label: 'Product', href: '#product', id: 'product' },
-  { label: 'Spaces', href: '#spaces', id: 'spaces' },
-  { label: 'Privacy', href: '#privacy', id: 'privacy' },
+  { label: 'Security', href: '#security', id: 'security' },
   { label: 'Features', href: '#files', id: 'files' },
   { label: 'FAQ', href: '#faq', id: 'faq' },
 ]
 
 export function LandingHeader() {
-  const { isDark, setAppearance } = useTheme()
+  const { theme, setTheme, allThemes, isDark, appearance, setAppearance } = useTheme()
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState<string>('')
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 20)
+      setScrolled(window.scrollY > 24)
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -51,7 +61,7 @@ export function LandingHeader() {
           }
         })
       },
-      { rootMargin: '-30% 0px -60% 0px' }
+      { rootMargin: '-20% 0px -60% 0px' }
     )
 
     navItems.forEach((item) => {
@@ -65,10 +75,11 @@ export function LandingHeader() {
   return (
     <header className="fixed inset-x-0 top-3 z-50 px-3 sm:top-4 sm:px-6">
       <div
-        className={`relative mx-auto flex h-[68px] max-w-[1280px] items-center justify-between rounded-xl border px-4 transition-all duration-200 sm:px-6 ${scrolled
-          ? 'border-border/80 bg-background/85 shadow-sm backdrop-blur-md'
-          : 'border-border/40 bg-background/40 backdrop-blur-sm'
-          }`}
+        className={`relative mx-auto flex h-[68px] max-w-[1280px] items-center justify-between rounded-xl border px-4 transition-all duration-200 sm:px-6 ${
+          scrolled
+            ? 'border-border/80 bg-background/85 shadow-sm backdrop-blur-xl'
+            : 'border-border/40 bg-background/40 backdrop-blur-sm'
+        }`}
       >
         {/* Left: Brand */}
         <Link
@@ -79,7 +90,7 @@ export function LandingHeader() {
           <WhiteCardLogo size={28} showWordmark={true} />
         </Link>
 
-        {/* Center: Desktop Navigation (Distinctly Centered) */}
+        {/* Center: Desktop Navigation */}
         <nav
           aria-label="Primary navigation"
           className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2"
@@ -90,10 +101,11 @@ export function LandingHeader() {
               <a
                 key={item.label}
                 href={item.href}
-                className={`relative px-3.5 py-1.5 text-xs font-medium transition-colors rounded-xl ${isActive
-                  ? 'text-foreground font-semibold bg-muted/70'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
-                  } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
+                className={`relative px-3.5 py-1.5 text-xs font-medium transition-colors rounded-xl ${
+                  isActive
+                    ? 'text-foreground font-semibold bg-muted/70'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
+                } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
               >
                 {item.label}
               </a>
@@ -101,24 +113,96 @@ export function LandingHeader() {
           })}
         </nav>
 
-        {/* Right Actions */}
-        <div className="flex items-center gap-2.5 shrink-0">
-          {/* Light / Dark Mode Toggle */}
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-            onClick={() => setAppearance(isDark ? 'light' : 'dark')}
-            className="size-9 rounded-xl text-muted-foreground hover:text-foreground"
-          >
-            <AppIcon icon={isDark ? Sun01Icon : Moon02Icon} size={17} />
-          </Button>
+        {/* Right Actions: Theme, Sign In, Create White Card */}
+        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          {/* Theme Dropdown (Desktop & Mobile) */}
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              render={
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  aria-label="Customize theme and appearance"
+                  className="size-9 sm:size-10 rounded-xl text-muted-foreground hover:text-foreground"
+                >
+                  <AppIcon icon={PaintBoardIcon} size={17} />
+                </Button>
+              }
+            />
+            <DropdownMenuContent align="end" className="w-56 p-2 rounded-2xl shadow-xl">
+              <DropdownMenuLabel className="text-xs font-semibold px-2 py-1 text-muted-foreground">
+                Appearance
+              </DropdownMenuLabel>
+              <div className="grid grid-cols-3 gap-1 p-1">
+                <Button
+                  type="button"
+                  size="sm"
+                  variant={appearance === 'light' ? 'default' : 'outline'}
+                  onClick={() => setAppearance('light')}
+                  className="h-7 text-[11px] px-2 rounded-lg gap-1"
+                >
+                  <AppIcon icon={Sun01Icon} size={12} />
+                  Light
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant={appearance === 'dark' ? 'default' : 'outline'}
+                  onClick={() => setAppearance('dark')}
+                  className="h-7 text-[11px] px-2 rounded-lg gap-1"
+                >
+                  <AppIcon icon={Moon02Icon} size={12} />
+                  Dark
+                </Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant={appearance === 'system' ? 'default' : 'outline'}
+                  onClick={() => setAppearance('system')}
+                  className="h-7 text-[11px] px-2 rounded-lg"
+                >
+                  Auto
+                </Button>
+              </div>
 
-          {/* Single Primary Action Button (Proper 40px Height) */}
+              <DropdownMenuSeparator className="my-1.5" />
+
+              <DropdownMenuLabel className="text-xs font-semibold px-2 py-1 text-muted-foreground">
+                Accent Theme
+              </DropdownMenuLabel>
+              <div className="grid grid-cols-5 gap-1.5 p-1.5">
+                {allThemes.map((t) => (
+                  <button
+                    key={t.id}
+                    type="button"
+                    title={t.label}
+                    onClick={() => setTheme(t.id as ThemeId)}
+                    className={`size-6 rounded-full border transition-all ${
+                      theme === t.id
+                        ? 'border-primary ring-2 ring-primary/40 scale-110'
+                        : 'border-border/60 hover:scale-105'
+                    }`}
+                    style={{ backgroundColor: t.previewColor }}
+                    aria-label={`Switch to ${t.label} theme`}
+                  />
+                ))}
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Desktop Sign In link */}
+          <Link
+            to="/login"
+            className="hidden sm:inline-flex items-center justify-center px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            Sign In
+          </Link>
+
+          {/* Create White Card CTA button */}
           <Button
             type="button"
-            render={<Link to="/auth" />}
+            render={<Link to="/signup" />}
             className="hidden sm:inline-flex h-10 px-4 text-xs font-semibold rounded-xl shadow-xs gap-1.5"
           >
             <span>Create White Card</span>
@@ -145,10 +229,10 @@ export function LandingHeader() {
                 <SheetHeader className="border-b border-border/70 pb-4 text-left">
                   <div className="flex items-center">
                     <WhiteCardLogo size={28} showWordmark={true} />
-                    <SheetTitle className="sr-only">White Card</SheetTitle>
+                    <SheetTitle className="sr-only">White Card Menu</SheetTitle>
                   </div>
-                  <SheetDescription className="text-xs text-muted-foreground">
-                    Personal document wallet for government documents & student certificates.
+                  <SheetDescription className="text-xs text-muted-foreground mt-1">
+                    Personal vault for government documents and student certificates.
                   </SheetDescription>
                 </SheetHeader>
 
@@ -160,7 +244,7 @@ export function LandingHeader() {
                       render={
                         <a
                           href={item.href}
-                          className="flex min-h-12 items-center rounded-xl px-3 text-sm font-medium text-foreground hover:bg-muted"
+                          className="flex min-h-[48px] items-center rounded-xl px-3 text-sm font-medium text-foreground hover:bg-muted"
                         >
                           {item.label}
                         </a>
@@ -172,7 +256,7 @@ export function LandingHeader() {
                     render={
                       <Link
                         to="/privacy"
-                        className="flex min-h-11 items-center rounded-xl px-3 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
+                        className="flex min-h-[44px] items-center rounded-xl px-3 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
                       >
                         Privacy Policy
                       </Link>
@@ -182,7 +266,7 @@ export function LandingHeader() {
                     render={
                       <Link
                         to="/terms"
-                        className="flex min-h-11 items-center rounded-xl px-3 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
+                        className="flex min-h-[44px] items-center rounded-xl px-3 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
                       >
                         Terms of Service
                       </Link>
@@ -201,7 +285,7 @@ export function LandingHeader() {
                       variant="outline"
                       size="sm"
                       onClick={() => setAppearance(isDark ? 'light' : 'dark')}
-                      className="h-8 text-xs gap-1.5"
+                      className="h-8 text-xs gap-1.5 rounded-xl"
                     >
                       <AppIcon icon={isDark ? Sun01Icon : Moon02Icon} size={14} />
                       <span>{isDark ? 'Light' : 'Dark'}</span>
@@ -209,14 +293,25 @@ export function LandingHeader() {
                   </div>
                 </div>
 
-                <div className="pt-2">
+                <div className="grid grid-cols-2 gap-2 pt-2">
                   <SheetClose
                     render={
                       <Button
-                        render={<Link to="/auth" />}
-                        className="w-full h-11 text-xs font-semibold rounded-xl shadow-xs"
+                        variant="outline"
+                        render={<Link to="/login" />}
+                        className="h-11 text-xs font-semibold rounded-xl"
                       >
-                        Open White Card
+                        Sign In
+                      </Button>
+                    }
+                  />
+                  <SheetClose
+                    render={
+                      <Button
+                        render={<Link to="/signup" />}
+                        className="h-11 text-xs font-semibold rounded-xl shadow-xs"
+                      >
+                        Create White Card
                       </Button>
                     }
                   />

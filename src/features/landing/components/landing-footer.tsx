@@ -7,22 +7,24 @@ export function LandingFooter() {
   const { theme, setTheme, allThemes } = useTheme()
 
   return (
-    <footer className="border-t border-border/70 bg-muted/20 text-xs text-muted-foreground select-none">
+    <footer className="relative z-20 w-full border-t border-border/80 bg-muted/40 text-xs text-muted-foreground select-none">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-12 sm:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
-          {/* Col 1: Brand info */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12 text-left">
+          {/* Col 1: Brand Info */}
           <div className="col-span-2 md:col-span-1 space-y-3">
             <Link to="/" className="flex items-center">
               <WhiteCardLogo size={26} showWordmark={true} />
             </Link>
             <p className="text-xs text-muted-foreground leading-relaxed max-w-xs">
-              A private digital document wallet for organizing government documents and student certificates in their original format.
+              One organized place for important government documents and student certificates. Private by default.
             </p>
           </div>
 
           {/* Col 2: Product */}
           <div className="space-y-3">
-            <h4 className="font-semibold text-foreground text-xs uppercase tracking-wider">Product</h4>
+            <h4 className="font-semibold text-foreground text-xs uppercase tracking-wider">
+              Product
+            </h4>
             <ul className="space-y-2">
               <li>
                 <a href="#spaces" className="hover:text-foreground transition-colors">
@@ -36,12 +38,7 @@ export function LandingFooter() {
               </li>
               <li>
                 <a href="#files" className="hover:text-foreground transition-colors">
-                  Supported Formats
-                </a>
-              </li>
-              <li>
-                <a href="#organization" className="hover:text-foreground transition-colors">
-                  Tags & Search
+                  Features
                 </a>
               </li>
             </ul>
@@ -49,8 +46,15 @@ export function LandingFooter() {
 
           {/* Col 3: Trust */}
           <div className="space-y-3">
-            <h4 className="font-semibold text-foreground text-xs uppercase tracking-wider">Trust</h4>
+            <h4 className="font-semibold text-foreground text-xs uppercase tracking-wider">
+              Trust
+            </h4>
             <ul className="space-y-2">
+              <li>
+                <a href="#security" className="hover:text-foreground transition-colors">
+                  Security
+                </a>
+              </li>
               <li>
                 <Link to="/privacy" className="hover:text-foreground transition-colors">
                   Privacy Policy
@@ -61,41 +65,35 @@ export function LandingFooter() {
                   Terms of Service
                 </Link>
               </li>
-              <li>
-                <a href="#privacy" className="hover:text-foreground transition-colors">
-                  Private by Default
-                </a>
-              </li>
-              <li>
-                <a href="#control" className="hover:text-foreground transition-colors">
-                  User Control & Deletion
-                </a>
-              </li>
             </ul>
           </div>
 
           {/* Col 4: Account */}
           <div className="space-y-3">
-            <h4 className="font-semibold text-foreground text-xs uppercase tracking-wider">Account</h4>
+            <h4 className="font-semibold text-foreground text-xs uppercase tracking-wider">
+              Account
+            </h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/auth" className="hover:text-foreground transition-colors">
-                  Access White Card
+                <Link to="/login" className="hover:text-foreground transition-colors">
+                  Sign In
                 </Link>
               </li>
               <li>
-                <a href="#authentication" className="hover:text-foreground transition-colors">
-                  Google Authentication
-                </a>
+                <Link to="/signup" className="hover:text-foreground transition-colors">
+                  Create White Card
+                </Link>
               </li>
             </ul>
           </div>
 
           {/* Col 5: Appearance */}
           <div className="col-span-2 md:col-span-1 space-y-3">
-            <h4 className="font-semibold text-foreground text-xs uppercase tracking-wider">Appearance</h4>
+            <h4 className="font-semibold text-foreground text-xs uppercase tracking-wider">
+              Appearance
+            </h4>
             <p className="text-[11px] text-muted-foreground">
-              Select an accent palette:
+              Theme Palette:
             </p>
             <div className="flex flex-wrap gap-1.5 pt-1">
               {allThemes.map((t) => (
@@ -106,7 +104,7 @@ export function LandingFooter() {
                   onClick={() => setTheme(t.id as ThemeId)}
                   className={`size-5 rounded-full border transition-all ${
                     theme === t.id
-                      ? 'border-primary ring-2 ring-primary/30 scale-110'
+                      ? 'border-primary ring-2 ring-primary/40 scale-110'
                       : 'border-border/60 hover:scale-105'
                   }`}
                   style={{ backgroundColor: t.previewColor }}
@@ -117,7 +115,7 @@ export function LandingFooter() {
           </div>
         </div>
 
-        {/* Bottom bar */}
+        {/* Bottom Row */}
         <div className="border-t border-border/60 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px]">
           <p>© {new Date().getFullYear()} White Card. All rights reserved.</p>
           <div className="flex items-center gap-6">

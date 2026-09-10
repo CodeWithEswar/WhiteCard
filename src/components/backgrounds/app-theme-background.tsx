@@ -20,7 +20,7 @@ export interface AppThemeBackgroundProps {
  */
 export function AppThemeBackground({
   variant = 'app',
-  grid = variant === 'landing' || variant === 'auth',
+  grid = variant === 'auth',
   glow = true,
   className = '',
   children,
@@ -36,8 +36,6 @@ export function AppThemeBackground({
       {/* 1. Base Root Page Tint Layer */}
       <div className="absolute inset-0 bg-page-background transition-colors duration-200" />
 
-
-
       {glow && variant === 'landing' && (
         <>
           {/* Hero spotlight glow */}
@@ -46,14 +44,6 @@ export function AppThemeBackground({
             style={{
               background:
                 'radial-gradient(ellipse at center, var(--theme-glow) 0%, var(--theme-glow-soft) 40%, transparent 70%)',
-            }}
-          />
-          {/* Secondary ambient glow */}
-          <div
-            className="absolute top-[60%] -left-[10%] w-[700px] h-[700px] rounded-full opacity-50 blur-3xl transition-all duration-300"
-            style={{
-              background:
-                'radial-gradient(circle at center, var(--theme-glow-soft) 0%, transparent 70%)',
             }}
           />
         </>
