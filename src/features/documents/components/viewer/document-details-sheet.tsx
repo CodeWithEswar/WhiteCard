@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useIsMobile } from '@/hooks/use-mobile'
 import {
   Sheet,
   SheetContent,
-  SheetHeader,
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet'
 import { DocumentDetailsContent } from './document-details-content'
+import { ArrowLeft02Icon } from '@hugeicons/core-free-icons'
+import { AppIcon } from '@/components/icons/app-icon'
 import type { VaultDocument } from '@/types/document'
 
 interface DocumentDetailsSheetProps {
@@ -39,16 +40,7 @@ export function DocumentDetailsSheet({
   onDelete,
   isDeleting,
 }: DocumentDetailsSheetProps) {
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-    checkIsMobile()
-    window.addEventListener('resize', checkIsMobile)
-    return () => window.removeEventListener('resize', checkIsMobile)
-  }, [])
+  const isMobile = useIsMobile()
 
   if (!doc) return null
 
@@ -58,20 +50,46 @@ export function DocumentDetailsSheet({
         side={isMobile ? 'bottom' : 'right'}
         className={
           isMobile
-            ? 'h-[90dvh] rounded-t-3xl border-t border-border bg-background p-0 shadow-2xl flex flex-col'
-            : 'w-full sm:max-w-[440px] border-l border-border bg-background p-0 shadow-2xl flex flex-col'
+            ? 'max-h-[90dvh] h-auto rounded-t-[28px] border-t border-border bg-background p-0 shadow-2xl flex flex-col overflow-hidden outline-none'
+            : 'w-full sm:max-w-[440px] h-full border-l border-border bg-background p-0 shadow-2xl flex flex-col overflow-hidden outline-none'
         }
       >
-        <SheetHeader className="px-5 pt-5 pb-2 text-left border-b border-border/40 shrink-0">
-          <SheetTitle className="text-sm font-bold text-foreground">
-            {isEditing ? 'Edit Document Details' : 'Document Details'}
-          </SheetTitle>
-          <SheetDescription className="text-xs text-muted-foreground">
-            {doc.originalFilename}
-          </SheetDescription>
-        </SheetHeader>
+        {/* Mobile Drag Indicator */}
+        <div className="flex justify-center pt-3 pb-1 sm:hidden shrink-0">
+          <div className="h-1.5 w-10 rounded-full bg-muted-foreground/30" />
+        </div>
 
-        <div className="flex-1 overflow-hidden">
+        {/* Sheet Header */}
+        <div className="px-5 py-3.5 border-b border-border/50 shrink-0 pr-12">
+          {isEditing ? (
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => onToggleEdit(false)}
+                className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground font-medium transition-colors cursor-pointer"
+              >
+                <AppIcon icon={ArrowLeft02Icon} size={15} />
+                <span>Back</span>
+              </button>
+              <span className="text-muted-foreground/40">•</span>
+              <SheetTitle className="text-sm font-bold text-foreground">
+                Edit Metadata
+              </SheetTitle>
+            </div>
+          ) : (
+            <div className="min-w-0">
+              <SheetTitle className="text-sm font-bold text-foreground truncate">
+                {doc.title || 'Document Details'}
+              </SheetTitle>
+              <SheetDescription className="text-xs text-muted-foreground truncate font-mono mt-0.5">
+                {doc.originalFilename}
+              </SheetDescription>
+            </div>
+          )}
+        </div>
+
+        {/* Sheet Body */}
+        <div className="flex-1 overflow-hidden min-h-0 flex flex-col">
           <DocumentDetailsContent
             document={doc}
             isEditing={isEditing}

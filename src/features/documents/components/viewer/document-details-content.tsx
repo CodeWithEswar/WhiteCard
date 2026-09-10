@@ -96,7 +96,7 @@ export function DocumentDetailsContent({
   }
 
   return (
-    <div className="h-full overflow-y-auto px-5 py-6 space-y-6 text-left">
+    <div className="h-full flex flex-col min-h-0 overflow-hidden text-left">
       <AnimatePresence mode="wait">
         {isEditing ? (
           /* IN-SHEET EDIT MODE (Prompt #67 & #68) */
@@ -107,28 +107,16 @@ export function DocumentDetailsContent({
             exit={{ opacity: 0, x: -8 }}
             transition={{ duration: 0.18 }}
             onSubmit={handleSave}
-            className="space-y-5"
+            className="flex-1 flex flex-col min-h-0 overflow-hidden"
           >
-            <div className="flex items-center justify-between pb-3 border-b border-border/60">
-              <button
-                type="button"
-                onClick={() => onToggleEdit(false)}
-                className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground font-medium"
-              >
-                <AppIcon icon={ArrowLeft02Icon} size={14} />
-                <span>Back to Details</span>
-              </button>
-              <span className="text-xs font-semibold text-foreground">Edit Metadata</span>
-            </div>
-
-            <div className="space-y-4 text-xs">
+            <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4 text-xs">
               <div className="space-y-1.5">
                 <label className="font-semibold text-foreground">Document Title</label>
                 <input
                   type="text"
                   value={editTitle}
                   onChange={(e) => setEditTitle(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-border bg-card text-foreground text-xs focus:ring-1 focus:ring-primary focus:outline-none"
+                  className="w-full h-10 px-3.5 rounded-xl border border-border bg-card text-foreground text-xs focus:ring-1 focus:ring-primary focus:outline-none transition-shadow"
                   required
                 />
               </div>
@@ -136,7 +124,7 @@ export function DocumentDetailsContent({
               <div className="space-y-1.5">
                 <label className="font-semibold text-foreground">Category</label>
                 <Select value={editCategory} onValueChange={(val) => val && setEditCategory(val)}>
-                  <SelectTrigger className="w-full h-9 rounded-xl border-border bg-card text-xs">
+                  <SelectTrigger className="w-full h-10 rounded-xl border-border bg-card text-xs">
                     <SelectValue placeholder="Select Category" />
                   </SelectTrigger>
                   <SelectContent>
@@ -167,26 +155,27 @@ export function DocumentDetailsContent({
                   onChange={(e) => setEditNotes(e.target.value)}
                   rows={4}
                   placeholder="Personal references, application notes, renewal instructions..."
-                  className="w-full px-3 py-2 rounded-xl border border-border bg-card text-foreground text-xs focus:ring-1 focus:ring-primary focus:outline-none resize-none leading-relaxed"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-card text-foreground text-xs focus:ring-1 focus:ring-primary focus:outline-none resize-none leading-relaxed transition-shadow"
                 />
               </div>
             </div>
 
-            <div className="flex items-center gap-2 pt-2">
+            {/* Sticky Action Footer */}
+            <div className="p-4 border-t border-border/50 bg-card/70 backdrop-blur-md shrink-0 flex items-center gap-3">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => onToggleEdit(false)}
-                className="flex-1 h-9 rounded-xl text-xs"
+                className="flex-1 h-10 rounded-xl text-xs font-medium border-border/70 hover:bg-muted text-foreground"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={isSaving || !editTitle.trim()}
-                className="flex-1 h-9 rounded-xl text-xs font-semibold gap-1.5 shadow-xs"
+                className="flex-1 h-10 rounded-xl text-xs font-semibold gap-1.5 shadow-xs"
               >
-                <AppIcon icon={CheckmarkCircle01Icon} size={14} />
+                <AppIcon icon={CheckmarkCircle01Icon} size={15} />
                 <span>{isSaving ? 'Saving...' : 'Save Changes'}</span>
               </Button>
             </div>
@@ -199,7 +188,7 @@ export function DocumentDetailsContent({
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 8 }}
             transition={{ duration: 0.18 }}
-            className="space-y-6"
+            className="flex-1 overflow-y-auto px-5 py-5 pb-8 space-y-6 text-left"
           >
             {/* Identity Summary Header (Prompt #14) */}
             <div className="flex items-start gap-3.5 pb-4 border-b border-border/60">

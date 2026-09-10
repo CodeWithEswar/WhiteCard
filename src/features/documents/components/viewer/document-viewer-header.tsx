@@ -66,12 +66,12 @@ export function DocumentViewerHeader({
             <AppIcon icon={isGov ? Passport01Icon : Certificate01Icon} size={16} />
           </div>
 
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5">
-              <h1 className="text-xs sm:text-sm font-bold text-foreground tracking-tight truncate max-w-[260px] sm:max-w-md">
+              <h1 className="text-xs sm:text-sm font-bold text-foreground tracking-tight truncate max-w-[150px] xs:max-w-[220px] sm:max-w-md" title={doc.title}>
                 {doc.title}
               </h1>
-              <span className="text-[9.5px] font-mono px-1.5 py-0.2 rounded bg-muted/60 text-muted-foreground border border-border/60 hidden md:inline">
+              <span className="text-[9.5px] font-mono px-1.5 py-0.2 rounded bg-muted/60 text-muted-foreground border border-border/60 hidden md:inline shrink-0">
                 {doc.fileType.toUpperCase()}
               </span>
             </div>

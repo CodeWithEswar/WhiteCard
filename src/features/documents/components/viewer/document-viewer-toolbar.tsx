@@ -36,8 +36,8 @@ export function DocumentViewerToolbar({
   }
 
   return (
-    <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-30 pointer-events-auto">
-      <div className="flex items-center gap-1 sm:gap-1.5 p-1.5 rounded-2xl border border-border/80 bg-card/90 backdrop-blur-md shadow-lg text-foreground select-none">
+    <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-30 pointer-events-auto max-w-[calc(100vw-24px)]">
+      <div className="flex items-center gap-1 sm:gap-1.5 p-1 sm:p-1.5 rounded-2xl border border-border/80 bg-card/90 backdrop-blur-md shadow-lg text-foreground select-none max-w-full overflow-x-auto">
         {/* Zoom Controls */}
         {capabilities.canZoom && (
           <>

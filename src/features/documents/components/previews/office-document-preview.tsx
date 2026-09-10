@@ -18,8 +18,8 @@ export function OfficeDocumentPreview({
   const formatLabel = isWord ? 'Word Document' : isPresentation ? 'Presentation' : 'Office Document'
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-6 text-center">
-      <div className="max-w-md w-full p-8 rounded-3xl border border-border/80 bg-card/80 backdrop-blur-md space-y-6 shadow-sm">
+    <div className="w-full h-full flex items-center justify-center p-4 sm:p-6 text-center">
+      <div className="max-w-md w-full p-5 sm:p-8 rounded-2xl sm:rounded-3xl border border-border/80 bg-card/80 backdrop-blur-md space-y-5 sm:space-y-6 shadow-sm">
         <div className="size-16 rounded-2xl border border-border bg-muted/40 flex items-center justify-center mx-auto text-foreground">
           <AppIcon icon={File01Icon} size={32} />
         </div>
