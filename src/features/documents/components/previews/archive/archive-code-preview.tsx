@@ -174,8 +174,8 @@ export function ArchiveCodePreview({
 
       {/* Main Code Table */}
       <div className="flex-1 overflow-auto">
-        <div className="min-w-full inline-block pb-8">
-          <table className="w-full border-collapse">
+        <div className={cn('pb-8', isWrapped ? 'w-full' : 'min-w-full inline-block')}>
+          <table className={cn('w-full border-collapse', isWrapped && 'table-fixed')}>
             <tbody>
               {formattedLines.map((line) => {
                 const lineNum = line.lineNumber
@@ -200,7 +200,7 @@ export function ArchiveCodePreview({
                     {/* Sticky Line Number Gutter */}
                     <td
                       className={cn(
-                        'sticky left-0 z-10 w-14 py-0.5 pr-3.5 pl-2 text-right text-[11px] font-mono select-none border-r align-top tabular-nums transition-colors',
+                        'sticky left-0 z-10 w-12 sm:w-14 py-0.5 pr-2.5 sm:pr-3.5 pl-2 text-right text-[11px] font-mono select-none border-r align-top tabular-nums transition-colors shrink-0',
                         isSelected
                           ? 'border-primary/50 text-primary font-medium bg-surface-elevated'
                           : 'border-border/50 text-muted-foreground/50 group-hover:text-muted-foreground/80 bg-surface'
@@ -213,9 +213,9 @@ export function ArchiveCodePreview({
                     {/* Code Content Line */}
                     <td
                       className={cn(
-                        'py-0.5 pl-4 pr-6 align-top font-mono',
-                        isWrapped ? 'whitespace-pre-wrap break-all' : 'whitespace-pre',
-                        isSelected && 'border-l-2 border-primary pl-3.5'
+                        'py-0.5 pl-3 sm:pl-4 pr-3 sm:pr-6 align-top font-mono',
+                        isWrapped ? 'whitespace-pre-wrap break-words overflow-wrap-anywhere' : 'whitespace-pre',
+                        isSelected && 'border-l-2 border-primary pl-2.5 sm:pl-3.5'
                       )}
                     >
                       {line.spans.length === 0 || (line.spans.length === 1 && !line.spans[0].text) ? (

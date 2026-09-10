@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { BookOpen01Icon, ArrowDown01Icon, ArrowRight01Icon } from '@hugeicons/core-free-icons'
 import { AppIcon } from '@/components/icons/app-icon'
 import type { ArchiveTreeNode } from '@/features/documents/lib/archive-tree'
+import { RichMarkdownRenderer } from '@/features/documents/lib/markdown-renderer'
 import { cn } from '@/lib/utils'
 
 export interface ArchiveSummaryProps {
@@ -68,8 +69,8 @@ export function ArchiveSummary({
 
           {/* README Content */}
           {readmeExpanded && (
-            <div className="p-5 text-xs text-foreground font-mono leading-relaxed whitespace-pre-wrap select-text max-h-[500px] overflow-y-auto">
-              {readmeContent}
+            <div className="p-6 text-foreground leading-relaxed select-text max-h-[600px] overflow-y-auto">
+              <RichMarkdownRenderer content={readmeContent} />
             </div>
           )}
         </div>

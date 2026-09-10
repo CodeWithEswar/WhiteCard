@@ -9,6 +9,7 @@ import { ArchiveImagePreview } from './archive-image-preview'
 import { ArchiveDocxPreview } from './archive-docx-preview'
 import { ArchivePdfPreview } from './archive-pdf-preview'
 import { ArchiveCsvPreview } from './archive-csv-preview'
+import { ArchiveMarkdownPreview } from './archive-markdown-preview'
 import { ArchiveCodeHeader } from './archive-code-header'
 import { useArchiveCodeViewer } from '@/features/documents/hooks/use-archive-code-viewer'
 import { AppIcon } from '@/components/icons/app-icon'
@@ -80,7 +81,7 @@ export function ArchiveFilePreviewRouter({
   return (
     <div className="w-full flex-1 flex flex-col bg-surface overflow-hidden">
       {/* 1. Header Bar for Code and Text entries */}
-      {isTextual && typeInfo.kind !== 'csv' && (
+      {isTextual && typeInfo.kind !== 'csv' && typeInfo.kind !== 'markdown' && (
         <ArchiveCodeHeader
           filename={node.name}
           lineCount={lineCount}
@@ -145,6 +146,13 @@ export function ArchiveFilePreviewRouter({
         ) : typeInfo.kind === 'csv' ? (
           /* CSV / TSV Spreadsheet Viewer */
           <ArchiveCsvPreview
+            filename={node.name}
+            content={textContent || ''}
+            onDownload={handleDownload}
+          />
+        ) : typeInfo.kind === 'markdown' ? (
+          /* Rich Markdown Viewer */
+          <ArchiveMarkdownPreview
             filename={node.name}
             content={textContent || ''}
             onDownload={handleDownload}

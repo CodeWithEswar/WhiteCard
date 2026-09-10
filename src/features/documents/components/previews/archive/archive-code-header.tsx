@@ -94,8 +94,12 @@ export function ArchiveCodeHeader({
           variant={isWrapped ? 'secondary' : 'outline'}
           size="sm"
           onClick={onToggleWrap}
-          className="h-7 px-2.5 rounded-lg text-xs font-medium border-border hidden sm:inline-flex"
+          className={cn(
+            'h-7 px-2.5 rounded-lg text-xs font-medium border-border transition-colors',
+            isWrapped && 'bg-primary text-primary-foreground font-semibold shadow-2xs'
+          )}
           aria-label={isWrapped ? 'Disable line wrap' : 'Enable line wrap'}
+          title={isWrapped ? 'Line wrap is active' : 'Enable line wrap'}
         >
           <span>Wrap</span>
         </Button>

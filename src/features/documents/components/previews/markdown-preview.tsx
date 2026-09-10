@@ -3,6 +3,7 @@ import { Copy01Icon, Tick02Icon } from '@hugeicons/core-free-icons'
 import { AppIcon } from '@/components/icons/app-icon'
 import { Button } from '@/components/ui/button'
 import { TextPreview } from './text-preview'
+import { RichMarkdownRenderer } from '@/features/documents/lib/markdown-renderer'
 import type { VaultDocument } from '@/types/document'
 
 interface MarkdownPreviewProps {
@@ -113,39 +114,7 @@ export function MarkdownPreview({
               <span className="text-xs text-muted-foreground font-mono">Rendering markdown...</span>
             </div>
           ) : content ? (
-            <div className="space-y-3">
-              {content.split('\n\n').map((block, idx) => {
-                const trimmed = block.trim()
-                if (trimmed.startsWith('# ')) {
-                  return <h1 key={idx} className="text-xl sm:text-2xl font-bold tracking-tight pb-2 border-b border-border">{trimmed.slice(2)}</h1>
-                }
-                if (trimmed.startsWith('## ')) {
-                  return <h2 key={idx} className="text-lg sm:text-xl font-bold tracking-tight pt-2">{trimmed.slice(3)}</h2>
-                }
-                if (trimmed.startsWith('### ')) {
-                  return <h3 key={idx} className="text-base font-semibold tracking-tight pt-1">{trimmed.slice(4)}</h3>
-                }
-                if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
-                  const items = trimmed.split('\n').map((line) => line.replace(/^[-*]\s+/, ''))
-                  return (
-                    <ul key={idx} className="list-disc pl-5 space-y-1 text-xs sm:text-sm text-muted-foreground">
-                      {items.map((it, i) => (
-                        <li key={i}>{it}</li>
-                      ))}
-                    </ul>
-                  )
-                }
-                if (trimmed.startsWith('```')) {
-                  const codeLines = trimmed.replace(/^```[a-z]*\n?/, '').replace(/```$/, '')
-                  return (
-                    <pre key={idx} className="p-3.5 rounded-xl bg-muted/50 border border-border/70 font-mono text-xs overflow-x-auto text-foreground">
-                      <code>{codeLines}</code>
-                    </pre>
-                  )
-                }
-                return <p key={idx} className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{trimmed}</p>
-              })}
-            </div>
+            <RichMarkdownRenderer content={content} />
           ) : (
             <p className="text-xs text-muted-foreground italic">No content</p>
           )}
