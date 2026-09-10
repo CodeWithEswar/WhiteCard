@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { supabase, isSupabaseConfigured } from '@/lib/supabase'
 import type { VaultDocument } from '@/types/document'
 
@@ -55,16 +55,34 @@ export function useDocumentPreview(document: VaultDocument | null) {
     refreshUrl()
   }, [refreshUrl])
 
+  const abortControllerRef = useRef<AbortController | null>(null)
+
+  // Abort any in-flight fetch when document changes or unmounts (Prompt #44)
+  useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort()
+        abortControllerRef.current = null
+      }
+    }
+  }, [document?.id])
+
   // Fetch text or array buffer content if required by renderer (text, json, csv, code, zip)
   const fetchContent = useCallback(
     async (type: 'text' | 'buffer') => {
       const url = state.signedUrl || document?.fileUrl
       if (!url || url === '#') return
 
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort()
+      }
+      const controller = new AbortController()
+      abortControllerRef.current = controller
+
       setState((prev) => ({ ...prev, isLoadingBytes: true, error: null }))
 
       try {
-        const response = await fetch(url)
+        const response = await fetch(url, { signal: controller.signal })
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}: Failed to load file data`)
         }
@@ -96,6 +114,7 @@ export function useDocumentPreview(document: VaultDocument | null) {
           }))
         }
       } catch (err: any) {
+        if (err.name === 'AbortError') return
         console.error('Failed to fetch document content bytes:', err)
         setState((prev) => ({
           ...prev,

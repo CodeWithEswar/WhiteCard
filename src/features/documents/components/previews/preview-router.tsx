@@ -6,12 +6,16 @@ import { MarkdownPreview } from './markdown-preview'
 import { JsonPreview } from './json-preview'
 import { CsvPreview } from './csv-preview'
 import { SpreadsheetPreview } from './spreadsheet-preview'
+import { PresentationPreview } from './presentation-preview'
 import { ArchivePreview } from './archive-preview'
-import { OfficeDocumentPreview } from './office-document-preview'
 import { DocxPreview } from './docx-preview'
 import { AudioPreview } from './audio-preview'
 import { VideoPreview } from './video-preview'
 import { CodePreview } from './code-preview'
+import { SvgPreview } from './svg-preview'
+import { XmlPreview } from './xml-preview'
+import { YamlPreview } from './yaml-preview'
+import { RtfPreview } from './rtf-preview'
 import { GenericFilePreview } from './generic-file-preview'
 import type { VaultDocument } from '@/types/document'
 import type { ZoomControls } from '../../hooks/use-document-zoom'
@@ -54,6 +58,19 @@ export function PreviewRouter({
         />
       )
 
+    case 'svg':
+      return (
+        <SvgPreview
+          document={doc}
+          content={rawContent}
+          fileUrl={fileUrl}
+          isLoading={isLoadingBytes}
+          lineWrap={lineWrap}
+          onFetchContent={() => onFetchContent('text')}
+          onDownload={onDownload}
+        />
+      )
+
     case 'pdf':
       return (
         <PdfPreview
@@ -62,6 +79,40 @@ export function PreviewRouter({
           arrayBuffer={arrayBuffer}
           isLoadingBytes={isLoadingBytes}
           zoom={zoom}
+          onFetchContent={() => onFetchContent('buffer')}
+          onDownload={onDownload}
+        />
+      )
+
+    case 'docx':
+      return (
+        <DocxPreview
+          document={doc}
+          arrayBuffer={arrayBuffer}
+          isLoading={isLoadingBytes}
+          zoom={zoom}
+          onFetchContent={() => onFetchContent('buffer')}
+          onDownload={onDownload}
+        />
+      )
+
+    case 'spreadsheet':
+      return (
+        <SpreadsheetPreview
+          document={doc}
+          arrayBuffer={arrayBuffer}
+          isLoading={isLoadingBytes}
+          onFetchContent={() => onFetchContent('buffer')}
+          onDownload={onDownload}
+        />
+      )
+
+    case 'presentation':
+      return (
+        <PresentationPreview
+          document={doc}
+          arrayBuffer={arrayBuffer}
+          isLoading={isLoadingBytes}
           onFetchContent={() => onFetchContent('buffer')}
           onDownload={onDownload}
         />
@@ -86,6 +137,7 @@ export function PreviewRouter({
           isLoading={isLoadingBytes}
           lineWrap={lineWrap}
           onFetchContent={() => onFetchContent('text')}
+          onDownload={onDownload}
         />
       )
 
@@ -96,6 +148,7 @@ export function PreviewRouter({
           content={rawContent}
           isLoading={isLoadingBytes}
           onFetchContent={() => onFetchContent('text')}
+          onDownload={onDownload}
         />
       )
 
@@ -106,54 +159,57 @@ export function PreviewRouter({
           content={rawContent}
           isLoading={isLoadingBytes}
           onFetchContent={() => onFetchContent('text')}
-        />
-      )
-
-    case 'spreadsheet':
-      return (
-        <SpreadsheetPreview
-          document={doc}
           onDownload={onDownload}
         />
       )
 
-    case 'archive':
+    case 'xml':
       return (
-        <ArchivePreview
+        <XmlPreview
           document={doc}
-          arrayBuffer={arrayBuffer}
+          content={rawContent}
           isLoading={isLoadingBytes}
-          onFetchContent={() => onFetchContent('buffer')}
+          lineWrap={lineWrap}
+          onFetchContent={() => onFetchContent('text')}
           onDownload={onDownload}
         />
       )
 
-    case 'office': {
-      const isDocx =
-        doc.originalFilename.toLowerCase().endsWith('.docx') ||
-        doc.mimeType ===
-          'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-
-      if (isDocx) {
-        return (
-          <DocxPreview
-            document={doc}
-            arrayBuffer={arrayBuffer}
-            isLoading={isLoadingBytes}
-            zoom={zoom}
-            onFetchContent={() => onFetchContent('buffer')}
-            onDownload={onDownload}
-          />
-        )
-      }
-
+    case 'yaml':
       return (
-        <OfficeDocumentPreview
+        <YamlPreview
           document={doc}
+          content={rawContent}
+          isLoading={isLoadingBytes}
+          lineWrap={lineWrap}
+          onFetchContent={() => onFetchContent('text')}
           onDownload={onDownload}
         />
       )
-    }
+
+    case 'code':
+      return (
+        <CodePreview
+          document={doc}
+          content={rawContent}
+          isLoading={isLoadingBytes}
+          lineWrap={lineWrap}
+          onFetchContent={() => onFetchContent('text')}
+          onDownload={onDownload}
+        />
+      )
+
+    case 'rtf':
+      return (
+        <RtfPreview
+          document={doc}
+          content={rawContent}
+          isLoading={isLoadingBytes}
+          lineWrap={lineWrap}
+          onFetchContent={() => onFetchContent('text')}
+          onDownload={onDownload}
+        />
+      )
 
     case 'audio':
       return (
@@ -169,17 +225,18 @@ export function PreviewRouter({
         <VideoPreview
           document={doc}
           fileUrl={fileUrl || ''}
+          onDownload={onDownload}
         />
       )
 
-    case 'code':
+    case 'archive':
       return (
-        <CodePreview
+        <ArchivePreview
           document={doc}
-          content={rawContent}
+          arrayBuffer={arrayBuffer}
           isLoading={isLoadingBytes}
-          lineWrap={lineWrap}
-          onFetchContent={() => onFetchContent('text')}
+          onFetchContent={() => onFetchContent('buffer')}
+          onDownload={onDownload}
         />
       )
 
