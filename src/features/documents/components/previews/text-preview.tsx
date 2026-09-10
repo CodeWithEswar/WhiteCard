@@ -59,7 +59,7 @@ export function TextPreview({
   const lines = content.split('\n')
 
   return (
-    <div className="w-full h-full max-w-5xl mx-auto flex flex-col rounded-2xl border border-border/70 bg-card shadow-sm overflow-hidden text-left my-auto max-h-[82dvh]">
+    <div className="w-full h-full min-h-0 flex flex-col bg-surface overflow-hidden text-left">
       {/* Top Reading Surface Header */}
       <div className="px-4 py-2.5 border-b border-border/60 bg-muted/30 flex items-center justify-between text-xs text-muted-foreground shrink-0">
         <span className="font-mono text-[11px] truncate max-w-[240px]">
@@ -85,7 +85,7 @@ export function TextPreview({
       </div>
 
       {/* Main Text Content with line numbers */}
-      <div className="flex-1 overflow-auto font-mono text-xs text-foreground p-4">
+      <div className="flex-1 min-h-0 overflow-auto font-mono text-xs text-foreground p-4">
         <div className="flex min-w-full">
           {/* Line Numbers Column */}
           <div className="select-none pr-4 text-right text-muted-foreground/50 border-r border-border/50 shrink-0 font-mono text-[11px]">

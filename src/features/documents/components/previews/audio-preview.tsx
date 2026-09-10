@@ -28,7 +28,7 @@ export function AudioPreview({
   }
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-6 text-center select-none">
+    <div className="w-full h-full min-h-0 flex items-center justify-center p-6 text-center select-none overflow-y-auto">
       <div className="max-w-md w-full p-8 rounded-3xl border border-border/80 bg-card/80 backdrop-blur-md space-y-6 shadow-sm">
         <div className="size-20 rounded-3xl border border-border bg-muted/40 flex items-center justify-center mx-auto text-foreground shadow-2xs">
           <AppIcon icon={hasPlaybackError ? AlertCircleIcon : MusicNote01Icon} size={36} className={hasPlaybackError ? 'text-destructive' : 'text-primary'} />

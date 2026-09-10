@@ -349,7 +349,7 @@ export function JsonPreview({
   return (
     <div
       className={cn(
-        'w-full flex-1 flex flex-col rounded-2xl border border-border/70 bg-card shadow-sm overflow-hidden text-left my-auto max-h-[84dvh]',
+        'w-full h-full min-h-0 flex flex-col bg-surface overflow-hidden text-left',
         className
       )}
     >
@@ -480,7 +480,7 @@ export function JsonPreview({
       )}
 
       {/* Main Viewport */}
-      <div className="flex-1 overflow-auto p-4 font-mono text-xs text-foreground bg-card">
+      <div className="flex-1 min-h-0 overflow-auto p-4 font-mono text-xs text-foreground bg-surface">
         {mode === 'tree' && isValidJson ? (
           <div className="space-y-0.5">
             <JsonNode

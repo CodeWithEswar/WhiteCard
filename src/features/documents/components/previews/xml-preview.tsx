@@ -59,7 +59,7 @@ export function XmlPreview({
   }
 
   return (
-    <div className={cn('w-full flex-1 flex flex-col overflow-hidden bg-card rounded-2xl border border-border/70 select-text font-mono text-xs my-auto max-h-[84dvh]', className)}>
+    <div className={cn('w-full h-full min-h-0 flex flex-col overflow-hidden bg-surface select-text font-mono text-xs', className)}>
       {/* Header Bar */}
       <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2 border-b border-border/70 bg-muted/30 select-none shrink-0">
         <div className="flex items-center gap-2 min-w-0">
@@ -125,7 +125,7 @@ export function XmlPreview({
       </div>
 
       {/* Code / XML Viewport */}
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 min-h-0 overflow-hidden">
         <ArchiveCodePreview
           filename={doc.originalFilename}
           content={content || ''}

@@ -103,7 +103,7 @@ export function ArchiveCodePreview({
   return (
     <div
       className={cn(
-        'relative w-full flex-1 flex flex-col overflow-hidden font-mono text-[13px] leading-relaxed bg-surface select-text',
+        'relative w-full h-full min-h-0 flex-1 flex flex-col overflow-hidden font-mono text-[13px] leading-relaxed bg-surface select-text',
         className
       )}
     >
@@ -173,7 +173,7 @@ export function ArchiveCodePreview({
       )}
 
       {/* Main Code Table */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 min-h-0 overflow-auto">
         <div className={cn('pb-8', isWrapped ? 'w-full' : 'min-w-full inline-block')}>
           <table className={cn('w-full border-collapse', isWrapped && 'table-fixed')}>
             <tbody>

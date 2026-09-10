@@ -71,7 +71,7 @@ export function CsvPreview({
   return (
     <div
       className={cn(
-        'w-full flex-1 flex flex-col rounded-2xl border border-border/70 bg-card shadow-sm overflow-hidden text-left my-auto max-h-[84dvh]',
+        'w-full h-full min-h-0 flex flex-col overflow-hidden bg-surface text-left font-mono text-xs select-text',
         className
       )}
     >
@@ -118,7 +118,7 @@ export function CsvPreview({
       </div>
 
       {/* Row Search Filter */}
-      <div className="px-4 py-1.5 border-b border-border/50 bg-surface/50 flex items-center gap-2 select-none">
+      <div className="px-4 py-1.5 border-b border-border/50 bg-surface/50 flex items-center gap-2 select-none shrink-0">
         <AppIcon icon={Search01Icon} size={14} className="text-muted-foreground shrink-0" />
         <Input
           value={searchQuery}
@@ -143,17 +143,17 @@ export function CsvPreview({
       </div>
 
       {/* Scrollable Data Table Viewport */}
-      <div className="flex-1 overflow-auto">
-        <table className="w-full text-xs text-left border-collapse">
-          <thead className="sticky top-0 bg-muted/90 backdrop-blur-xs text-muted-foreground font-mono text-[11px] border-b border-border/70 z-10 select-none">
+      <div className="flex-1 min-h-0 overflow-auto w-full">
+        <table className="min-w-full text-xs text-left border-collapse">
+          <thead className="sticky top-0 bg-muted/95 backdrop-blur-xs text-muted-foreground font-mono text-[11px] border-b border-border/70 z-10 select-none">
             <tr>
-              <th className="p-2.5 w-12 text-center border-r border-border/60 text-muted-foreground/60 select-none">
+              <th className="sticky left-0 z-20 p-2.5 w-12 text-center border-r border-border/60 text-muted-foreground/60 bg-muted select-none">
                 #
               </th>
               {parsed.headers.map((h, i) => (
                 <th
                   key={i}
-                  className="p-2.5 font-semibold text-foreground border-r border-border/60 last:border-r-0 whitespace-nowrap"
+                  className="p-2.5 font-semibold text-foreground border-r border-border/60 last:border-r-0 whitespace-nowrap bg-muted"
                 >
                   {h || `Col ${i + 1}`}
                 </th>
@@ -173,7 +173,7 @@ export function CsvPreview({
             ) : (
               filteredRows.map((row, rIdx) => (
                 <tr key={rIdx} className="hover:bg-muted/30 transition-colors">
-                  <td className="p-2 text-center border-r border-border/60 text-muted-foreground/60 bg-muted/10 select-none font-mono">
+                  <td className="sticky left-0 z-10 p-2 text-center border-r border-border/60 text-muted-foreground/60 bg-muted select-none font-mono">
                     {rIdx + 1}
                   </td>
                   {row.map((cell, cIdx) => (

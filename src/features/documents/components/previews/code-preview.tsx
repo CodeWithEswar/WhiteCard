@@ -70,7 +70,7 @@ export function CodePreview({
   }
 
   return (
-    <div className={cn('w-full flex-1 flex flex-col overflow-hidden bg-surface select-text font-mono text-xs', className)}>
+    <div className={cn('w-full h-full min-h-0 flex flex-col overflow-hidden bg-surface select-text font-mono text-xs', className)}>
       {/* Code Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-4 py-2 border-b border-border/70 bg-surface-muted/30 select-none shrink-0">
         <div className="flex items-center gap-2 min-w-0">

@@ -101,7 +101,7 @@ export function RtfPreview({
     return (
       <div
         className={cn(
-          'w-full flex-1 flex flex-col rounded-2xl border border-border/70 bg-card shadow-sm overflow-hidden text-left my-auto max-h-[84dvh]',
+          'w-full h-full min-h-0 flex flex-col bg-surface overflow-hidden text-left',
           className
         )}
       >
@@ -159,7 +159,7 @@ export function RtfPreview({
           </div>
         </div>
 
-        <div className="flex-1 overflow-auto p-6 font-mono text-xs text-foreground bg-card leading-relaxed">
+        <div className="flex-1 min-h-0 overflow-auto p-6 font-mono text-xs text-foreground bg-surface leading-relaxed">
           <div className={cn(isWrapped ? 'whitespace-pre-wrap break-words' : 'whitespace-pre overflow-x-auto')}>
             {extractedText}
           </div>
@@ -170,7 +170,7 @@ export function RtfPreview({
 
   // Fallback state (Prompt #37)
   return (
-    <div className={cn('w-full flex-1 flex items-center justify-center p-6 text-center select-none', className)}>
+    <div className={cn('w-full h-full min-h-0 flex items-center justify-center p-6 text-center select-none overflow-y-auto', className)}>
       <div className="max-w-md w-full p-8 rounded-3xl border border-border/80 bg-card/90 backdrop-blur-md space-y-6 shadow-sm">
         <div className="size-16 rounded-2xl border border-border bg-muted/40 flex items-center justify-center mx-auto text-foreground shadow-2xs">
           <AppIcon icon={File01Icon} size={32} />

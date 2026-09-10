@@ -20,7 +20,7 @@ export function DocumentViewerCanvas({
       <div className="absolute bottom-3 right-3 size-2.5 border-b border-r border-border/40 pointer-events-none" aria-hidden="true" />
 
       {/* Viewing Canvas Stage */}
-      <div className="relative flex-1 w-full h-full flex items-center justify-center overflow-hidden">
+      <div className="relative flex-1 w-full h-full min-h-0 flex flex-col overflow-hidden">
         {children}
       </div>
     </div>

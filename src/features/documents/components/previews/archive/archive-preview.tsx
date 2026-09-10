@@ -119,7 +119,7 @@ export function ArchivePreview({
   }
 
   return (
-    <div className="w-full h-full flex flex-col bg-surface overflow-hidden select-none">
+    <div className="w-full h-full min-h-0 flex flex-col bg-surface overflow-hidden select-none">
       {/* 1. Repository-like Header */}
       <ArchiveHeader
         archiveName={doc.originalFilename}
@@ -146,7 +146,7 @@ export function ArchivePreview({
       />
 
       {/* 3. Main Repository Workspace Body */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 min-h-0 flex overflow-hidden">
         {/* Collapsible Folder Tree Rail / Mobile Sheet */}
         <ArchiveFolderTree
           rootTree={parsedArchive.rootTree}
@@ -161,7 +161,7 @@ export function ArchivePreview({
         />
 
         {/* Content Viewer / File Browser */}
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 min-h-0 flex flex-col overflow-hidden">
           {activeEntry ? (
             /* File Content Preview View */
             <ArchiveFilePreviewRouter

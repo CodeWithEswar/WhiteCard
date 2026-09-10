@@ -201,7 +201,7 @@ export function SpreadsheetPreview({
   }
 
   return (
-    <div className={cn('w-full flex-1 flex flex-col overflow-hidden bg-surface select-text font-mono text-xs', className)}>
+    <div className={cn('w-full h-full min-h-0 flex flex-col overflow-hidden bg-surface select-text font-mono text-xs', className)}>
       {/* 1. Top Spreadsheet Control Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 px-4 py-2 border-b border-border/70 bg-surface-muted/30 select-none shrink-0">
         <div className="flex items-center gap-2 min-w-0">
@@ -279,18 +279,18 @@ export function SpreadsheetPreview({
       )}
 
       {/* 3. Main Data Table Grid */}
-      <div className="flex-1 overflow-auto">
-        <table className="w-full border-collapse text-left">
+      <div className="flex-1 min-h-0 overflow-auto w-full">
+        <table className="min-w-full border-collapse text-left">
           {/* Column Letters Row (A, B, C...) */}
-          <thead className="sticky top-0 z-10 bg-surface-elevated border-b border-border shadow-2xs font-semibold select-none">
+          <thead className="sticky top-0 z-10 bg-surface border-b border-border shadow-2xs font-semibold select-none">
             <tr>
-              <th className="w-12 py-1.5 px-3 text-[10px] text-muted-foreground font-mono text-right border-r border-border/60 bg-surface-muted/60">
+              <th className="sticky left-0 z-20 w-12 py-1.5 px-3 text-[10px] text-muted-foreground font-mono text-right border-r border-border/60 bg-surface-muted">
                 #
               </th>
               {activeSheet.headers.map((header, hIdx) => (
                 <th
                   key={hIdx}
-                  className="py-1.5 px-3 text-[11px] text-muted-foreground/80 border-r border-border/50 text-center font-mono"
+                  className="py-1.5 px-3 text-[11px] text-muted-foreground/80 border-r border-border/50 text-center font-mono bg-surface-muted"
                 >
                   {header}
                 </th>
@@ -306,7 +306,7 @@ export function SpreadsheetPreview({
                 className="hover:bg-surface-elevated/40 border-b border-border/40 transition-colors"
               >
                 {/* Row Number (1, 2, 3...) */}
-                <td className="py-1.5 px-3 text-[10px] text-muted-foreground/60 text-right border-r border-border/60 bg-surface-muted/20 select-none font-mono tabular-nums">
+                <td className="sticky left-0 z-10 py-1.5 px-3 text-[10px] text-muted-foreground/60 text-right border-r border-border/60 bg-surface-muted select-none font-mono tabular-nums">
                   {rIdx + 1}
                 </td>
 
@@ -317,7 +317,7 @@ export function SpreadsheetPreview({
                   return (
                     <td
                       key={cIdx}
-                      className="py-1.5 px-3 text-xs text-foreground/90 border-r border-border/40 truncate max-w-xs"
+                      className="py-1.5 px-3 text-xs text-foreground/90 border-r border-border/40 truncate max-w-xs whitespace-nowrap"
                       title={cellValue}
                     >
                       {cellValue}

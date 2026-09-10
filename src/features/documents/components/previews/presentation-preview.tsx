@@ -73,7 +73,7 @@ export function PresentationPreview({
   }, [arrayBuffer])
 
   return (
-    <div className={cn('w-full flex-1 flex items-center justify-center p-6 text-center select-none', className)}>
+    <div className={cn('w-full h-full min-h-0 flex items-center justify-center p-6 text-center select-none overflow-y-auto', className)}>
       <div className="max-w-md w-full p-8 rounded-3xl border border-border/80 bg-card/90 backdrop-blur-md space-y-6 shadow-sm">
         {/* Presentation Icon */}
         <div className="size-16 rounded-2xl border border-border bg-surface-muted flex items-center justify-center mx-auto text-foreground shadow-2xs">

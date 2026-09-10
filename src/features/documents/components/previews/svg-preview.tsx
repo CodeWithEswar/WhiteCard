@@ -106,7 +106,7 @@ export function SvgPreview({
   return (
     <div
       className={cn(
-        'w-full flex-1 flex flex-col rounded-2xl border border-border/70 bg-card shadow-sm overflow-hidden text-left my-auto max-h-[84dvh]',
+        'w-full h-full min-h-0 flex flex-col overflow-hidden bg-surface text-left',
         className
       )}
     >
@@ -236,7 +236,7 @@ export function SvgPreview({
 
       {/* Main Viewport */}
       {tab === 'vector' ? (
-        <div className="flex-1 overflow-auto p-6 flex items-center justify-center relative bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-muted/30 via-background to-background">
+        <div className="flex-1 min-h-0 overflow-auto p-6 flex items-center justify-center relative bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-muted/30 via-background to-background">
           {/* Subtle transparency checkerboard canvas */}
           <div
             className="p-8 rounded-2xl border border-border/70 shadow-sm flex items-center justify-center transition-transform duration-150"
@@ -261,7 +261,7 @@ export function SvgPreview({
           </div>
         </div>
       ) : (
-        <div className="flex-1 overflow-hidden">
+        <div className="flex-1 min-h-0 overflow-hidden">
           <ArchiveCodePreview
             filename={doc.originalFilename}
             content={content || ''}
