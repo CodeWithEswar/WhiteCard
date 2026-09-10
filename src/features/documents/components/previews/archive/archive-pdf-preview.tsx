@@ -255,7 +255,7 @@ export function ArchivePdfPreview({
 
         <div
           className={cn(
-            'rounded-2xl shadow-xl border border-border/80 bg-white overflow-hidden my-auto max-w-full transition-opacity',
+            'shadow-xl border border-border/70 overflow-hidden my-auto max-w-full transition-opacity bg-transparent',
             isLoading || error ? 'hidden' : 'block'
           )}
         >

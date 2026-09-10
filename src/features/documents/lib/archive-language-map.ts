@@ -240,75 +240,82 @@ export function tokenizeFullCode(code: string, filename: string): FormattedLine[
 }
 
 /**
- * Maps a Prism token type to White Card's monochrome-first semantic theme classes.
+ * Maps a Prism token type to rich, professional syntax theme classes (GitHub Dark/Light standard).
  */
 export function getMonochromeTokenClassName(type: string | null): string {
   if (!type) return 'text-foreground'
 
   switch (type) {
-    // Control flow, imports, declarations
+    // Control flow, keywords, imports, exports, returns
     case 'keyword':
     case 'atrule':
     case 'rule':
-      return 'font-semibold text-primary/95'
-
-    // Multi-line and single-line comments, docstrings
-    case 'comment':
-    case 'prolog':
-    case 'doctype':
-    case 'cdata':
-      return 'italic text-muted-foreground/60'
-
-    // Strings, template literals
-    case 'string':
-    case 'char':
-    case 'attr-value':
-      return 'text-emerald-700 dark:text-emerald-300/90 font-normal'
-
-    // Numbers, constants, booleans
-    case 'number':
-    case 'boolean':
-    case 'constant':
-      return 'text-amber-700 dark:text-amber-300/90 font-normal'
+      return 'text-[#cf222e] dark:text-[#ff7b72] font-semibold'
 
     // Functions and methods
     case 'function':
     case 'function-variable':
-      return 'font-medium text-foreground'
+      return 'text-[#8250df] dark:text-[#d2a8ff] font-medium'
 
     // Classes, interfaces, types, builtins
     case 'class-name':
     case 'builtin':
-      return 'font-medium text-foreground/90'
+      return 'text-[#953800] dark:text-[#ffa657] font-medium'
+
+    // Strings and characters
+    case 'string':
+    case 'char':
+    case 'attr-value':
+      return 'text-[#0a3069] dark:text-[#a5d6ff] font-normal'
+
+    // Numbers, constants, booleans, null, undefined
+    case 'number':
+    case 'boolean':
+    case 'constant':
+      return 'text-[#0550ae] dark:text-[#79c0ff] font-mono'
+
+    // Comments and docstrings
+    case 'comment':
+    case 'prolog':
+    case 'doctype':
+    case 'cdata':
+      return 'text-[#6e7781] dark:text-[#8b949e] italic font-normal'
 
     // HTML / JSX / XML tags
     case 'tag':
-      return 'font-semibold text-primary/90'
+      return 'text-[#116329] dark:text-[#7ee787] font-semibold'
 
     // HTML / JSX attributes
     case 'attr-name':
-      return 'text-muted-foreground font-normal'
+      return 'text-[#8250df] dark:text-[#d2a8ff] font-normal'
+
+    // Object keys, CSS properties
+    case 'property':
+      return 'text-[#0550ae] dark:text-[#79c0ff] font-medium'
+
+    // Variables, identifiers
+    case 'variable':
+      return 'text-[#953800] dark:text-[#ffa657]'
 
     // Operators and expressions
     case 'operator':
-      return 'text-muted-foreground/90'
+      return 'text-[#cf222e] dark:text-[#ff7b72]'
 
     // Punctuation (braces, brackets, commas, semicolons)
     case 'punctuation':
-      return 'text-muted-foreground/70'
+      return 'text-[#57606a] dark:text-[#8b949e]'
 
     // Regular expressions
     case 'regex':
     case 'important':
-      return 'text-rose-600 dark:text-rose-400 font-normal'
+      return 'text-[#116329] dark:text-[#7ee787] font-mono'
 
-    // Variables, properties, selectors
-    case 'variable':
-    case 'property':
-      return 'text-foreground'
-
+    // CSS selectors
     case 'selector':
-      return 'font-medium text-primary'
+      return 'text-[#116329] dark:text-[#7ee787] font-medium'
+
+    case 'unit':
+      return 'text-[#0550ae] dark:text-[#79c0ff]'
 
     default:
       return 'text-foreground'

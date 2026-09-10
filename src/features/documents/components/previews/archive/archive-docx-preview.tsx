@@ -79,7 +79,7 @@ export function ArchiveDocxPreview({
   }, [zip, path])
 
   return (
-    <div className={cn('relative w-full flex-1 flex flex-col overflow-hidden bg-muted/20 select-text', className)}>
+    <div className={cn('relative w-full flex-1 flex flex-col overflow-hidden bg-surface select-text', className)}>
       {/* Floating Zoom & Controls Bar */}
       <div className="sticky top-2 z-20 flex items-center justify-between gap-2 px-4 py-1.5 mx-auto rounded-full bg-surface-elevated/90 backdrop-blur-md border border-border/80 shadow-md text-xs select-none">
         <div className="flex items-center gap-1.5 text-muted-foreground font-mono text-[11px] pr-2 border-r border-border/60">
@@ -169,7 +169,7 @@ export function ArchiveDocxPreview({
             transition: 'transform 0.12s ease-out',
           }}
           className={cn(
-            'w-full max-w-4xl rounded-2xl shadow-md border border-border/80 bg-white text-black p-4 sm:p-10 transition-opacity',
+            'w-full max-w-4xl flex flex-col items-center bg-transparent transition-opacity',
             isLoading || error ? 'hidden' : 'block'
           )}
         />
