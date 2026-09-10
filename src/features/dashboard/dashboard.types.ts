@@ -15,12 +15,18 @@ export interface TagSummary {
   colorDot?: string
 }
 
-export interface StorageShareItem {
-  name: string
-  space: DocumentSpace
-  bytes: number
-  percent: number
-  colorVar: string
+export interface FileTypeDistributionItem {
+  type: string
+  label: string
+  count: number
+  color: string
+}
+
+export interface VaultHealthSummary {
+  validCount: number
+  expiringCount: number
+  expiredCount: number
+  healthPercentage: number
 }
 
 export interface DashboardSummary {
@@ -31,4 +37,6 @@ export interface DashboardSummary {
   tags: TagSummary[]
   totalBytes: number
   totalCount: number
+  fileTypes: FileTypeDistributionItem[]
+  health: VaultHealthSummary
 }

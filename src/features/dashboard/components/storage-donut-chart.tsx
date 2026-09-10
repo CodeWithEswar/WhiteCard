@@ -39,7 +39,7 @@ function StorageChartTooltip({ active, payload, totalBytes }: CustomTooltipProps
   const percent = totalBytes > 0 ? Math.round((bytes / totalBytes) * 100) : 0
 
   return (
-    <div className="rounded-xl border border-border bg-card/95 backdrop-blur-md px-3 py-2 shadow-lg text-xs">
+    <div className="rounded-xl border border-border bg-card/95 backdrop-blur-md px-3 py-2 shadow-lg text-xs z-50">
       <div className="flex items-center gap-2 mb-1">
         <span
           className="size-2 rounded-full shrink-0"
@@ -80,21 +80,21 @@ export function StorageDonutChart({
   const formattedTotal = useMemo(() => formatBytes(totalBytes), [totalBytes])
 
   return (
-    <div className="relative w-full h-52 sm:h-56 md:h-60 flex items-center justify-center">
+    <div className="relative size-36 sm:size-40 shrink-0 mx-auto flex items-center justify-center">
       <ResponsiveContainer width="100%" height="100%">
-        <PieChart>
+        <PieChart margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
           <Pie
             data={chartData}
             cx="50%"
             cy="50%"
-            innerRadius="65%"
-            outerRadius="88%"
+            innerRadius="68%"
+            outerRadius="92%"
             paddingAngle={totalBytes > 0 && governmentBytes > 0 && studentBytes > 0 ? 3 : 0}
             dataKey="value"
             stroke="var(--card)"
             strokeWidth={2}
             isAnimationActive={true}
-            animationDuration={500}
+            animationDuration={400}
           >
             {chartData.map((entry, index) => (
               <Cell
@@ -113,10 +113,10 @@ export function StorageDonutChart({
 
       {/* Center Label inside Donut */}
       <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
-        <span className="text-sm sm:text-base font-bold tracking-tight text-foreground font-mono">
+        <span className="text-xs sm:text-sm font-bold tracking-tight text-foreground font-mono leading-tight">
           {formattedTotal}
         </span>
-        <span className="text-[10px] sm:text-xs font-medium text-muted-foreground uppercase tracking-wider">
+        <span className="text-[9px] font-semibold text-muted-foreground uppercase tracking-wider mt-0.5">
           Used
         </span>
       </div>

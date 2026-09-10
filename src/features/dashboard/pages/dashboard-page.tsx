@@ -10,7 +10,7 @@ import { DashboardHeader } from '../components/dashboard-header'
 import { DashboardSpaceGrid } from '../components/dashboard-space-grid'
 import { RecentDocumentsSection } from '../components/recent-documents-section'
 import { ExpiringDocumentsSection } from '../components/expiring-documents-section'
-import { StorageOverview } from '../components/storage-overview'
+import { DashboardChartsGrid } from '../components/dashboard-charts-grid'
 import { TagShortcuts } from '../components/tag-shortcuts'
 import { DashboardSkeleton } from '../components/dashboard-skeleton'
 import { DashboardEmptyState } from '../components/dashboard-empty-state'
@@ -21,7 +21,7 @@ import type { VaultDocument, DocumentSpace } from '@/types/document'
 
 export function DashboardPage() {
   const reduceMotion = useAppReducedMotion()
-  const { data, isPending, isError, error, refetch, isFetching } = useDashboardSummary()
+  const { data, isPending, isError, error, refetch } = useDashboardSummary()
 
   const [uploadOpen, setUploadOpen] = useState(false)
   const [defaultSpace, setDefaultSpace] = useState<DocumentSpace>('government')
@@ -101,7 +101,7 @@ export function DashboardPage() {
     >
       <PageMeta title="White Card — Vault Home" noIndex noFollow />
 
-      {/* Section 63: Background refresh subtle warning banner if refresh fails with cached data */}
+      {/* Background refresh subtle warning banner if refresh fails with cached data */}
       {isError && data && (
         <div className="mb-4 px-3.5 py-2.5 rounded-xl border border-amber-500/20 bg-amber-500/10 text-amber-900 dark:text-amber-200 text-xs flex items-center justify-between">
           <span className="flex items-center gap-2 font-medium">
@@ -143,37 +143,15 @@ export function DashboardPage() {
           onUploadClick={() => handleOpenUpload('government')}
         />
 
-        {/* 3. CONTEXTUAL & UTILITY ROW: Expiring Soon (if real) & Storage */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
-          {hasExpiring ? (
-            <>
-              <div className="lg:col-span-7">
-                <ExpiringDocumentsSection documents={summary.expiringDocuments} />
-              </div>
-              <div className="lg:col-span-5">
-                <StorageOverview
-                  governmentBytes={summary.government.bytes}
-                  studentBytes={summary.student.bytes}
-                  totalBytes={summary.totalBytes}
-                  totalCount={summary.totalCount}
-                  onUploadClick={() => handleOpenUpload('government')}
-                />
-              </div>
-            </>
-          ) : (
-            <div className="lg:col-span-12">
-              <StorageOverview
-                governmentBytes={summary.government.bytes}
-                studentBytes={summary.student.bytes}
-                totalBytes={summary.totalBytes}
-                totalCount={summary.totalCount}
-                onUploadClick={() => handleOpenUpload('government')}
-              />
-            </div>
-          )}
-        </div>
+        {/* 3. ANALYTICS ROW: 4 Charts in a row on Desktop, 2 in a row on Tablet/Remaining UI */}
+        <DashboardChartsGrid summary={summary} />
 
-        {/* 4. UTILITY: Tag Shortcuts */}
+        {/* 4. CONTEXTUAL: Expiring Soon (only if meaningful data exists) */}
+        {hasExpiring && (
+          <ExpiringDocumentsSection documents={summary.expiringDocuments} />
+        )}
+
+        {/* 5. UTILITY: Tag Shortcuts */}
         <TagShortcuts tags={summary.tags} />
       </motion.div>
 
