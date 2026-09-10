@@ -28,7 +28,7 @@ export function SearchResultsGrid({
   return (
     <div
       className={cn(
-        'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5',
+        'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5 items-stretch',
         className
       )}
     >
@@ -42,6 +42,7 @@ export function SearchResultsGrid({
             delay: reduceMotion ? 0 : Math.min(idx * 0.025, 0.25),
             ease: 'easeOut',
           }}
+          className="h-full flex flex-col"
         >
           <SearchResultCard
             document={doc}
@@ -50,6 +51,7 @@ export function SearchResultsGrid({
             onShare={onShare}
             onDownload={onDownload}
             onDelete={onDelete}
+            className="h-full"
           />
         </motion.div>
       ))}

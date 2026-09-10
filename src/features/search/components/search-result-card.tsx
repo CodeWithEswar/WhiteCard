@@ -72,12 +72,13 @@ export function SearchResultCard({
         'group relative flex flex-col justify-between p-4 rounded-2xl border border-border/80 bg-surface text-left cursor-pointer select-none transition-all duration-150',
         'hover:border-border-strong hover:bg-surface-elevated/40 hover:shadow-sm',
         'outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-ring',
+        'h-full min-h-[210px]',
         className
       )}
     >
-      <div className="space-y-3">
+      <div className="space-y-2.5">
         {/* Card Header: Type Icon & Dropdown Menu */}
-        <div className="flex items-center justify-between gap-2">
+        <div className="h-7 flex items-center justify-between gap-2">
           <DocumentTypeIcon type={doc.fileType} size={18} />
 
           <div
@@ -158,25 +159,27 @@ export function SearchResultCard({
           </div>
         </div>
 
-        {/* Title with Subtle Highlight */}
-        <div>
-          <h3 className="font-medium text-sm text-foreground line-clamp-2 leading-snug group-hover:text-primary transition-colors">
-            {titleSegments.map((seg, idx) =>
-              seg.match ? (
-                <mark
-                  key={idx}
-                  className="bg-primary/15 text-foreground font-semibold px-0.5 rounded-xs"
-                >
-                  {seg.text}
-                </mark>
-              ) : (
-                <span key={idx}>{seg.text}</span>
-              )
-            )}
+        {/* Title with Uniform 2-line Slot */}
+        <div className="space-y-1">
+          <h3 className="h-10 font-medium text-sm text-foreground line-clamp-2 leading-snug group-hover:text-primary transition-colors flex items-start">
+            <span>
+              {titleSegments.map((seg, idx) =>
+                seg.match ? (
+                  <mark
+                    key={idx}
+                    className="bg-primary/15 text-foreground font-semibold px-0.5 rounded-xs"
+                  >
+                    {seg.text}
+                  </mark>
+                ) : (
+                  <span key={idx}>{seg.text}</span>
+                )
+              )}
+            </span>
           </h3>
 
-          {/* Space • Category */}
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-1">
+          {/* Space • Category with Fixed 1-line Height */}
+          <div className="h-4 flex items-center gap-1.5 text-xs text-muted-foreground truncate">
             <span className="capitalize">{doc.space}</span>
             <span className="text-border-strong">•</span>
             <span className="truncate">{doc.category || 'General'}</span>
@@ -184,35 +187,39 @@ export function SearchResultCard({
         </div>
       </div>
 
-      {/* Card Footer: Metadata and Tags */}
-      <div className="pt-3 mt-3 border-t border-border/50 space-y-2">
-        <div className="flex items-center justify-between text-[11px] text-muted-foreground font-mono">
-          <span className="uppercase">{doc.fileType} • {doc.sizeFormatted}</span>
-          <span>{formatSearchDate(doc.createdAt)}</span>
+      {/* Card Footer: Metadata and Tags with Uniform Height */}
+      <div className="pt-3 mt-auto border-t border-border/50 space-y-2">
+        <div className="h-4 flex items-center justify-between text-[11px] text-muted-foreground font-mono">
+          <span className="uppercase truncate mr-2">{doc.fileType} • {doc.sizeFormatted}</span>
+          <span className="shrink-0">{formatSearchDate(doc.createdAt)}</span>
         </div>
 
-        {/* Tags with monochrome neutral label & tiny color dot */}
-        {visibleTags.length > 0 && (
-          <div className="flex items-center gap-1.5 flex-wrap">
-            {visibleTags.map((tag) => {
-              const colorConfig = resolveTagColor(tag)
-              return (
-                <span
-                  key={tag}
-                  className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-md border border-border/70 bg-surface-muted/50 text-foreground/85"
-                >
-                  <span className={`size-1.5 rounded-full ${colorConfig.dot}`} />
-                  <span>{tag}</span>
+        {/* Tags with monochrome neutral label & tiny color dot - Fixed Height */}
+        <div className="h-6 flex items-center gap-1.5 overflow-hidden">
+          {visibleTags.length > 0 ? (
+            <>
+              {visibleTags.map((tag) => {
+                const colorConfig = resolveTagColor(tag)
+                return (
+                  <span
+                    key={tag}
+                    className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-md border border-border/70 bg-surface-muted/50 text-foreground/85 shrink-0"
+                  >
+                    <span className={`size-1.5 rounded-full ${colorConfig.dot}`} />
+                    <span className="truncate max-w-20">{tag}</span>
+                  </span>
+                )
+              })}
+              {remainingTagsCount > 0 && (
+                <span className="text-[10px] text-muted-foreground font-medium px-1 shrink-0">
+                  +{remainingTagsCount}
                 </span>
-              )
-            })}
-            {remainingTagsCount > 0 && (
-              <span className="text-[10px] text-muted-foreground font-medium px-1">
-                +{remainingTagsCount}
-              </span>
-            )}
-          </div>
-        )}
+              )}
+            </>
+          ) : (
+            <span className="text-[10px] text-muted-foreground/40 italic">No tags</span>
+          )}
+        </div>
       </div>
     </motion.div>
   )
