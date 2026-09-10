@@ -104,7 +104,7 @@ export function SharingShowcase() {
                     Direct link
                   </label>
                   <div className="flex items-center gap-2">
-                    <div className="flex-1 bg-muted/50 border border-border/70 rounded-xl px-3 py-2 text-xs font-mono text-muted-foreground truncate">
+                    <div className="min-w-0 flex-1 bg-muted/50 border border-border/70 rounded-xl px-3 py-2 text-xs font-mono text-muted-foreground truncate">
                       whitecard-in.vercel.app/share/e4f7a912b…
                     </div>
                     <Button
@@ -138,15 +138,15 @@ export function SharingShowcase() {
                 </div>
 
                 {/* Revoke Action */}
-                <div className="pt-2 border-t border-border/60 flex items-center justify-between">
-                  <span className="text-[11px] text-muted-foreground font-mono">
+                <div className="pt-2 border-t border-border/60 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2">
+                  <span className="text-[11px] text-muted-foreground font-mono truncate">
                     Created today • 0 views
                   </span>
                   <Button
                     type="button"
                     variant="outline"
                     size="sm"
-                    className="h-8 px-3 text-xs text-rose-600 dark:text-rose-400 border-rose-500/30 hover:bg-rose-500/10 rounded-xl gap-1.5"
+                    className="h-8 px-3 text-xs text-foreground border-border/80 hover:bg-muted rounded-xl gap-1.5 shrink-0"
                   >
                     <AppIcon icon={Delete02Icon} size={13} />
                     <span>Revoke link</span>

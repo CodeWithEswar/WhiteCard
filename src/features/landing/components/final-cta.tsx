@@ -65,12 +65,12 @@ export function FinalCta() {
             </div>
 
             {/* Factual Trust Line */}
-            <div className="relative z-10 pt-2 text-xs text-muted-foreground flex items-center justify-center gap-2 font-medium">
+            <div className="relative z-10 pt-2 text-xs text-muted-foreground flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap font-medium text-center">
               <span className="flex items-center gap-1.5">
                 <AppIcon icon={GoogleIcon} size={13} />
                 Google sign-in
               </span>
-              <span>•</span>
+              <span className="text-border">•</span>
               <span>No separate White Card password</span>
             </div>
           </div>

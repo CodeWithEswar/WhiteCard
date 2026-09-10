@@ -111,16 +111,16 @@ export function SpacesShowcase() {
 
                 {/* Mock Document Cards */}
                 <div className="space-y-2 pt-2">
-                  <div className="p-3 rounded-xl border border-border/70 bg-muted/25 flex items-center justify-between">
-                    <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="p-2.5 sm:p-3 rounded-xl border border-border/70 bg-muted/25 flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2.5 min-w-0 flex-1">
                       <AppIcon icon={Pdf01Icon} size={16} className="text-foreground shrink-0" />
-                      <div className="min-w-0">
+                      <div className="min-w-0 flex-1">
                         <p className="text-xs font-semibold text-foreground truncate">
                           Passport_Document.pdf
                         </p>
-                        <p className="text-[10px] text-muted-foreground font-mono flex items-center gap-1">
-                          <AppIcon icon={Calendar03Icon} size={10} />
-                          Expires 2033
+                        <p className="text-[10px] text-muted-foreground font-mono flex items-center gap-1 truncate">
+                          <AppIcon icon={Calendar03Icon} size={10} className="shrink-0" />
+                          <span>Expires 2033</span>
                         </p>
                       </div>
                     </div>
@@ -129,16 +129,16 @@ export function SpacesShowcase() {
                     </span>
                   </div>
 
-                  <div className="p-3 rounded-xl border border-border/70 bg-muted/25 flex items-center justify-between">
-                    <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="p-2.5 sm:p-3 rounded-xl border border-border/70 bg-muted/25 flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2.5 min-w-0 flex-1">
                       <AppIcon icon={Image01Icon} size={16} className="text-foreground shrink-0" />
-                      <div className="min-w-0">
+                      <div className="min-w-0 flex-1">
                         <p className="text-xs font-semibold text-foreground truncate">
                           Driving_Licence_Front.png
                         </p>
-                        <p className="text-[10px] text-muted-foreground font-mono flex items-center gap-1">
-                          <AppIcon icon={Calendar03Icon} size={10} />
-                          Expires 2028
+                        <p className="text-[10px] text-muted-foreground font-mono flex items-center gap-1 truncate">
+                          <AppIcon icon={Calendar03Icon} size={10} className="shrink-0" />
+                          <span>Expires 2028</span>
                         </p>
                       </div>
                     </div>
@@ -211,16 +211,16 @@ export function SpacesShowcase() {
 
                 {/* Mock Document Cards */}
                 <div className="space-y-2 pt-2">
-                  <div className="p-3 rounded-xl border border-border/70 bg-muted/25 flex items-center justify-between">
-                    <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="p-2.5 sm:p-3 rounded-xl border border-border/70 bg-muted/25 flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2.5 min-w-0 flex-1">
                       <AppIcon icon={Pdf01Icon} size={16} className="text-foreground shrink-0" />
-                      <div className="min-w-0">
+                      <div className="min-w-0 flex-1">
                         <p className="text-xs font-semibold text-foreground truncate">
                           Degree_Certificate_Official.pdf
                         </p>
-                        <p className="text-[10px] text-muted-foreground font-mono flex items-center gap-1">
-                          <AppIcon icon={Building03Icon} size={10} />
-                          Conferred 2024
+                        <p className="text-[10px] text-muted-foreground font-mono flex items-center gap-1 truncate">
+                          <AppIcon icon={Building03Icon} size={10} className="shrink-0" />
+                          <span>Conferred 2024</span>
                         </p>
                       </div>
                     </div>
@@ -229,16 +229,16 @@ export function SpacesShowcase() {
                     </span>
                   </div>
 
-                  <div className="p-3 rounded-xl border border-border/70 bg-muted/25 flex items-center justify-between">
-                    <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="p-2.5 sm:p-3 rounded-xl border border-border/70 bg-muted/25 flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2.5 min-w-0 flex-1">
                       <AppIcon icon={Zip01Icon} size={16} className="text-foreground shrink-0" />
-                      <div className="min-w-0">
+                      <div className="min-w-0 flex-1">
                         <p className="text-xs font-semibold text-foreground truncate">
                           Cumulative_Transcripts.zip
                         </p>
-                        <p className="text-[10px] text-muted-foreground font-mono flex items-center gap-1">
-                          <AppIcon icon={Building03Icon} size={10} />
-                          8 Semesters
+                        <p className="text-[10px] text-muted-foreground font-mono flex items-center gap-1 truncate">
+                          <AppIcon icon={Building03Icon} size={10} className="shrink-0" />
+                          <span>8 Semesters</span>
                         </p>
                       </div>
                     </div>

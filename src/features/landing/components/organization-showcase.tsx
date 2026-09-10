@@ -9,12 +9,12 @@ import { AppIcon } from '../../../components/icons/app-icon'
 import { Reveal } from '../../../components/motion/reveal'
 
 const tags = [
-  { name: 'Identity', color: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20' },
-  { name: 'Travel', color: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20' },
-  { name: 'Education', color: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20' },
-  { name: 'Vehicle', color: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20' },
-  { name: 'Renewal', color: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20' },
-  { name: 'Personal', color: 'bg-zinc-500/10 text-zinc-600 dark:text-zinc-400 border-zinc-500/20' },
+  { name: 'Identity' },
+  { name: 'Travel' },
+  { name: 'Education' },
+  { name: 'Vehicle' },
+  { name: 'Renewal' },
+  { name: 'Personal' },
 ] as const
 
 const mockResults = [
@@ -22,7 +22,6 @@ const mockResults = [
     title: 'Identity Document.pdf',
     space: 'Government',
     tag: 'Identity',
-    tagClass: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20',
     size: '2.4 MB',
     date: 'Updated 2 days ago',
   },
@@ -30,7 +29,6 @@ const mockResults = [
     title: 'Degree Certificate.pdf',
     space: 'Student',
     tag: 'Education',
-    tagClass: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20',
     size: '3.8 MB',
     date: 'Updated last week',
   },
@@ -38,7 +36,6 @@ const mockResults = [
     title: 'Vehicle Insurance.pdf',
     space: 'Government',
     tag: 'Vehicle',
-    tagClass: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
     size: '1.2 MB',
     date: 'Updated 3 weeks ago',
   },
@@ -118,7 +115,7 @@ export function OrganizationShowcase() {
                   {tags.map((t) => (
                     <span
                       key={t.name}
-                      className={`text-[10.5px] sm:text-[11px] font-semibold px-2 sm:px-2.5 py-0.5 rounded-md border ${t.color}`}
+                      className="text-[10.5px] sm:text-[11px] font-medium px-2 sm:px-2.5 py-0.5 rounded-md border border-border/70 bg-muted/60 text-foreground"
                     >
                       {t.name}
                     </span>
@@ -153,11 +150,11 @@ export function OrganizationShowcase() {
                     </div>
 
                     <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-                      <span className={`text-[10.5px] sm:text-[11px] font-semibold px-2 sm:px-2.5 py-0.5 rounded-md border ${doc.tagClass}`}>
+                      <span className="text-[10.5px] sm:text-[11px] font-medium px-2 sm:px-2.5 py-0.5 rounded-md border border-border/70 bg-muted/60 text-foreground">
                         {doc.tag}
                       </span>
                       <span className="hidden sm:inline-flex items-center gap-1 text-[11px] text-muted-foreground font-mono">
-                        <AppIcon icon={CheckmarkCircle01Icon} size={13} className="text-emerald-500" />
+                        <AppIcon icon={CheckmarkCircle01Icon} size={13} className="text-foreground" />
                         Stored
                       </span>
                     </div>

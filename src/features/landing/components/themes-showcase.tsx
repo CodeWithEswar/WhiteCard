@@ -97,7 +97,7 @@ export function ThemesShowcase() {
 
         {/* 10 Theme Semantic Preview Cards (5x2 Desktop, 3 cols Tablet, 2 cols Mobile) */}
         <Reveal delay={0.2}>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3.5 max-w-5xl mx-auto">
             {allThemes.map((t) => {
               const isSelected = theme === t.id
               const colors = isDark ? t.dark : t.light
@@ -110,7 +110,7 @@ export function ThemesShowcase() {
                   key={t.id}
                   type="button"
                   onClick={() => setTheme(t.id as ThemeId)}
-                  className={`relative p-3 rounded-2xl border text-left transition-all duration-200 group flex flex-col justify-between ${
+                  className={`relative p-2.5 sm:p-3 rounded-2xl border text-left transition-all duration-200 group flex flex-col justify-between ${
                     isSelected
                       ? 'border-primary ring-2 ring-primary/30 shadow-md bg-card'
                       : 'border-border/70 hover:border-border bg-card/60 hover:bg-card'
@@ -120,7 +120,7 @@ export function ThemesShowcase() {
                 >
                   {/* Semantic Mini Layout Preview */}
                   <div
-                    className="w-full h-24 rounded-xl border p-2 flex flex-col justify-between overflow-hidden relative shadow-2xs"
+                    className="w-full h-20 sm:h-24 rounded-xl border p-2 flex flex-col justify-between overflow-hidden relative shadow-2xs"
                     style={{
                       backgroundColor: pageBg,
                       borderColor: borderColor,
@@ -175,23 +175,23 @@ export function ThemesShowcase() {
                   </div>
 
                   {/* Label & Active State */}
-                  <div className="pt-2.5 flex items-center justify-between w-full">
-                    <div>
-                      <p className="text-xs font-bold text-foreground tracking-tight">
+                  <div className="pt-2 sm:pt-2.5 flex items-center justify-between w-full min-w-0">
+                    <div className="min-w-0 pr-1">
+                      <p className="text-xs font-bold text-foreground tracking-tight truncate">
                         {t.label}
                       </p>
-                      <p className="text-[10px] text-muted-foreground font-mono">
+                      <p className="text-[10px] text-muted-foreground font-mono truncate">
                         {t.id === 'zinc' ? 'Default' : 'Semantic'}
                       </p>
                     </div>
 
                     {isSelected ? (
-                      <div className="size-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-xs">
+                      <div className="size-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-xs shrink-0">
                         <AppIcon icon={Tick02Icon} size={12} />
                       </div>
                     ) : (
                       <div
-                        className="size-4 rounded-full border border-border/80 group-hover:scale-110 transition-transform"
+                        className="size-4 rounded-full border border-border/80 group-hover:scale-110 transition-transform shrink-0"
                         style={{ backgroundColor: t.previewColor }}
                       />
                     )}

@@ -117,21 +117,21 @@ export function FileTypesShowcase() {
 
         {/* Important Clarification Callout Note */}
         <Reveal delay={0.2} className="max-w-3xl mx-auto mt-12">
-          <div className="rounded-2xl border border-border/70 bg-muted/25 p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-muted text-foreground shrink-0">
+          <div className="rounded-2xl border border-border/70 bg-muted/25 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-left">
+            <div className="flex items-start gap-3 min-w-0">
+              <div className="p-2 rounded-xl bg-muted text-foreground shrink-0 mt-0.5">
                 <AppIcon icon={AlertCircleIcon} size={18} />
               </div>
-              <div className="space-y-0.5">
+              <div className="space-y-0.5 min-w-0">
                 <h4 className="text-xs font-bold text-foreground">
                   Preview Support Clarification
                 </h4>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   Preview support depends on file type and browser capabilities. Files that cannot be previewed in the browser can always be downloaded in their original format.
                 </p>
               </div>
             </div>
-            <div className="inline-flex items-center gap-1.5 text-[11px] font-mono text-muted-foreground px-3 py-1.5 rounded-xl bg-card border border-border/60 shrink-0">
+            <div className="inline-flex items-center gap-1.5 text-[11px] font-mono text-muted-foreground px-3 py-1.5 rounded-xl bg-card border border-border/60 shrink-0 self-start sm:self-auto">
               <AppIcon icon={Download01Icon} size={13} />
               <span>Original Preservation</span>
             </div>

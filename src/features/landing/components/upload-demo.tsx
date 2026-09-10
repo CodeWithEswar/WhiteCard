@@ -96,17 +96,18 @@ export function UploadDemo() {
                 {queueItems.map((item) => (
                   <div
                     key={item.name}
-                    className="p-3.5 sm:p-4 rounded-xl border border-border/70 bg-muted/20 flex items-center justify-between gap-4"
+                    className="p-3 sm:p-4 rounded-xl border border-border/70 bg-muted/20 flex items-center justify-between gap-2.5 sm:gap-4"
                   >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="size-9 rounded-xl bg-card border border-border/70 flex items-center justify-center text-foreground shrink-0 shadow-2xs">
-                        <AppIcon icon={item.icon} size={18} />
+                    <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
+                      <div className="size-8 sm:size-9 rounded-xl bg-card border border-border/70 flex items-center justify-center text-foreground shrink-0 shadow-2xs">
+                        <AppIcon icon={item.icon} size={16} className="sm:hidden" />
+                        <AppIcon icon={item.icon} size={18} className="hidden sm:block" />
                       </div>
-                      <div className="min-w-0">
+                      <div className="min-w-0 flex-1">
                         <p className="text-xs sm:text-sm font-semibold text-foreground truncate">
                           {item.name}
                         </p>
-                        <p className="text-[11px] text-muted-foreground font-mono">
+                        <p className="text-[11px] text-muted-foreground font-mono truncate">
                           {item.size}
                         </p>
                       </div>
@@ -114,7 +115,7 @@ export function UploadDemo() {
 
                     <div className="shrink-0">
                       <span
-                        className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-lg border ${item.statusColor}`}
+                        className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-medium px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg border border-border/80 bg-muted/70 text-foreground"
                       >
                         {item.stage === 'Complete' && (
                           <AppIcon icon={CheckmarkCircle01Icon} size={13} />

@@ -62,43 +62,43 @@ export function ResponsivePreview() {
                     <AppIcon icon={LaptopIcon} size={15} className="text-foreground" />
                     <span className="font-semibold text-foreground">Desktop Layout</span>
                   </div>
-                  <span className="text-[10px] font-mono">Sidebar + Topbar + Content Canvas</span>
+                  <span className="hidden sm:inline text-[10px] font-mono">Sidebar + Topbar + Canvas</span>
                 </div>
 
                 {/* Simulated Desktop Interface */}
-                <div className="rounded-xl border border-border/60 bg-muted/20 overflow-hidden flex h-52">
+                <div className="rounded-xl border border-border/60 bg-muted/20 overflow-hidden flex h-48 sm:h-52">
                   {/* Left Sidebar */}
-                  <div className="w-36 border-r border-border/60 p-3 bg-muted/40 space-y-2 shrink-0">
-                    <div className="h-2 w-16 rounded bg-primary/40 mb-3" />
-                    <div className="flex items-center gap-1.5 px-2 py-1.5 rounded-xl bg-primary text-primary-foreground text-[10px] font-semibold">
-                      <AppIcon icon={Passport01Icon} size={11} />
+                  <div className="w-24 sm:w-36 border-r border-border/60 p-2 sm:p-3 bg-muted/40 space-y-2 shrink-0">
+                    <div className="h-2 w-12 sm:w-16 rounded bg-primary/40 mb-2 sm:mb-3" />
+                    <div className="flex items-center gap-1 sm:gap-1.5 px-1.5 sm:px-2 py-1.5 rounded-xl bg-primary text-primary-foreground text-[9px] sm:text-[10px] font-semibold">
+                      <AppIcon icon={Passport01Icon} size={11} className="shrink-0" />
                       <span className="truncate">Government</span>
                     </div>
-                    <div className="flex items-center gap-1.5 px-2 py-1.5 rounded-xl text-muted-foreground text-[10px] font-medium">
-                      <AppIcon icon={Certificate01Icon} size={11} />
+                    <div className="flex items-center gap-1 sm:gap-1.5 px-1.5 sm:px-2 py-1.5 rounded-xl text-muted-foreground text-[9px] sm:text-[10px] font-medium">
+                      <AppIcon icon={Certificate01Icon} size={11} className="shrink-0" />
                       <span className="truncate">Student</span>
                     </div>
-                    <div className="h-px bg-border/50 my-2" />
-                    <div className="h-1.5 w-12 rounded bg-muted-foreground/30" />
-                    <div className="h-1.5 w-20 rounded bg-muted-foreground/30" />
+                    <div className="h-px bg-border/50 my-1.5 sm:my-2" />
+                    <div className="h-1.5 w-10 sm:w-12 rounded bg-muted-foreground/30" />
+                    <div className="h-1.5 w-14 sm:w-20 rounded bg-muted-foreground/30" />
                   </div>
 
                   {/* Main Canvas Area */}
-                  <div className="flex-1 p-3 space-y-2 overflow-hidden">
+                  <div className="flex-1 p-2.5 sm:p-3 space-y-2 overflow-hidden min-w-0">
                     <div className="flex items-center justify-between">
-                      <div className="h-2 w-24 rounded bg-muted-foreground/40" />
-                      <div className="h-5 w-20 rounded bg-muted border border-border/60" />
+                      <div className="h-2 w-16 sm:w-24 rounded bg-muted-foreground/40" />
+                      <div className="h-4 sm:h-5 w-14 sm:w-20 rounded bg-muted border border-border/60" />
                     </div>
-                    <div className="grid grid-cols-2 gap-2 pt-1">
-                      <div className="p-2.5 rounded-xl border border-border/60 bg-card space-y-2 shadow-2xs">
-                        <div className="p-1 rounded bg-blue-500/10 text-blue-500 w-fit">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                      <div className="p-2 sm:p-2.5 rounded-xl border border-border/60 bg-card space-y-1.5 sm:space-y-2 shadow-2xs">
+                        <div className="p-1 rounded bg-muted text-foreground w-fit">
                           <AppIcon icon={Pdf01Icon} size={12} />
                         </div>
                         <div className="h-1.5 w-16 rounded bg-foreground/60" />
                         <div className="h-1 w-10 rounded bg-muted-foreground/40" />
                       </div>
-                      <div className="p-2.5 rounded-xl border border-border/60 bg-card space-y-2 shadow-2xs">
-                        <div className="p-1 rounded bg-purple-500/10 text-purple-500 w-fit">
+                      <div className="hidden sm:block p-2.5 rounded-xl border border-border/60 bg-card space-y-2 shadow-2xs">
+                        <div className="p-1 rounded bg-muted text-foreground w-fit">
                           <AppIcon icon={Pdf01Icon} size={12} />
                         </div>
                         <div className="h-1.5 w-20 rounded bg-foreground/60" />

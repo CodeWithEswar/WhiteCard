@@ -1,31 +1,6 @@
 import { PageMeta } from '../../../components/seo/page-meta'
 import { LegalLayout } from '../components/legal-layout'
 import { LegalSection } from '../components/legal-section'
-import type { TocItem } from '../components/legal-table-of-contents'
-
-const termsTocItems: TocItem[] = [
-  { id: 'acceptance', number: '01', title: 'Acceptance of Terms' },
-  { id: 'about', number: '02', title: 'About White Card' },
-  { id: 'eligibility', number: '03', title: 'Eligibility' },
-  { id: 'account-auth', number: '04', title: 'Account & Google Auth' },
-  { id: 'responsibilities', number: '05', title: 'User Responsibilities' },
-  { id: 'content', number: '06', title: 'Uploaded Content' },
-  { id: 'acceptable-use', number: '07', title: 'Acceptable Use' },
-  { id: 'prohibited', number: '08', title: 'Prohibited Files & Activities' },
-  { id: 'storage', number: '09', title: 'Storage & Availability' },
-  { id: 'metadata', number: '10', title: 'Document Metadata' },
-  { id: 'sharing', number: '11', title: 'Direct Sharing Links' },
-  { id: 'deletion', number: '12', title: 'User-Controlled Deletion' },
-  { id: 'service-changes', number: '13', title: 'Service Changes' },
-  { id: 'termination', number: '14', title: 'Suspension & Termination' },
-  { id: 'reliability', number: '15', title: 'Availability & Reliability' },
-  { id: 'ip', number: '16', title: 'Intellectual Property' },
-  { id: 'third-parties', number: '17', title: 'Third-Party Services' },
-  { id: 'disclaimers', number: '18', title: 'Disclaimers' },
-  { id: 'liability', number: '19', title: 'Limitation of Liability' },
-  { id: 'terms-changes', number: '20', title: 'Changes to These Terms' },
-  { id: 'contact', number: '21', title: 'Contact Information' },
-]
 
 export function TermsPage() {
   return (
@@ -40,7 +15,6 @@ export function TermsPage() {
         title="Terms of Service"
         lastUpdated="September 2026"
         subtitle="These terms govern your access to and use of White Card, our personal digital document storage application."
-        tocItems={termsTocItems}
       >
         <LegalSection id="acceptance" number="01" title="Acceptance of Terms">
           <p>
@@ -166,16 +140,6 @@ export function TermsPage() {
           <p>
             We may revise these Terms of Service periodically. The revised terms will become effective upon posting to this URL. Continued use of White Card following the posting of changes constitutes acceptance of the modified terms.
           </p>
-        </LegalSection>
-
-        <LegalSection id="contact" number="21" title="Contact Information">
-          <p>
-            For questions or inquiries regarding these Terms of Service, please reach out to:
-          </p>
-          <div className="p-4 rounded-xl border border-border/70 bg-muted/20 text-xs font-mono space-y-1">
-            <p>Email: legal@whitecard.app</p>
-            <p>Product: White Card Vault</p>
-          </div>
         </LegalSection>
       </LegalLayout>
     </>

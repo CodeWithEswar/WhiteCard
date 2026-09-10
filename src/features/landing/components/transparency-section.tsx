@@ -88,12 +88,13 @@ export function TransparencySection() {
 
         {/* Prominent OCR Transparency Declaration */}
         <Reveal delay={0.2} className="max-w-4xl mx-auto mt-12">
-          <div className="rounded-3xl border border-border/80 bg-background p-6 sm:p-8 shadow-sm flex flex-col sm:flex-row items-start sm:items-center gap-6 text-left">
-            <div className="p-3.5 rounded-2xl bg-muted text-foreground shrink-0">
-              <AppIcon icon={CheckmarkCircle01Icon} size={26} className="text-emerald-500" />
+          <div className="rounded-2xl sm:rounded-3xl border border-border/80 bg-background p-5 sm:p-8 shadow-sm flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 text-left">
+            <div className="p-3 sm:p-3.5 rounded-2xl bg-muted text-foreground shrink-0">
+              <AppIcon icon={CheckmarkCircle01Icon} size={24} className="text-foreground sm:hidden" />
+              <AppIcon icon={CheckmarkCircle01Icon} size={26} className="text-foreground hidden sm:block" />
             </div>
-            <div className="space-y-1.5">
-              <div className="inline-flex items-center gap-2 text-xs font-bold text-foreground uppercase tracking-wider">
+            <div className="space-y-1.5 min-w-0">
+              <div className="inline-flex items-center gap-2 text-xs font-bold text-foreground uppercase tracking-wider flex-wrap">
                 <span>OCR Transparency Declaration</span>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-muted text-muted-foreground">
                   Factual Standard

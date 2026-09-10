@@ -131,7 +131,7 @@ export function HeroDocumentStack() {
               className="group p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border border-border/80 bg-card hover:border-border transition-colors shadow-xs flex items-center justify-between gap-2.5 sm:gap-4"
             >
               <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0 flex-1">
-                <div className="size-9 sm:size-10 rounded-lg sm:rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 flex items-center justify-center shrink-0">
+                <div className="size-9 sm:size-10 rounded-lg sm:rounded-xl bg-muted text-foreground border border-border/70 flex items-center justify-center shrink-0">
                   <AppIcon icon={Pdf01Icon} size={18} className="sm:hidden" />
                   <AppIcon icon={Pdf01Icon} size={20} className="hidden sm:block" />
                 </div>
@@ -151,10 +151,10 @@ export function HeroDocumentStack() {
               </div>
 
               <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-                <span className="hidden sm:inline-flex px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 text-[11px] font-medium">
+                <span className="hidden sm:inline-flex px-2 py-0.5 rounded-md bg-muted/70 text-foreground border border-border/70 text-[11px] font-medium">
                   Identity
                 </span>
-                <span className="inline-flex items-center gap-1 text-[10.5px] sm:text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
+                <span className="inline-flex items-center gap-1 text-[10.5px] sm:text-[11px] text-foreground font-medium">
                   <AppIcon icon={CheckmarkCircle01Icon} size={14} />
                   <span className="hidden xs:inline">Verified</span>
                 </span>
@@ -169,7 +169,7 @@ export function HeroDocumentStack() {
               className="group p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border border-border/70 bg-card/90 hover:border-border transition-colors shadow-2xs flex items-center justify-between gap-2.5 sm:gap-4"
             >
               <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0 flex-1">
-                <div className="size-9 sm:size-10 rounded-lg sm:rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 flex items-center justify-center shrink-0">
+                <div className="size-9 sm:size-10 rounded-lg sm:rounded-xl bg-muted text-foreground border border-border/70 flex items-center justify-center shrink-0">
                   <AppIcon icon={Pdf01Icon} size={18} className="sm:hidden" />
                   <AppIcon icon={Pdf01Icon} size={20} className="hidden sm:block" />
                 </div>
@@ -190,7 +190,7 @@ export function HeroDocumentStack() {
               </div>
 
               <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-                <span className="hidden sm:inline-flex px-2 py-0.5 rounded-md bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 text-[11px] font-medium">
+                <span className="hidden sm:inline-flex px-2 py-0.5 rounded-md bg-muted/70 text-foreground border border-border/70 text-[11px] font-medium">
                   Academic
                 </span>
                 <span className="inline-flex items-center gap-1 text-[10.5px] sm:text-[11px] text-muted-foreground font-mono">
@@ -208,7 +208,7 @@ export function HeroDocumentStack() {
               className="group p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border border-border/70 bg-card/90 hover:border-border transition-colors shadow-2xs flex items-center justify-between gap-2.5 sm:gap-4"
             >
               <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0 flex-1">
-                <div className="size-9 sm:size-10 rounded-lg sm:rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center justify-center shrink-0">
+                <div className="size-9 sm:size-10 rounded-lg sm:rounded-xl bg-muted text-foreground border border-border/70 flex items-center justify-center shrink-0">
                   <AppIcon icon={Shield01Icon} size={18} className="sm:hidden" />
                   <AppIcon icon={Shield01Icon} size={20} className="hidden sm:block" />
                 </div>
@@ -229,7 +229,7 @@ export function HeroDocumentStack() {
               </div>
 
               <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-                <span className="hidden sm:inline-flex px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[11px] font-medium">
+                <span className="hidden sm:inline-flex px-2 py-0.5 rounded-md bg-muted/70 text-foreground border border-border/70 text-[11px] font-medium">
                   Insurance
                 </span>
                 <span className="inline-flex items-center gap-1 text-[10.5px] sm:text-[11px] text-muted-foreground font-mono">
@@ -247,7 +247,7 @@ export function HeroDocumentStack() {
               className="group p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border border-border/60 bg-card/75 hover:border-border transition-colors shadow-2xs flex items-center justify-between gap-2.5 sm:gap-4"
             >
               <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0 flex-1">
-                <div className="size-9 sm:size-10 rounded-lg sm:rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 flex items-center justify-center shrink-0">
+                <div className="size-9 sm:size-10 rounded-lg sm:rounded-xl bg-muted text-foreground border border-border/70 flex items-center justify-center shrink-0">
                   <AppIcon icon={Zip01Icon} size={18} className="sm:hidden" />
                   <AppIcon icon={Zip01Icon} size={20} className="hidden sm:block" />
                 </div>
@@ -268,7 +268,7 @@ export function HeroDocumentStack() {
               </div>
 
               <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-                <span className="hidden sm:inline-flex px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-[11px] font-medium">
+                <span className="hidden sm:inline-flex px-2 py-0.5 rounded-md bg-muted/70 text-foreground border border-border/70 text-[11px] font-medium">
                   Archive
                 </span>
                 <span className="inline-flex items-center gap-1 text-[10.5px] sm:text-[11px] text-muted-foreground font-mono">

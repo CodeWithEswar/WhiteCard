@@ -1,26 +1,6 @@
 import { PageMeta } from '../../../components/seo/page-meta'
 import { LegalLayout } from '../components/legal-layout'
 import { LegalSection } from '../components/legal-section'
-import type { TocItem } from '../components/legal-table-of-contents'
-
-const privacyTocItems: TocItem[] = [
-  { id: 'intro', number: '01', title: 'Introduction' },
-  { id: 'info-we-use', number: '02', title: 'Information We Use' },
-  { id: 'google-auth', number: '03', title: 'Google Sign-In Information' },
-  { id: 'documents', number: '04', title: 'Uploaded Documents' },
-  { id: 'metadata', number: '05', title: 'Document Metadata' },
-  { id: 'how-used', number: '06', title: 'How Information Is Used' },
-  { id: 'storage-access', number: '07', title: 'Storage and Account Access' },
-  { id: 'sharing-links', number: '08', title: 'Document Sharing Links' },
-  { id: 'data-retention', number: '09', title: 'Data Retention' },
-  { id: 'deletion', number: '10', title: 'Document Deletion' },
-  { id: 'preferences', number: '11', title: 'Local Preferences & Themes' },
-  { id: 'security', number: '12', title: 'Security Practices' },
-  { id: 'user-choices', number: '13', title: 'User Choices and Controls' },
-  { id: 'third-party', number: '14', title: 'Third-Party Services' },
-  { id: 'changes', number: '15', title: 'Changes to This Policy' },
-  { id: 'contact', number: '16', title: 'Contact Information' },
-]
 
 export function PrivacyPage() {
   return (
@@ -35,7 +15,6 @@ export function PrivacyPage() {
         title="Privacy Policy"
         lastUpdated="September 2026"
         subtitle="This policy explains how White Card collects, stores, and handles your account information and uploaded files across our digital document wallet."
-        tocItems={privacyTocItems}
       >
         <LegalSection id="intro" number="01" title="Introduction">
           <p>
@@ -187,16 +166,6 @@ export function PrivacyPage() {
           <p>
             We may update this Privacy Policy from time to time to reflect product enhancements, architectural updates, or regulatory requirements. Material revisions will be accompanied by an updated &ldquo;Last updated&rdquo; date at the top of this page.
           </p>
-        </LegalSection>
-
-        <LegalSection id="contact" number="16" title="Contact Information">
-          <p>
-            If you have questions, inquiries, or feedback regarding this Privacy Policy or the handling of your document data, please contact our support team through our official repository or contact channels:
-          </p>
-          <div className="p-4 rounded-xl border border-border/70 bg-muted/20 text-xs font-mono space-y-1">
-            <p>Email: privacy@whitecard.app</p>
-            <p>Service: White Card Digital Document Vault</p>
-          </div>
         </LegalSection>
       </LegalLayout>
     </>
