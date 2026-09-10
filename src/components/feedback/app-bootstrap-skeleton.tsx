@@ -2,7 +2,7 @@ export function AppBootstrapSkeleton() {
   return (
     <div className="flex h-screen w-full bg-background text-foreground overflow-hidden select-none">
       {/* Desktop Sidebar Skeleton (>=1024px) */}
-      <aside className="hidden lg:flex flex-col w-[256px] border-r border-sidebar-border/80 bg-sidebar p-4 space-y-6 shrink-0">
+      <aside className="hidden lg:flex flex-col w-[230px] border-r border-sidebar-border/80 bg-sidebar p-4 space-y-6 shrink-0">
         {/* Brand */}
         <div className="flex items-center gap-2.5 px-2 py-1.5 h-16 border-b border-sidebar-border/70 -mx-4 px-4">
           <div className="size-7 rounded-md bg-muted/80 animate-pulse shrink-0" />

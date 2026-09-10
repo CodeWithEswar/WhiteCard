@@ -48,8 +48,8 @@ export function SidebarUser({ isCollapsed = false, className }: SidebarUserProps
               type="button"
               aria-label="User profile and settings"
               className={cn(
-                'w-full flex items-center rounded-md text-left outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted/50 transition-colors',
-                isCollapsed ? 'justify-center p-1.5' : 'justify-between p-1.5 gap-2'
+                'flex items-center rounded-md text-left outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted/50 transition-colors',
+                isCollapsed ? 'size-10 mx-auto justify-center p-0' : 'w-full justify-between p-1.5 gap-2'
               )}
             />
           }

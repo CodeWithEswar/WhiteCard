@@ -1,5 +1,4 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import {
   Upload01Icon,
   Settings02Icon,
@@ -12,7 +11,6 @@ import {
 import { WhiteCardLogo } from '../brand/white-card-logo'
 import { AppIcon } from '../icons/app-icon'
 import { useTheme } from '../../providers/theme-provider'
-import { useAppReducedMotion } from '../../lib/motion'
 import { NAVIGATION_CONFIG } from '@/config/navigation'
 import { isParentRouteActive } from '@/lib/navigation/is-route-active'
 import { useVaultStats } from '@/features/documents/hooks/use-documents'
@@ -39,7 +37,6 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
   const navigate = useNavigate()
   const pathname = location.pathname
   const { isDark, setAppearance } = useTheme()
-  const reduceMotion = useAppReducedMotion()
   const { expiringCount } = useVaultStats()
   const { displayName, email, isBootstrapping } = useCurrentUser()
   const { signOut } = useAuth()
@@ -57,17 +54,17 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
   return (
     <aside
       aria-label="Tablet primary rail"
-      className="w-[72px] h-screen sticky top-0 flex flex-col justify-between items-center py-3 border-r border-sidebar-border/80 bg-sidebar select-none shrink-0 z-30"
+      className="w-[56px] h-screen sticky top-0 flex flex-col justify-between items-center py-3 border-r border-sidebar-border/80 bg-sidebar select-none shrink-0 z-30"
     >
       {/* Brand & Main Spaces */}
-      <div className="flex flex-col items-center gap-4 w-full">
+      <div className="flex flex-col items-center gap-3.5 w-full">
         {/* Brand Logo */}
         <Link
           to="/app"
           aria-label="White Card Vault Home"
-          className="size-10 rounded-md flex items-center justify-center hover:bg-muted/50 transition-colors"
+          className="size-9 rounded-md flex items-center justify-center hover:bg-muted/50 transition-colors"
         >
-          <WhiteCardLogo size={24} showWordmark={false} />
+          <WhiteCardLogo size={22} showWordmark={false} />
         </Link>
 
         {/* Quick Upload Action */}
@@ -78,21 +75,21 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
                 type="button"
                 onClick={onOpenUpload}
                 aria-label="Quick Upload document"
-                className="size-10 rounded-md bg-primary text-primary-foreground flex items-center justify-center shadow-2xs hover:bg-primary/90 transition-all active:scale-95 outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+                className="size-9 rounded-md bg-primary text-primary-foreground flex items-center justify-center shadow-2xs hover:bg-primary/90 transition-all active:scale-95 outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
               />
             }
           >
-            <AppIcon icon={Upload01Icon} size={18} />
+            <AppIcon icon={Upload01Icon} size={17} />
           </TooltipTrigger>
           <TooltipContent side="right" align="center">
             Quick Upload
           </TooltipContent>
         </Tooltip>
 
-        <div className="w-8 h-px bg-border/60 my-1" />
+        <div className="w-6 h-px bg-border/60 my-0.5" />
 
         {/* Core Spaces Navigation */}
-        <nav aria-label="Vault spaces navigation" className="flex flex-col items-center gap-1.5 w-full px-2">
+        <nav aria-label="Vault spaces navigation" className="flex flex-col items-center gap-1.5 w-full px-1">
           {vaultSpaces.map((item) => {
             const isActive = isParentRouteActive(item.href, pathname, location.search)
 
@@ -101,23 +98,17 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
                 to={item.href}
                 aria-current={isActive ? 'page' : undefined}
                 className={cn(
-                  'relative size-10 rounded-md flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring',
-                  isActive
-                    ? 'text-foreground font-semibold bg-muted/70'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
+                  'relative size-9 rounded-md flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted/40',
+                  isActive ? 'font-semibold' : ''
                 )}
               >
-                {isActive && (
-                  <motion.div
-                    layoutId={reduceMotion ? undefined : 'tablet-nav-active'}
-                    className="absolute inset-0 rounded-md bg-muted/80 border border-border shadow-2xs"
-                    transition={{ type: 'spring', stiffness: 450, damping: 32 }}
-                  />
-                )}
                 <AppIcon
                   icon={item.icon}
                   size={18}
-                  className={cn('relative z-10', isActive ? 'text-foreground' : 'text-muted-foreground')}
+                  className={cn(
+                    'relative z-10 transition-colors',
+                    isActive ? 'text-primary' : 'text-muted-foreground'
+                  )}
                 />
               </Link>
             )
@@ -133,23 +124,17 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
                       type="button"
                       aria-label={`${item.label} space`}
                       className={cn(
-                        'relative size-10 rounded-md flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring',
-                        isActive
-                          ? 'text-foreground font-semibold bg-muted/70'
-                          : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
+                        'relative size-9 rounded-md flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted/40',
+                        isActive ? 'font-semibold' : ''
                       )}
                     >
-                      {isActive && (
-                        <motion.div
-                          layoutId={reduceMotion ? undefined : 'tablet-nav-active'}
-                          className="absolute inset-0 rounded-md bg-muted/80 border border-border shadow-2xs"
-                          transition={{ type: 'spring', stiffness: 450, damping: 32 }}
-                        />
-                      )}
                       <AppIcon
                         icon={item.icon}
                         size={18}
-                        className={cn('relative z-10', isActive ? 'text-foreground' : 'text-muted-foreground')}
+                        className={cn(
+                          'relative z-10 transition-colors',
+                          isActive ? 'text-primary' : 'text-muted-foreground'
+                        )}
                       />
                     </button>
                   }
@@ -175,19 +160,23 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
                   <Link
                     to={expiringItem.href}
                     aria-current={pathname === expiringItem.href ? 'page' : undefined}
-                    className={cn(
-                      'relative size-10 rounded-md flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring',
-                      pathname === expiringItem.href
-                        ? 'text-foreground font-semibold bg-muted/70'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
+                    className="relative size-9 rounded-md flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted/40"
+                  >
+                    <AppIcon
+                      icon={expiringItem.icon}
+                      size={18}
+                      className={cn(
+                        'transition-colors',
+                        pathname === expiringItem.href ? 'text-primary' : 'text-muted-foreground'
+                      )}
+                    />
+                    {expiringCount > 0 && (
+                      <span className="absolute top-1.5 right-1.5 size-2 rounded-full bg-amber-500 ring-2 ring-background" />
                     )}
-                  />
+                  </Link>
                 }
               >
                 <AppIcon icon={expiringItem.icon} size={18} />
-                {expiringCount > 0 && (
-                  <span className="absolute top-1.5 right-1.5 size-2 rounded-full bg-amber-500 ring-2 ring-background" />
-                )}
               </TooltipTrigger>
               <TooltipContent side="right" align="center">
                 {expiringItem.label}
@@ -199,7 +188,7 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
       </div>
 
       {/* Bottom Utilities & Profile */}
-      <div className="flex flex-col items-center gap-2 w-full px-2">
+      <div className="flex flex-col items-center gap-1.5 w-full px-1">
         {/* Theme Toggle */}
         <Tooltip>
           <TooltipTrigger
@@ -228,22 +217,27 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
                 aria-label="Vault settings"
                 aria-current={pathname === '/app/settings' ? 'page' : undefined}
                 className={cn(
-                  'size-9 rounded-md flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring',
-                  pathname === '/app/settings'
-                    ? 'text-foreground bg-muted font-semibold'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                  'size-9 rounded-md flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted/50',
+                  pathname === '/app/settings' ? 'font-semibold' : ''
                 )}
               />
             }
           >
-            <AppIcon icon={Settings02Icon} size={17} />
+            <AppIcon
+              icon={Settings02Icon}
+              size={17}
+              className={cn(
+                'transition-colors',
+                pathname === '/app/settings' ? 'text-primary' : 'text-muted-foreground'
+              )}
+            />
           </TooltipTrigger>
           <TooltipContent side="right" align="center">
             Settings & Themes
           </TooltipContent>
         </Tooltip>
 
-        <div className="w-8 h-px bg-border/60 my-0.5" />
+        <div className="w-6 h-px bg-border/60 my-0.5" />
 
         {/* User Profile Dropdown */}
         <DropdownMenu>
@@ -252,7 +246,7 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
               <button
                 type="button"
                 aria-label="User profile and preferences"
-                className="rounded-md outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+                className="size-9 rounded-md flex items-center justify-center outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
               />
             }
           >

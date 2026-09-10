@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { ArrowDown01Icon } from '@hugeicons/core-free-icons'
@@ -47,11 +46,13 @@ export function SidebarParentItem({
         type="button"
         onClick={() => item.actionId && onActionClick?.(item.actionId)}
         className={cn(
-          'w-full flex items-center gap-3 h-10 px-3 rounded-md text-xs font-medium text-foreground transition-all duration-150 select-none outline-hidden focus-visible:ring-2 focus-visible:ring-ring border border-dashed border-border/80 hover:border-border hover:bg-muted/50',
-          isCollapsed ? 'justify-center px-0' : ''
+          'flex items-center rounded-md text-xs font-medium transition-all duration-150 select-none outline-hidden focus-visible:ring-2 focus-visible:ring-ring',
+          isCollapsed
+            ? 'size-9 mx-auto justify-center text-muted-foreground hover:text-foreground hover:bg-muted/40 p-0'
+            : 'w-full gap-3 h-10 px-3 text-foreground border border-dashed border-border/80 hover:border-border hover:bg-muted/50'
         )}
       >
-        <AppIcon icon={item.icon} size={18} className="text-foreground shrink-0" />
+        <AppIcon icon={item.icon} size={18} className="shrink-0 transition-colors" />
         {!isCollapsed && <span className="truncate">{item.label}</span>}
       </button>
     )
@@ -77,11 +78,10 @@ export function SidebarParentItem({
         to={item.href}
         aria-current={isParentActive ? 'page' : undefined}
         className={cn(
-          'relative w-full flex items-center gap-3 h-10 px-3 rounded-md text-xs transition-colors duration-150 select-none outline-hidden focus-visible:ring-2 focus-visible:ring-ring group',
-          isParentActive
-            ? 'font-semibold text-foreground bg-muted/60'
-            : 'text-muted-foreground hover:text-foreground hover:bg-muted/40 font-normal',
-          isCollapsed ? 'justify-center px-0' : ''
+          'relative flex items-center h-10 rounded-md text-xs transition-colors duration-150 select-none outline-hidden focus-visible:ring-2 focus-visible:ring-ring group',
+          isCollapsed
+            ? 'size-9 mx-auto justify-center p-0 hover:bg-muted/40'
+            : 'w-full gap-3 px-3 hover:bg-muted/30'
         )}
       >
         <AppIcon
@@ -89,12 +89,23 @@ export function SidebarParentItem({
           size={18}
           className={cn(
             'shrink-0 transition-colors',
-            isParentActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
+            isParentActive
+              ? 'text-primary' // Color the icon only, no background square
+              : 'text-muted-foreground group-hover:text-foreground'
           )}
         />
         {!isCollapsed && (
           <>
-            <span className="truncate flex-1">{item.label}</span>
+            <span
+              className={cn(
+                'truncate flex-1',
+                isParentActive
+                  ? 'text-foreground font-semibold'
+                  : 'text-muted-foreground group-hover:text-foreground font-normal'
+              )}
+            >
+              {item.label}
+            </span>
             {item.badgeKey === 'expiring' && expiringCount > 0 && (
               <span className="size-5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/25 text-[10px] font-mono font-bold flex items-center justify-center shrink-0">
                 {expiringCount}
@@ -124,16 +135,18 @@ export function SidebarParentItem({
   const parentTrigger = (
     <div
       className={cn(
-        'group flex items-center justify-between h-10 px-3 rounded-md text-xs transition-colors duration-150 select-none outline-hidden',
-        isHighlighted
-          ? 'font-semibold text-foreground bg-muted/40'
-          : 'text-muted-foreground hover:text-foreground hover:bg-muted/30 font-medium',
-        isCollapsed ? 'justify-center px-0' : ''
+        'group flex items-center justify-between h-10 rounded-md text-xs transition-colors duration-150 select-none outline-hidden',
+        isCollapsed
+          ? 'size-9 mx-auto justify-center p-0 hover:bg-muted/40'
+          : 'w-full px-3 hover:bg-muted/30'
       )}
     >
       <Link
         to={item.href}
-        className="flex items-center gap-3 flex-1 min-w-0 outline-hidden focus-visible:ring-2 focus-visible:ring-ring rounded"
+        className={cn(
+          'flex items-center outline-hidden focus-visible:ring-2 focus-visible:ring-ring rounded',
+          isCollapsed ? 'size-9 justify-center p-0' : 'gap-3 flex-1 min-w-0'
+        )}
         aria-current={isParentActive ? 'page' : undefined}
       >
         <AppIcon
@@ -141,10 +154,23 @@ export function SidebarParentItem({
           size={18}
           className={cn(
             'shrink-0 transition-colors',
-            isHighlighted ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'
+            isHighlighted
+              ? 'text-primary' // Color the icon only, no background square
+              : 'text-muted-foreground group-hover:text-foreground'
           )}
         />
-        {!isCollapsed && <span className="truncate">{item.label}</span>}
+        {!isCollapsed && (
+          <span
+            className={cn(
+              'truncate',
+              isHighlighted
+                ? 'text-foreground font-semibold'
+                : 'text-muted-foreground group-hover:text-foreground font-medium'
+            )}
+          >
+            {item.label}
+          </span>
+        )}
       </Link>
 
       {!isCollapsed && (

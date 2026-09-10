@@ -48,12 +48,12 @@ export function AppShell() {
         )}
 
         {/* 3. Mobile Topbar (< 768px) */}
-        <div className="block md:hidden">
+        <div className="block md:hidden sticky top-0 z-20">
           <MobileTopbar onOpenUpload={() => setUploadOpen(true)} />
         </div>
 
         {/* 4. Desktop & Tablet Top Command Bar (>= 768px) */}
-        <div className="hidden md:block">
+        <div className="hidden md:block sticky top-0 z-20">
           <AppTopbar onOpenUpload={() => setUploadOpen(true)} />
         </div>
 

@@ -35,24 +35,68 @@
     overflow-x: hidden;
   }
 
-  /* Custom subtle scrollbars */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
+}
 
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
+/* Minimalist sleek WebKit scrollbars (No native Windows arrow buttons or bulky tracks) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(140, 140, 140, 0.25) transparent;
+}
 
-  ::-webkit-scrollbar-thumb {
-    background: var(--border-strong);
-    border-radius: 9999px;
-  }
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--muted-foreground);
-  }
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(140, 140, 140, 0.25);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(140, 140, 140, 0.5);
+}
+
+::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(140, 140, 140, 0.2) transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: rgba(140, 140, 140, 0.2);
+  border-radius: 9999px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(140, 140, 140, 0.45);
+}
+
+.sidebar-scroll::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 /* Touch target helpers */

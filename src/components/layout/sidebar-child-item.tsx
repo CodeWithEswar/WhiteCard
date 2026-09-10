@@ -30,8 +30,8 @@ export function SidebarChildItem({ label, href, isActive, onClick }: SidebarChil
         className={cn(
           'flex items-center h-8 px-2.5 rounded-md text-xs transition-colors duration-150 select-none outline-hidden focus-visible:ring-2 focus-visible:ring-ring',
           isActive
-            ? 'font-semibold text-foreground bg-muted/60'
-            : 'text-muted-foreground hover:text-foreground hover:bg-muted/40 font-normal'
+            ? 'font-semibold text-primary' // Clean colored text, no background square
+            : 'text-muted-foreground hover:text-foreground hover:bg-muted/30 font-normal'
         )}
       >
         <span className="truncate">{label}</span>

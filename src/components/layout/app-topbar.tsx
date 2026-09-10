@@ -20,6 +20,7 @@ import { useAuth } from '@/features/auth/auth-provider'
 import { getBreadcrumbs, getPageTitle } from '@/lib/navigation/route-labels'
 import { useNavigationState } from '@/lib/navigation/navigation-state'
 import { UserIdentity } from '../account/user-identity'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,6 +28,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
+import { cn } from 'cn'
 
 interface AppTopbarProps {
   onOpenUpload: () => void
@@ -71,14 +73,27 @@ export function AppTopbar({ onOpenUpload }: AppTopbarProps) {
     >
       {/* Left: Sidebar Toggle + Contextual Breadcrumb & Page Title */}
       <div className="flex items-center gap-3 min-w-0">
-        <button
-          type="button"
-          onClick={toggleCollapsed}
-          aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          className="p-1.5 -ml-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring shrink-0"
-        >
-          <AppIcon icon={SidebarLeft01Icon} size={17} />
-        </button>
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <button
+                type="button"
+                onClick={toggleCollapsed}
+                aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+                className="p-1.5 -ml-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring shrink-0"
+              />
+            }
+          >
+            <AppIcon
+              icon={SidebarLeft01Icon}
+              size={17}
+              className={cn('transition-transform duration-200', isCollapsed ? 'rotate-180' : '')}
+            />
+          </TooltipTrigger>
+          <TooltipContent side="bottom" align="start">
+            {isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          </TooltipContent>
+        </Tooltip>
         <div className="h-4 w-px bg-border/80 shrink-0" />
 
         {breadcrumbs.length > 1 ? (
