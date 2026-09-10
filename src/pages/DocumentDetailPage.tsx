@@ -1,1 +1,1 @@
-export { DocumentDetailPage } from '@/features/documents/pages/document-detail-page'
+export { DocumentViewerPage as DocumentDetailPage, DocumentViewerPage } from '@/features/documents/pages/document-viewer-page'

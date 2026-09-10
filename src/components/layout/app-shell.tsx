@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { DesktopSidebar } from './desktop-sidebar'
 import { TabletRail } from './tablet-rail'
 import { MobileTopbar } from './mobile-topbar'
@@ -13,6 +13,10 @@ import { useOnlineStatus } from '@/hooks/use-online-status'
 export function AppShell() {
   const [uploadOpen, setUploadOpen] = useState(false)
   const isOnline = useOnlineStatus()
+  const location = useLocation()
+  const isDocumentViewer =
+    location.pathname.startsWith('/app/document/') ||
+    location.pathname.startsWith('/app/documents/')
 
   return (
     <div className="relative flex min-h-screen w-full bg-transparent text-foreground">
@@ -44,14 +48,18 @@ export function AppShell() {
         )}
 
         {/* 3. Mobile Topbar (< 768px) */}
-        <div className="block md:hidden sticky top-0 z-20">
-          <MobileTopbar onOpenUpload={() => setUploadOpen(true)} />
-        </div>
+        {!isDocumentViewer && (
+          <div className="block md:hidden sticky top-0 z-20">
+            <MobileTopbar onOpenUpload={() => setUploadOpen(true)} />
+          </div>
+        )}
 
         {/* 4. Desktop & Tablet Top Command Bar (>= 768px) */}
-        <div className="hidden md:block sticky top-0 z-20">
-          <AppTopbar onOpenUpload={() => setUploadOpen(true)} />
-        </div>
+        {!isDocumentViewer && (
+          <div className="hidden md:block sticky top-0 z-20">
+            <AppTopbar onOpenUpload={() => setUploadOpen(true)} />
+          </div>
+        )}
 
         {/* Dynamic Page Content Canvas */}
         <main className="flex-1 min-w-0 w-full">
