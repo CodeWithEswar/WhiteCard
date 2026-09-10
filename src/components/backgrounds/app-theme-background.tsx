@@ -36,35 +36,7 @@ export function AppThemeBackground({
       {/* 1. Base Root Page Tint Layer */}
       <div className="absolute inset-0 bg-page-background transition-colors duration-200" />
 
-      {/* 2. Theme Atmospheric Glows */}
-      {glow && variant === 'app' && (
-        <>
-          {/* Prominent top-center atmospheric glow */}
-          <div
-            className="absolute -top-[12%] left-1/2 -translate-x-1/2 w-[1100px] h-[650px] rounded-full blur-3xl pointer-events-none transition-all duration-300"
-            style={{
-              background:
-                'radial-gradient(ellipse at center, var(--theme-glow) 0%, var(--theme-glow-soft) 45%, transparent 72%)',
-            }}
-          />
-          {/* Right-rail ambient accent glow */}
-          <div
-            className="absolute top-[25%] -right-[8%] w-[750px] h-[750px] rounded-full blur-3xl pointer-events-none transition-all duration-300"
-            style={{
-              background:
-                'radial-gradient(circle at center, var(--theme-glow-soft) 0%, transparent 68%)',
-            }}
-          />
-          {/* Lower-left ambient accent glow */}
-          <div
-            className="absolute -bottom-[10%] -left-[8%] w-[650px] h-[650px] rounded-full blur-3xl pointer-events-none transition-all duration-300"
-            style={{
-              background:
-                'radial-gradient(circle at center, var(--theme-glow-soft) 0%, transparent 68%)',
-            }}
-          />
-        </>
-      )}
+
 
       {glow && variant === 'landing' && (
         <>
