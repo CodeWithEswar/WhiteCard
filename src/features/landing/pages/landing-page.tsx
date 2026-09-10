@@ -15,10 +15,13 @@ import { FaqSection } from '../components/faq-section'
 import { FinalCta } from '../components/final-cta'
 import { LandingFooter } from '../components/landing-footer'
 import { PageMeta } from '../../../components/seo/page-meta'
+import { AppThemeBackground } from '../../../components/backgrounds/app-theme-background'
 
 export function LandingPage() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-background text-foreground selection:bg-primary/20 flex flex-col justify-between">
+    <div className="relative min-h-screen overflow-x-hidden bg-page-background text-foreground selection:bg-primary/20 flex flex-col justify-between">
+      {/* Theme Atmospheric Background */}
+      <AppThemeBackground variant="landing" />
       <PageMeta
         title="White Card — Secure Document Storage"
         description="Store government documents and student certificates in one private, organized digital space with White Card."

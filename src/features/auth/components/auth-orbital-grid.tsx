@@ -49,7 +49,11 @@ export function AuthOrbitalGrid() {
               }
         }
         transition={{ type: 'spring', stiffness: 50, damping: 20 }}
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-primary/[0.04] blur-[120px]"
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[550px] rounded-full opacity-80 blur-[100px]"
+        style={{
+          background:
+            'radial-gradient(ellipse at center, var(--theme-glow) 0%, var(--theme-glow-soft) 45%, transparent 70%)',
+        }}
       />
 
       {/* Layer 3: Concentric Geometric Orbital Rings behind Auth Card */}

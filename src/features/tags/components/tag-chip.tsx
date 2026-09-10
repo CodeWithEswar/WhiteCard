@@ -1,5 +1,6 @@
 import { Cancel01Icon } from '@hugeicons/core-free-icons'
 import { AppIcon } from '../../../components/icons/app-icon'
+import { resolveTagColor } from '@/config/tag-colors'
 
 export type TagVariant = 'default' | 'compact' | 'filter' | 'selected'
 
@@ -13,16 +14,6 @@ interface TagChipProps {
   className?: string
 }
 
-// Allowed theme-safe dot tints
-const TAG_COLOR_MAP: Record<string, string> = {
-  Identity: 'bg-blue-500',
-  Education: 'bg-indigo-500',
-  Travel: 'bg-emerald-500',
-  Vehicle: 'bg-amber-500',
-  Renewal: 'bg-rose-500',
-  Personal: 'bg-purple-500',
-}
-
 export function TagChip({
   label,
   variant = 'default',
@@ -32,17 +23,17 @@ export function TagChip({
   onClick,
   className = '',
 }: TagChipProps) {
-  const dotColorClass =
-    colorDot || TAG_COLOR_MAP[label] || 'bg-muted-foreground'
+  const tagConfig = resolveTagColor(label)
+  const dotColorClass = colorDot || tagConfig.dot
 
   const baseStyles =
     'inline-flex items-center gap-1.5 rounded-full font-medium transition-all select-none'
 
   const variantStyles = {
     default:
-      'px-2.5 py-0.5 text-[11px] bg-surface-muted/90 text-foreground/85 border border-border/80',
+      `px-2.5 py-0.5 text-[11px] ${tagConfig.bg} ${tagConfig.text} border ${tagConfig.border}`,
     compact:
-      'px-2 py-0.5 text-[10px] bg-surface-muted/80 text-foreground/80 border border-border/60',
+      `px-2 py-0.5 text-[10px] ${tagConfig.bg} ${tagConfig.text} border ${tagConfig.border}`,
     filter:
       'px-3 py-1 text-xs bg-surface border border-border text-muted-foreground hover:text-foreground hover:border-border-strong cursor-pointer active:scale-95',
     selected:
@@ -63,7 +54,7 @@ export function TagChip({
         }
       }}
       className={`${baseStyles} ${variantStyles[variant]} ${
-        isInteractive ? 'cursor-pointer hover:bg-surface-muted' : ''
+        isInteractive ? 'cursor-pointer hover:opacity-90' : ''
       } ${className}`}
     >
       <span
@@ -87,3 +78,4 @@ export function TagChip({
     </span>
   )
 }
+

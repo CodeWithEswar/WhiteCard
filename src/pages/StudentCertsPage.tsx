@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { Upload01Icon } from '@hugeicons/core-free-icons'
+import { Upload01Icon, Certificate01Icon } from '@hugeicons/core-free-icons'
 import { PageShell } from '../components/layout/page-shell'
 import { ResponsivePageHeader } from '../components/layout/responsive-page-header'
 import { PageHeaderMeta } from '../components/layout/page-header-meta'
@@ -123,6 +123,7 @@ export function StudentCertsPage() {
           eyebrow="VAULT SPACE"
           title={pageTitle}
           description={pageDescription}
+          icon={Certificate01Icon}
           primaryAction={
             <Button
               onClick={() => setUploadOpen(true)}

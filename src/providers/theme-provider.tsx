@@ -1,6 +1,7 @@
-import { useState, useEffect, createContext, useContext, type ReactNode } from 'react'
+import { useState, useEffect, createContext, useContext, useRef, type ReactNode } from 'react'
 import type { AppearanceMode, ThemeConfig, ThemeId } from '../types/theme'
 import { DEFAULT_THEME_ID, getThemeConfig, THEME_PRESETS } from '../config/themes'
+import { supabase, isSupabaseConfigured } from '@/lib/supabase'
 
 interface ThemeContextType {
   theme: ThemeId
@@ -14,14 +15,14 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
-const THEME_KEY = 'whitecard_theme_preset'
-const THEME_KEY_ALT = 'white-card-theme'
-const APPEARANCE_KEY = 'whitecard_appearance_mode'
-const APPEARANCE_KEY_ALT = 'white-card-appearance'
+const THEME_KEY = 'white-card-theme'
+const THEME_KEY_LEGACY = 'whitecard_theme_preset'
+const APPEARANCE_KEY = 'white-card-appearance'
+const APPEARANCE_KEY_LEGACY = 'whitecard_appearance_mode'
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
+export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<ThemeId>(() => {
-    const saved = (localStorage.getItem(THEME_KEY_ALT) || localStorage.getItem(THEME_KEY)) as ThemeId | null
+    const saved = (localStorage.getItem(THEME_KEY) || localStorage.getItem(THEME_KEY_LEGACY)) as ThemeId | null
     if (saved && THEME_PRESETS.some((t) => t.id === saved)) {
       return saved
     }
@@ -29,7 +30,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   })
 
   const [appearance, setAppearanceState] = useState<AppearanceMode>(() => {
-    const saved = (localStorage.getItem(APPEARANCE_KEY_ALT) || localStorage.getItem(APPEARANCE_KEY)) as AppearanceMode | null
+    const saved = (localStorage.getItem(APPEARANCE_KEY) || localStorage.getItem(APPEARANCE_KEY_LEGACY)) as AppearanceMode | null
     if (saved && ['system', 'light', 'dark'].includes(saved)) {
       return saved
     }
@@ -42,6 +43,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
     return false
   })
+
+  const transitionTimerRef = useRef<number | null>(null)
 
   // Watch system color scheme changes
   useEffect(() => {
@@ -71,16 +74,118 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   }, [theme, isDark])
 
+  // Background sync: Fetch remote preferences when authenticated
+  useEffect(() => {
+    const client = supabase
+    if (!isSupabaseConfigured || !client) return
+
+    let isMounted = true
+
+    async function syncRemotePreferences() {
+      if (!isSupabaseConfigured || !supabase) return
+      const client = supabase
+      try {
+        const { data: authData } = await client.auth.getUser()
+        if (!authData?.user || !isMounted) return
+
+        const { data: pref, error } = await client
+          .from('user_preferences')
+          .select('theme_id, appearance')
+          .eq('user_id', authData.user.id)
+          .maybeSingle()
+
+        if (error || !pref || !isMounted) return
+
+        if (pref.theme_id && THEME_PRESETS.some((t) => t.id === pref.theme_id)) {
+          setThemeState(pref.theme_id as ThemeId)
+          localStorage.setItem(THEME_KEY, pref.theme_id)
+        }
+
+        if (pref.appearance && ['system', 'light', 'dark'].includes(pref.appearance)) {
+          setAppearanceState(pref.appearance as AppearanceMode)
+          localStorage.setItem(APPEARANCE_KEY, pref.appearance)
+        }
+      } catch {
+        // Non-blocking background sync
+      }
+    }
+
+    syncRemotePreferences()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  const triggerSmoothTransition = () => {
+    if (typeof document === 'undefined') return
+    const root = document.documentElement
+    root.classList.add('theme-transition')
+
+    if (transitionTimerRef.current) {
+      window.clearTimeout(transitionTimerRef.current)
+    }
+
+    transitionTimerRef.current = window.setTimeout(() => {
+      root.classList.remove('theme-transition')
+      transitionTimerRef.current = null
+    }, 200)
+  }
+
   const setTheme = (newTheme: ThemeId) => {
+    triggerSmoothTransition()
     setThemeState(newTheme)
     localStorage.setItem(THEME_KEY, newTheme)
-    localStorage.setItem(THEME_KEY_ALT, newTheme)
+    localStorage.setItem(THEME_KEY_LEGACY, newTheme)
+
+    // Background sync to Supabase user_preferences
+    const client = supabase
+    if (isSupabaseConfigured && client) {
+      client.auth.getUser().then(({ data }) => {
+        if (data?.user?.id) {
+          Promise.resolve(
+            client
+              .from('user_preferences')
+              .upsert(
+                {
+                  user_id: data.user.id,
+                  theme_id: newTheme,
+                  updated_at: new Date().toISOString(),
+                },
+                { onConflict: 'user_id' }
+              )
+          ).catch(console.warn)
+        }
+      })
+    }
   }
 
   const setAppearance = (newMode: AppearanceMode) => {
+    triggerSmoothTransition()
     setAppearanceState(newMode)
     localStorage.setItem(APPEARANCE_KEY, newMode)
-    localStorage.setItem(APPEARANCE_KEY_ALT, newMode)
+    localStorage.setItem(APPEARANCE_KEY_LEGACY, newMode)
+
+    // Background sync to Supabase user_preferences
+    const client = supabase
+    if (isSupabaseConfigured && client) {
+      client.auth.getUser().then(({ data }) => {
+        if (data?.user?.id) {
+          Promise.resolve(
+            client
+              .from('user_preferences')
+              .upsert(
+                {
+                  user_id: data.user.id,
+                  appearance: newMode,
+                  updated_at: new Date().toISOString(),
+                },
+                { onConflict: 'user_id' }
+              )
+          ).catch(console.warn)
+        }
+      })
+    }
   }
 
   const themeConfig = getThemeConfig(theme)

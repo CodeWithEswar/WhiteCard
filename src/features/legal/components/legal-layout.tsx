@@ -2,7 +2,7 @@ import React from 'react'
 import { LegalHeader } from './legal-header'
 import { LegalFooter } from './legal-footer'
 import { LegalTableOfContents, type TocItem } from './legal-table-of-contents'
-import { GridBackground } from '../../../components/backgrounds/grid-background'
+import { AppThemeBackground } from '../../../components/backgrounds/app-theme-background'
 
 export interface LegalLayoutProps {
   title: string
@@ -20,14 +20,11 @@ export function LegalLayout({
   children,
 }: LegalLayoutProps) {
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col justify-between selection:bg-primary/20">
+    <div className="relative min-h-screen bg-page-background text-foreground flex flex-col justify-between selection:bg-primary/20">
+      <AppThemeBackground variant="legal" />
       <LegalHeader />
 
       <main className="relative flex-1">
-        {/* Subtle grid background near header */}
-        <div className="absolute top-0 inset-x-0 h-96 pointer-events-none opacity-30 overflow-hidden">
-          <GridBackground size="micro" mask="radial" className="w-full h-full" />
-        </div>
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
           {/* Article Header (Stationary, editorial) */}

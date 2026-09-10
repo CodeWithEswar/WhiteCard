@@ -29,7 +29,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
 
   if (checkingSession) {
     return (
-      <div className="min-h-[100svh] bg-background text-foreground flex items-center justify-center">
+      <div className="min-h-[100svh] bg-page-background text-foreground flex items-center justify-center">
         <AuthOrbitalGrid />
         <div className="relative z-10 size-6 rounded-full border-2 border-primary border-t-transparent animate-spin" />
       </div>
@@ -37,7 +37,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
   }
 
   return (
-    <div className="relative min-h-[100svh] bg-background text-foreground flex flex-col justify-between selection:bg-primary/20 overflow-x-hidden">
+    <div className="relative min-h-[100svh] bg-page-background text-foreground flex flex-col justify-between selection:bg-primary/20 overflow-x-hidden">
       {/* Refined Ambient Background Grid & Rings */}
       <AuthOrbitalGrid />
 

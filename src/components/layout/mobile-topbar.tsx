@@ -60,7 +60,7 @@ export function MobileTopbar({ onOpenUpload }: MobileTopbarProps) {
     <>
       <header
         aria-label="Mobile navigation header"
-        className="h-14 px-3.5 flex items-center justify-between border-b border-sidebar-border/80 bg-surface/90 backdrop-blur-md sticky top-0 z-30 select-none pt-[env(safe-area-inset-top)]"
+        className="h-14 px-3.5 flex items-center justify-between border-b border-topbar-border bg-topbar-background/90 backdrop-blur-md sticky top-0 z-30 select-none pt-[env(safe-area-inset-top)]"
       >
         {/* Left: Drawer Toggle + Contextual Back / Page Info */}
         <div className="flex items-center gap-2 min-w-0 flex-1 mr-2">

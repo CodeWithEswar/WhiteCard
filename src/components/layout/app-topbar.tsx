@@ -31,8 +31,8 @@ export function AppTopbar({ onOpenUpload }: AppTopbarProps) {
       className={cn(
         'h-[68px] px-4 sm:px-6 lg:px-8 sticky top-0 z-30 flex items-center justify-between select-none transition-all duration-200 ease-in-out',
         isScrolled
-          ? 'bg-background/90 dark:bg-background/85 backdrop-blur-xl border-b border-border/80 shadow-2xs'
-          : 'bg-background/60 dark:bg-background/50 backdrop-blur-md border-b border-border/60'
+          ? 'bg-topbar-background backdrop-blur-xl border-b border-topbar-border shadow-2xs'
+          : 'bg-topbar-background/80 backdrop-blur-md border-b border-topbar-border/70'
       )}
     >
       {/* Left: Sidebar Toggle + Space / Breadcrumbs */}

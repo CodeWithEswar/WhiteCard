@@ -154,7 +154,7 @@ export function PublicSharePage() {
   }
 
   return (
-    <div className="relative min-h-screen flex flex-col justify-between bg-background text-foreground selection:bg-primary/20">
+    <div className="relative min-h-screen flex flex-col justify-between bg-page-background text-foreground selection:bg-primary/20">
       <RadialGridBackground />
 
       {/* Header */}

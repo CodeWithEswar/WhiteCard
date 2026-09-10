@@ -27,7 +27,7 @@ export function MobileBottomNav() {
       aria-label="Mobile primary vault navigation"
       className="fixed z-40 left-3 right-3 bottom-[calc(12px+env(safe-area-inset-bottom))] select-none pointer-events-auto"
     >
-      <div className="h-15 max-w-md mx-auto px-2 rounded-[22px] border border-border/85 bg-surface/90 backdrop-blur-xl shadow-lg flex items-center justify-around">
+        <div className="h-15 max-w-md mx-auto px-2 rounded-[22px] border border-border bg-surface-overlay backdrop-blur-xl shadow-lg flex items-center justify-around">
         {tabs.map((tab) => {
           const isActive = isParentRouteActive(tab.path, pathname, location.search)
 
@@ -41,7 +41,7 @@ export function MobileBottomNav() {
               {isActive && (
                 <motion.div
                   layoutId={reduceMotion ? undefined : 'mobile-nav-active'}
-                  className="absolute inset-x-2 inset-y-1 rounded-xl bg-muted/80 border border-border/70 -z-10 shadow-2xs"
+                  className="absolute inset-x-2 inset-y-1 rounded-xl bg-selection-background border border-border/70 -z-10 shadow-2xs"
                   transition={{ type: 'spring', stiffness: 450, damping: 32 }}
                 />
               )}
@@ -51,7 +51,7 @@ export function MobileBottomNav() {
                 size={18}
                 className={cn(
                   'transition-all duration-150',
-                  isActive ? 'text-foreground scale-105' : 'text-muted-foreground group-hover:text-foreground'
+                  isActive ? 'text-primary scale-105' : 'text-muted-foreground group-hover:text-foreground'
                 )}
               />
               <span

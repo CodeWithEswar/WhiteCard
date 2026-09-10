@@ -6,7 +6,7 @@ import { MobileTopbar } from './mobile-topbar'
 import { AppTopbar } from './app-topbar'
 import { UploadDialog } from '../../features/upload/components/upload-dialog'
 import { CommandMenu } from './command-menu'
-import { GridBackground } from '../backgrounds/grid-background'
+import { AppThemeBackground } from '../backgrounds/app-theme-background'
 
 import { useOnlineStatus } from '@/hooks/use-online-status'
 
@@ -15,12 +15,9 @@ export function AppShell() {
   const isOnline = useOnlineStatus()
 
   return (
-    <div className="relative flex min-h-screen w-full bg-background text-foreground">
-      {/* Background Architectural Grid */}
-      <GridBackground
-        mask="radial"
-        className="fixed inset-0 pointer-events-none opacity-40 z-0"
-      />
+    <div className="relative flex min-h-screen w-full bg-transparent text-foreground">
+      {/* Dynamic Theme-Aware Architectural Background (No grid pattern for app shell) */}
+      <AppThemeBackground variant="app" grid={false} />
 
       {/* 1. Desktop Sidebar (>= 1024px) */}
       <div className="hidden lg:flex shrink-0 z-30">

@@ -1,0 +1,64 @@
+/* ==============================================================================
+   WHITE CARD — THEME UTILITIES
+   Performance-focused semantic surface, transition, and atmospheric utilities
+   ============================================================================== */
+
+/* Controlled Theme Switch Transition (Paint-friendly: background, border, color) */
+.theme-transition,
+.theme-transition * {
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 160ms ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-transition,
+  .theme-transition * {
+    transition: none !important;
+  }
+}
+
+/* Atmospheric Theme Radial Glows */
+.theme-glow-ambient {
+  background: radial-gradient(
+    circle at 50% 0%,
+    var(--theme-glow),
+    transparent 70%
+  );
+}
+
+.theme-glow-soft-radial {
+  background: radial-gradient(
+    circle at 70% 10%,
+    var(--theme-glow-soft),
+    transparent 34%
+  );
+}
+
+/* Semantic Surface Helper Utilities */
+.surface-card {
+  background-color: var(--surface);
+  border-color: var(--border);
+  color: var(--foreground);
+}
+
+.surface-elevated {
+  background-color: var(--surface-elevated);
+  border-color: var(--border);
+}
+
+.surface-muted {
+  background-color: var(--surface-muted);
+  border-color: var(--border-subtle);
+}
+
+.surface-subtle {
+  background-color: var(--surface-subtle);
+}
+
+.surface-overlay {
+  background-color: var(--surface-overlay);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
