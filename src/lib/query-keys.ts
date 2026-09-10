@@ -34,4 +34,10 @@ export const queryKeys = {
   tags: {
     all: (userId: string) => ['tags', userId] as const,
   },
+
+  storage: {
+    all: ['storage'] as const,
+    user: (userId: string) => ['storage', userId] as const,
+    breakdown: (userId: string) => ['storage', userId, 'breakdown'] as const,
+  },
 } as const

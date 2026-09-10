@@ -4,7 +4,12 @@ export function isParentRouteActive(
   search: string = ''
 ): boolean {
   if (href === '/app') {
-    return pathname === '/app' || pathname === '/app/' || pathname === '/app/recent'
+    return (
+      pathname === '/app' ||
+      pathname === '/app/' ||
+      pathname === '/app/recent' ||
+      pathname === '/app/storage'
+    )
   }
 
   if (href === '/app/government') {
@@ -38,8 +43,8 @@ export function isChildRouteActive(
   const currentCategory = searchParams.get('category')
   const currentView = searchParams.get('view')
 
-  if (child.view) {
-    return pathname === '/app' && currentView === child.view
+  if (child.href === '/app/storage' || child.view === 'storage') {
+    return pathname === '/app/storage' || (pathname === '/app' && currentView === 'storage')
   }
 
   if (child.category) {

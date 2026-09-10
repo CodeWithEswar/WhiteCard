@@ -8,6 +8,7 @@ import { SearchPage } from '../pages/SearchPage'
 import { RecentDocsPage } from '../pages/RecentDocsPage'
 import { ExpiringDocsPage } from '../pages/ExpiringDocsPage'
 import { DocumentDetailPage } from '../pages/DocumentDetailPage'
+import { StorageBreakdownPage } from '../pages/StorageBreakdownPage'
 import { SettingsPage } from '../pages/SettingsPage'
 import { LoginPage } from '../features/auth/pages/login-page'
 import { SignupPage } from '../features/auth/pages/signup-page'
@@ -65,6 +66,9 @@ export function AppRouter() {
           {/* Document Detail / Preview */}
           <Route path="document/:documentId" element={<DocumentDetailPage />} />
           <Route path="documents/:id" element={<DocumentDetailPage />} />
+
+          {/* Storage Observatory Breakdown */}
+          <Route path="storage" element={<StorageBreakdownPage />} />
 
           {/* User Profile & Themes Settings */}
           <Route path="settings" element={<SettingsPage />} />

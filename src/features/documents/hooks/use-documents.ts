@@ -125,6 +125,7 @@ export function useUploadDocument() {
       }
       queryClient.invalidateQueries({ queryKey: queryKeys.documents.all(userId) })
       queryClient.invalidateQueries({ queryKey: queryKeys.dashboard.summary(userId) })
+      queryClient.invalidateQueries({ queryKey: queryKeys.storage.all })
     },
   })
 }
@@ -150,6 +151,7 @@ export function useUpdateDocument() {
       queryClient.invalidateQueries({ queryKey: queryKeys.documents.all(userId) })
       queryClient.invalidateQueries({ queryKey: queryKeys.documents.detail(userId, updated.id) })
       queryClient.invalidateQueries({ queryKey: queryKeys.dashboard.summary(userId) })
+      queryClient.invalidateQueries({ queryKey: queryKeys.storage.all })
     },
   })
 }
@@ -173,6 +175,7 @@ export function useDeleteDocument() {
       )
       queryClient.invalidateQueries({ queryKey: queryKeys.documents.all(userId) })
       queryClient.invalidateQueries({ queryKey: queryKeys.dashboard.summary(userId) })
+      queryClient.invalidateQueries({ queryKey: queryKeys.storage.all })
     },
   })
 }

@@ -76,6 +76,7 @@ export function useUploadController(defaultSpace: DocumentSpace = 'government') 
     queryClient.invalidateQueries({ queryKey: queryKeys.documents.all(userId) })
     queryClient.invalidateQueries({ queryKey: queryKeys.dashboard.summary(userId) })
     queryClient.invalidateQueries({ queryKey: queryKeys.vaultStats.summary(userId) })
+    queryClient.invalidateQueries({ queryKey: queryKeys.storage.all })
   }, [queue, userId, queryClient])
 
   const retrySingle = useCallback(
@@ -104,6 +105,7 @@ export function useUploadController(defaultSpace: DocumentSpace = 'government') 
 
         queryClient.invalidateQueries({ queryKey: queryKeys.documents.all(userId) })
         queryClient.invalidateQueries({ queryKey: queryKeys.dashboard.summary(userId) })
+        queryClient.invalidateQueries({ queryKey: queryKeys.storage.all })
       } catch (err: any) {
         const isCancelled = err?.message === 'Upload cancelled' || err?.name === 'AbortError'
         queue.updateItemStatus(id, isCancelled ? 'cancelled' : 'failed', {

@@ -24,6 +24,7 @@ export function getPageTitle(pathname: string, searchParams: URLSearchParams): s
     return 'Student Certificates'
   }
 
+  if (pathname === '/app/storage') return 'Storage Breakdown'
   if (pathname === '/app/search') return 'Search Vault'
   if (pathname === '/app/expiring') return 'Expiring Soon'
   if (pathname === '/app/recent') return 'Recent Documents'
@@ -68,6 +69,11 @@ export function getBreadcrumbs(
   if (pathname.startsWith('/app/document/') || pathname.startsWith('/app/documents/')) {
     breadcrumbs.push({ label: 'Documents', href: '/app' })
     breadcrumbs.push({ label: documentTitle || 'Document Details' })
+    return breadcrumbs
+  }
+
+  if (pathname === '/app/storage') {
+    breadcrumbs.push({ label: 'Storage Breakdown' })
     return breadcrumbs
   }
 

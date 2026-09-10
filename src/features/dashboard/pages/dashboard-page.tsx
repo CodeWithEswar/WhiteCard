@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Navigate, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Alert02Icon, RefreshIcon } from '@hugeicons/core-free-icons'
 import { PageShell } from '@/components/layout/page-shell'
@@ -21,9 +22,15 @@ import { useDocumentDownload } from '@/features/documents/hooks/use-documents'
 import type { VaultDocument, DocumentSpace } from '@/types/document'
 
 export function DashboardPage() {
+  const [searchParams] = useSearchParams()
   const reduceMotion = useAppReducedMotion()
   const { data, isPending, isError, error, refetch } = useDashboardSummary()
   const { download } = useDocumentDownload()
+
+  // Clean migration: /app?view=storage -> /app/storage
+  if (searchParams.get('view') === 'storage') {
+    return <Navigate to="/app/storage" replace />
+  }
 
   const [uploadOpen, setUploadOpen] = useState(false)
   const [defaultSpace, setDefaultSpace] = useState<DocumentSpace>('government')

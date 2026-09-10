@@ -53,8 +53,7 @@ export const NAVIGATION_CONFIG: NavigationGroup[] = [
           {
             id: 'storage-breakdown',
             label: 'Storage Breakdown',
-            href: '/app?view=storage',
-            view: 'storage',
+            href: '/app/storage',
           },
         ],
       },

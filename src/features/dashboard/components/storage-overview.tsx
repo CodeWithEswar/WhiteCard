@@ -1,4 +1,5 @@
-import { FolderSecurityIcon, Upload01Icon, ShieldCheckIcon } from '@hugeicons/core-free-icons'
+import { Link } from 'react-router-dom'
+import { FolderSecurityIcon, Upload01Icon, ShieldCheckIcon, ArrowRight01Icon } from '@hugeicons/core-free-icons'
 import { AppIcon } from '@/components/icons/app-icon'
 import { Button } from '@/components/ui/button'
 import { StorageDonutChart } from './storage-donut-chart'
@@ -96,6 +97,20 @@ export function StorageOverview({
           </div>
         </div>
       )}
+
+      {/* Deep-link to Storage Breakdown observatory */}
+      <div className="pt-3 border-t border-border/50 flex items-center justify-between text-xs">
+        <Link
+          to="/app/storage"
+          className="inline-flex items-center gap-1.5 font-medium text-xs text-primary hover:text-primary/80 transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring rounded-xs"
+        >
+          <span>View storage details</span>
+          <AppIcon icon={ArrowRight01Icon} size={14} />
+        </Link>
+        <span className="text-[11px] text-muted-foreground font-mono">
+          {totalCount} {totalCount === 1 ? 'document' : 'documents'}
+        </span>
+      </div>
     </div>
   )
 }
