@@ -65,16 +65,16 @@ export function LandingHeader() {
   return (
     <header className="fixed inset-x-0 top-3 z-50 px-3 sm:top-4 sm:px-6">
       <div
-        className={`relative mx-auto flex h-[68px] max-w-[1280px] items-center justify-between rounded-md border px-4 transition-all duration-200 sm:px-6 ${scrolled
-            ? 'border-border/80 bg-background/85 shadow-sm backdrop-blur-md'
-            : 'border-border/40 bg-background/40 backdrop-blur-sm'
+        className={`relative mx-auto flex h-[68px] max-w-[1280px] items-center justify-between rounded-xl border px-4 transition-all duration-200 sm:px-6 ${scrolled
+          ? 'border-border/80 bg-background/85 shadow-sm backdrop-blur-md'
+          : 'border-border/40 bg-background/40 backdrop-blur-sm'
           }`}
       >
         {/* Left: Brand */}
         <Link
           to="/"
           aria-label="White Card Home"
-          className="flex items-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shrink-0"
+          className="flex items-center rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shrink-0"
         >
           <WhiteCardLogo size={28} showWordmark={true} />
         </Link>
@@ -90,9 +90,9 @@ export function LandingHeader() {
               <a
                 key={item.label}
                 href={item.href}
-                className={`relative px-3.5 py-1.5 text-xs font-medium transition-colors rounded-md ${isActive
-                    ? 'text-foreground font-semibold bg-muted/70'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
+                className={`relative px-3.5 py-1.5 text-xs font-medium transition-colors rounded-xl ${isActive
+                  ? 'text-foreground font-semibold bg-muted/70'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
                   } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
               >
                 {item.label}
@@ -110,7 +110,7 @@ export function LandingHeader() {
             size="icon"
             aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
             onClick={() => setAppearance(isDark ? 'light' : 'dark')}
-            className="size-9 rounded-md text-muted-foreground hover:text-foreground"
+            className="size-9 rounded-xl text-muted-foreground hover:text-foreground"
           >
             <AppIcon icon={isDark ? Sun01Icon : Moon02Icon} size={17} />
           </Button>
@@ -119,7 +119,7 @@ export function LandingHeader() {
           <Button
             type="button"
             render={<Link to="/auth" />}
-            className="hidden sm:inline-flex h-10 px-4 text-xs font-semibold rounded-md shadow-xs gap-1.5"
+            className="hidden sm:inline-flex h-10 px-4 text-xs font-semibold rounded-xl shadow-xs gap-1.5"
           >
             <span>Create White Card</span>
             <AppIcon icon={ArrowRight01Icon} size={14} />
@@ -133,7 +133,7 @@ export function LandingHeader() {
                   type="button"
                   variant="ghost"
                   size="icon"
-                  className="size-10 rounded-md text-muted-foreground hover:text-foreground md:hidden"
+                  className="size-10 rounded-xl text-muted-foreground hover:text-foreground md:hidden"
                   aria-label="Open navigation menu"
                 >
                   <AppIcon icon={Menu01Icon} size={20} />
@@ -214,7 +214,7 @@ export function LandingHeader() {
                     render={
                       <Button
                         render={<Link to="/auth" />}
-                        className="w-full h-11 text-xs font-semibold rounded-md shadow-xs"
+                        className="w-full h-11 text-xs font-semibold rounded-xl shadow-xs"
                       >
                         Open White Card
                       </Button>

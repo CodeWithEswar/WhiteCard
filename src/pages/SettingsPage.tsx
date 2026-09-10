@@ -11,7 +11,8 @@ import {
   Key01Icon,
   Tag01Icon,
 } from '@hugeicons/core-free-icons'
-import { PageContainer } from '../components/layout/page-container'
+import { PageShell } from '../components/layout/page-shell'
+import { ResponsivePageHeader } from '../components/layout/responsive-page-header'
 import { AppearanceControl } from '../features/settings/components/appearance-control'
 import { ThemePicker } from '../features/settings/components/theme-picker'
 import { SettingsGroup } from '../features/settings/components/settings-group'
@@ -30,7 +31,7 @@ export function SettingsPage() {
   const [checksumVerification, setChecksumVerification] = useState(true)
   const [localCaching, setLocalCaching] = useState(true)
   const [cacheCleared, setCacheCleared] = useState(false)
-  
+
   const { displayName, email, avatarUrl, initials, isBootstrapping } = useCurrentUser()
   const { signOut } = useAuth()
   const queryClient = useQueryClient()
@@ -48,16 +49,16 @@ export function SettingsPage() {
   }
 
   return (
-    <PageContainer maxWidth="reading" className="space-y-8 pb-12">
-      {/* Settings Header */}
-      <div className="space-y-1">
-        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
-          Vault Settings
-        </h1>
-        <p className="text-xs sm:text-sm text-muted-foreground">
-          Personal vault configuration, theme preferences, and privacy boundaries.
-        </p>
-      </div>
+    <PageShell
+      maxWidth="reading"
+      header={
+        <ResponsivePageHeader
+          eyebrow="ACCOUNT"
+          title="Vault Settings"
+          description="Manage your profile, appearance, themes, tags, document preferences, and account controls."
+        />
+      }
+    >
 
       {/* 1. Account Section */}
       <SettingsGroup
@@ -76,10 +77,10 @@ export function SettingsPage() {
                   <img
                     src={avatarUrl}
                     alt={displayName || 'Avatar'}
-                    className="size-6 rounded-md object-cover border border-border"
+                    className="size-6 rounded-xl object-cover border border-border"
                   />
                 ) : initials ? (
-                  <div className="size-6 rounded-md bg-muted border border-border flex items-center justify-center text-[10px] font-bold font-mono">
+                  <div className="size-6 rounded-xl bg-muted border border-border flex items-center justify-center text-[10px] font-bold font-mono">
                     {initials}
                   </div>
                 ) : null}
@@ -114,7 +115,7 @@ export function SettingsPage() {
             Appearance mode operates independently of your selected accent theme.
           </p>
         </div>
-        <div className="p-4 sm:p-5 rounded-md border border-border/80 bg-surface shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-4 sm:p-5 rounded-xl border border-border/80 bg-surface shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-0.5">
             <p className="text-xs sm:text-sm font-semibold text-foreground">
               Color Mode
@@ -193,7 +194,7 @@ export function SettingsPage() {
                 variant="outline"
                 size="sm"
                 onClick={handleClearCache}
-                className="text-xs h-7 px-2.5 rounded-md"
+                className="text-xs h-7 px-2.5 rounded-xl"
               >
                 {cacheCleared ? 'Cache Purged ✓' : 'Clear Cache'}
               </Button>
@@ -214,7 +215,7 @@ export function SettingsPage() {
           </p>
         </div>
 
-        <div className="p-4 sm:p-5 rounded-md border border-border/80 bg-surface shadow-xs space-y-3">
+        <div className="p-4 sm:p-5 rounded-xl border border-border/80 bg-surface shadow-xs space-y-3">
           <div className="flex flex-wrap gap-2">
             {STANDARD_TAGS.map((tag) => (
               <TagChip key={tag} label={tag} variant="default" />
@@ -250,12 +251,12 @@ export function SettingsPage() {
         <button
           type="button"
           onClick={handleSignOut}
-          className="w-full flex items-center justify-center gap-2 p-3.5 rounded-md border border-destructive/20 text-destructive bg-destructive/5 hover:bg-destructive/10 transition-colors text-xs font-semibold cursor-pointer"
+          className="w-full flex items-center justify-center gap-2 p-3.5 rounded-xl border border-destructive/20 text-destructive bg-destructive/5 hover:bg-destructive/10 transition-colors text-xs font-semibold cursor-pointer"
         >
           <AppIcon icon={Logout01Icon} size={16} />
           <span>Sign Out from Vault</span>
         </button>
       </div>
-    </PageContainer>
+    </PageShell>
   )
 }

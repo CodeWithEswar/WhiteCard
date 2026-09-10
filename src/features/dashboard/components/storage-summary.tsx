@@ -18,7 +18,7 @@ export function StorageSummary({
   const studentPercent = totalCount > 0 ? 100 - govPercent : 0
 
   return (
-    <div className="p-5 sm:p-6 rounded-md border border-border/80 bg-surface space-y-4">
+    <div className="p-5 sm:p-6 rounded-xl border border-border/80 bg-surface space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <AppIcon icon={FolderSecurityIcon} size={18} className="text-foreground" />

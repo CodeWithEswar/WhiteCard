@@ -45,7 +45,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
       <header className="relative z-20 w-full max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
         <Link
           to="/"
-          className="flex items-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="flex items-center rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           aria-label="Back to Home"
         >
           <WhiteCardLogo size={26} showWordmark={true} />
@@ -56,7 +56,7 @@ export function AuthLayout({ children }: AuthLayoutProps) {
 
           <Link
             to="/"
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors p-1.5 rounded-md hover:bg-muted"
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors p-1.5 rounded-xl hover:bg-muted"
             aria-label="Back to Overview"
           >
             <AppIcon icon={ArrowLeft01Icon} size={15} />

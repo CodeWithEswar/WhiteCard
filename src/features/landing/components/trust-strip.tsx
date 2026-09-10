@@ -42,9 +42,8 @@ export function TrustStrip() {
           {trustPillars.map((item, index) => (
             <StaggerItem
               key={item.title}
-              className={`flex items-center gap-3.5 py-4 sm:py-2 ${
-                index % 2 === 1 ? 'pl-4 sm:pl-6' : 'pr-4 sm:pr-6'
-              } md:px-6`}
+              className={`flex items-center gap-3.5 py-4 sm:py-2 ${index % 2 === 1 ? 'pl-4 sm:pl-6' : 'pr-4 sm:pr-6'
+                } md:px-6`}
             >
               <div className="p-2.5 rounded-xl bg-background border border-border/70 text-foreground shrink-0 shadow-2xs">
                 <AppIcon icon={item.icon} size={18} />

@@ -26,7 +26,7 @@ export function TabletNavFlyout({ item, trigger }: TabletNavFlyoutProps) {
         side="right"
         align="start"
         sideOffset={12}
-        className="w-56 p-2 rounded-md bg-popover/95 backdrop-blur-md border border-border shadow-md select-none"
+        className="w-56 p-2 rounded-xl bg-popover/95 backdrop-blur-md border border-border shadow-md select-none"
       >
         <div className="px-2 py-1.5 border-b border-border/70 flex items-center justify-between">
           <Link
@@ -49,7 +49,7 @@ export function TabletNavFlyout({ item, trigger }: TabletNavFlyoutProps) {
                 onClick={() => setOpen(false)}
                 aria-current={isChildActive ? 'page' : undefined}
                 className={cn(
-                  'flex items-center justify-between px-2.5 py-1.5 rounded-md text-xs transition-colors',
+                  'flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs transition-colors',
                   isChildActive
                     ? 'font-semibold text-foreground bg-muted/80'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/40 font-normal'

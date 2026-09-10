@@ -65,11 +65,10 @@ export function DocumentFilters({
                   key={s.id}
                   type="button"
                   onClick={() => handleSpaceChange(s.id as DocumentSpace | 'all')}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
-                    active
-                      ? 'bg-primary text-primary-foreground shadow-xs'
-                      : 'bg-surface border border-border text-muted-foreground hover:text-foreground hover:border-border-strong'
-                  }`}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${active
+                    ? 'bg-primary text-primary-foreground shadow-xs'
+                    : 'bg-surface border border-border text-muted-foreground hover:text-foreground hover:border-border-strong'
+                    }`}
                 >
                   {s.label}
                 </button>
@@ -92,11 +91,10 @@ export function DocumentFilters({
                 key={ft.id}
                 type="button"
                 onClick={() => handleFileTypeChange(ft.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
-                  active
-                    ? 'bg-primary text-primary-foreground shadow-xs'
-                    : 'bg-surface border border-border text-muted-foreground hover:text-foreground hover:border-border-strong'
-                }`}
+                className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${active
+                  ? 'bg-primary text-primary-foreground shadow-xs'
+                  : 'bg-surface border border-border text-muted-foreground hover:text-foreground hover:border-border-strong'
+                  }`}
               >
                 {ft.label}
               </button>

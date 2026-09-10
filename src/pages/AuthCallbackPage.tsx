@@ -71,7 +71,7 @@ export function AuthCallbackPage() {
             <p className="text-xs">{error}</p>
             <button
               onClick={() => navigate('/auth', { replace: true })}
-              className="px-4 py-1.5 rounded-md bg-foreground text-background text-xs font-semibold cursor-pointer"
+              className="px-4 py-1.5 rounded-xl bg-foreground text-background text-xs font-semibold cursor-pointer"
             >
               Return to Sign In
             </button>

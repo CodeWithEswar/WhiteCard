@@ -172,7 +172,7 @@ export function TermsPage() {
           <p>
             For questions or inquiries regarding these Terms of Service, please reach out to:
           </p>
-          <div className="p-4 rounded-md border border-border/70 bg-muted/20 text-xs font-mono space-y-1">
+          <div className="p-4 rounded-xl border border-border/70 bg-muted/20 text-xs font-mono space-y-1">
             <p>Email: legal@whitecard.app</p>
             <p>Product: White Card Vault</p>
           </div>

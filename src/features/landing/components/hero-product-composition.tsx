@@ -47,7 +47,7 @@ export function HeroProductComposition() {
           </div>
 
           {/* Search Bar Simulation */}
-          <div className="flex items-center gap-2 bg-background/80 border border-border/60 rounded-md px-3 py-1.5 text-xs text-muted-foreground w-44 sm:w-64">
+          <div className="flex items-center gap-2 bg-background/80 border border-border/60 rounded-xl px-3 py-1.5 text-xs text-muted-foreground w-44 sm:w-64">
             <AppIcon icon={Search01Icon} size={14} />
             <span className="truncate">Search documents or tags…</span>
           </div>
@@ -65,14 +65,14 @@ export function HeroProductComposition() {
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/50 pb-4">
             {/* Space selector pills */}
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-primary text-primary-foreground text-xs font-semibold shadow-xs">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-primary text-primary-foreground text-xs font-semibold shadow-xs">
                 <AppIcon icon={Passport01Icon} size={15} />
                 <span>Government Documents</span>
                 <span className="ml-1 px-1.5 py-0.2 rounded-full bg-primary-foreground/20 text-[10px]">
                   6
                 </span>
               </div>
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-muted text-muted-foreground hover:text-foreground text-xs font-medium transition-colors">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-muted text-muted-foreground hover:text-foreground text-xs font-medium transition-colors">
                 <AppIcon icon={Certificate01Icon} size={15} />
                 <span className="hidden xs:inline">Student Certificates</span>
                 <span className="xs:hidden">Student</span>
@@ -110,7 +110,7 @@ export function HeroProductComposition() {
               {/* Card 1: Identity Document */}
               <div className="group rounded-xl border border-border/70 bg-card p-4 hover:border-border transition-all shadow-xs space-y-3 text-left">
                 <div className="flex items-start justify-between">
-                  <div className="p-2 rounded-md bg-red-500/10 text-red-600 dark:text-red-400">
+                  <div className="p-2 rounded-xl bg-red-500/10 text-red-600 dark:text-red-400">
                     <AppIcon icon={Pdf01Icon} size={20} />
                   </div>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-muted text-muted-foreground">
@@ -140,7 +140,7 @@ export function HeroProductComposition() {
               {/* Card 2: Degree Certificate */}
               <div className="group rounded-xl border border-border/70 bg-card p-4 hover:border-border transition-all shadow-xs space-y-3 text-left">
                 <div className="flex items-start justify-between">
-                  <div className="p-2 rounded-md bg-red-500/10 text-red-600 dark:text-red-400">
+                  <div className="p-2 rounded-xl bg-red-500/10 text-red-600 dark:text-red-400">
                     <AppIcon icon={Pdf01Icon} size={20} />
                   </div>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-muted text-muted-foreground">
@@ -170,7 +170,7 @@ export function HeroProductComposition() {
               {/* Card 3: Insurance Record */}
               <div className="group rounded-xl border border-border/70 bg-card p-4 hover:border-border transition-all shadow-xs space-y-3 text-left">
                 <div className="flex items-start justify-between">
-                  <div className="p-2 rounded-md bg-red-500/10 text-red-600 dark:text-red-400">
+                  <div className="p-2 rounded-xl bg-red-500/10 text-red-600 dark:text-red-400">
                     <AppIcon icon={Pdf01Icon} size={20} />
                   </div>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-muted text-muted-foreground">
@@ -200,7 +200,7 @@ export function HeroProductComposition() {
               {/* Card 4: Semester Records.zip */}
               <div className="group rounded-xl border border-border/70 bg-card p-4 hover:border-border transition-all shadow-xs space-y-3 text-left">
                 <div className="flex items-start justify-between">
-                  <div className="p-2 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                  <div className="p-2 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400">
                     <AppIcon icon={File02Icon} size={20} />
                   </div>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-muted text-muted-foreground">

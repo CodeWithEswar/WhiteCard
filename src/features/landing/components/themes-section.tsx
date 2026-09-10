@@ -59,9 +59,9 @@ export function ThemesSection() {
               <button
                 type="button"
                 onClick={() => setAppearance('light')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${appearance === 'light'
-                    ? 'bg-primary text-primary-foreground font-semibold shadow-xs'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${appearance === 'light'
+                  ? 'bg-primary text-primary-foreground font-semibold shadow-xs'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                   }`}
               >
                 <AppIcon icon={Sun01Icon} size={13} />
@@ -70,9 +70,9 @@ export function ThemesSection() {
               <button
                 type="button"
                 onClick={() => setAppearance('dark')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${appearance === 'dark'
-                    ? 'bg-primary text-primary-foreground font-semibold shadow-xs'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${appearance === 'dark'
+                  ? 'bg-primary text-primary-foreground font-semibold shadow-xs'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                   }`}
               >
                 <AppIcon icon={Moon02Icon} size={13} />
@@ -81,9 +81,9 @@ export function ThemesSection() {
               <button
                 type="button"
                 onClick={() => setAppearance('system')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${appearance === 'system'
-                    ? 'bg-primary text-primary-foreground font-semibold shadow-xs'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${appearance === 'system'
+                  ? 'bg-primary text-primary-foreground font-semibold shadow-xs'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                   }`}
               >
                 <span>System</span>
@@ -105,8 +105,8 @@ export function ThemesSection() {
                   type="button"
                   onClick={() => setTheme(t.id as ThemeId)}
                   className={`relative rounded-2xl border p-4 text-left transition-all duration-200 hover:-translate-y-0.5 shadow-2xs group flex flex-col justify-between ${isSelected
-                      ? 'border-primary ring-2 ring-primary/20 bg-card'
-                      : 'border-border/70 bg-card hover:border-border'
+                    ? 'border-primary ring-2 ring-primary/20 bg-card'
+                    : 'border-border/70 bg-card hover:border-border'
                     }`}
                 >
                   <div className="space-y-3 w-full">

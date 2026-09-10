@@ -33,7 +33,7 @@ export function SignInButton({ className = '', compact = false }: SignInButtonPr
       type="button"
       onClick={handleSignIn}
       disabled={loading}
-      className={`h-11 rounded-md px-5 text-sm font-semibold shadow-xs ${className}`}
+      className={`h-11 rounded-xl px-5 text-sm font-semibold shadow-xs ${className}`}
     >
       <AppIcon icon={GoogleIcon} size={18} aria-hidden />
       <span>{loading ? 'Opening Google…' : compact ? 'Continue' : 'Continue with Google'}</span>

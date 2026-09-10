@@ -69,11 +69,11 @@ export function NavUser({
               />
             }
           >
-            <Avatar className="size-7 rounded-md shrink-0">
+            <Avatar className="size-7 rounded-xl shrink-0">
               {user.avatar ? (
                 <AvatarImage src={user.avatar} alt={user.name} />
               ) : null}
-              <AvatarFallback className="rounded-md font-bold text-[11px] bg-sidebar-primary text-sidebar-primary-foreground">
+              <AvatarFallback className="rounded-xl font-bold text-[11px] bg-sidebar-primary text-sidebar-primary-foreground">
                 {getInitials(user.name)}
               </AvatarFallback>
             </Avatar>
@@ -88,7 +88,7 @@ export function NavUser({
             )}
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-56 rounded-md"
+            className="w-56 rounded-xl"
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
@@ -96,11 +96,11 @@ export function NavUser({
             <DropdownMenuGroup>
               <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1.5 py-1.5 text-left text-sm">
-                  <Avatar className="size-8 rounded-md">
+                  <Avatar className="size-8 rounded-xl">
                     {user.avatar ? (
                       <AvatarImage src={user.avatar} alt={user.name} />
                     ) : null}
-                    <AvatarFallback className="rounded-md font-bold text-xs bg-sidebar-primary text-sidebar-primary-foreground">
+                    <AvatarFallback className="rounded-xl font-bold text-xs bg-sidebar-primary text-sidebar-primary-foreground">
                       {getInitials(user.name)}
                     </AvatarFallback>
                   </Avatar>

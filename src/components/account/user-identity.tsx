@@ -40,13 +40,13 @@ export function UserIdentity({
   const renderedEmail = email || ''
 
   const avatarElement = showAvatar && (
-    <div className="size-8 rounded-md bg-muted/80 border border-border/80 flex items-center justify-center font-bold text-xs text-foreground shrink-0 overflow-hidden select-none">
+    <div className="size-8 rounded-xl bg-muted/80 border border-border/80 flex items-center justify-center font-bold text-xs text-foreground shrink-0 overflow-hidden select-none">
       {avatarUrl && !imageError ? (
         <img
           src={avatarUrl}
           alt={renderedName}
           onError={() => setImageError(true)}
-          className="size-full object-cover rounded-md transition-opacity duration-150"
+          className="size-full object-cover rounded-xl transition-opacity duration-150"
         />
       ) : (
         <span className="font-mono text-[11px] tracking-tight">{initials || '•'}</span>

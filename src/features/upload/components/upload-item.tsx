@@ -74,7 +74,7 @@ export function UploadItem({ item, onRemove }: UploadItemProps) {
               type="button"
               onClick={() => onRemove(item.id)}
               aria-label="Remove file"
-              className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+              className="p-1 rounded-xl text-muted-foreground hover:text-foreground hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
             >
               <AppIcon icon={Cancel01Icon} size={13} />
             </button>

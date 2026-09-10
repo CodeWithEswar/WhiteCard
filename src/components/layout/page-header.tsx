@@ -1,8 +1,15 @@
 import React from 'react'
+import {
+  ResponsivePageHeader,
+  type ResponsivePageHeaderProps,
+} from './responsive-page-header'
 
-interface PageHeaderProps {
+export { ResponsivePageHeader, type ResponsivePageHeaderProps }
+
+export interface LegacyPageHeaderProps {
   title: string
   description?: string
+  eyebrow?: string
   badge?: React.ReactNode
   actions?: React.ReactNode
   className?: string
@@ -11,33 +18,19 @@ interface PageHeaderProps {
 export function PageHeader({
   title,
   description,
+  eyebrow,
   badge,
   actions,
-  className = '',
-}: PageHeaderProps) {
+  className,
+}: LegacyPageHeaderProps) {
   return (
-    <div
-      className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border/60 ${className}`}
-    >
-      <div className="space-y-1">
-        <div className="flex items-center gap-2.5">
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-            {title}
-          </h1>
-          {badge}
-        </div>
-        {description && (
-          <p className="text-xs sm:text-sm text-muted-foreground max-w-xl">
-            {description}
-          </p>
-        )}
-      </div>
-
-      {actions && (
-        <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
-          {actions}
-        </div>
-      )}
-    </div>
+    <ResponsivePageHeader
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
+      primaryAction={actions}
+      metadata={badge}
+      className={className}
+    />
   )
 }

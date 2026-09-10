@@ -30,7 +30,7 @@ export function AuthThemeControl() {
             type="button"
             variant="ghost"
             size="icon"
-            className="size-9 rounded-md text-muted-foreground hover:text-foreground"
+            className="size-9 rounded-xl text-muted-foreground hover:text-foreground"
             aria-label="Change appearance mode"
           >
             <AppIcon icon={isDark ? Sun01Icon : Moon02Icon} size={16} />
@@ -48,9 +48,8 @@ export function AuthThemeControl() {
           <DropdownMenuItem
             key={m.id}
             onClick={() => setAppearance(m.id)}
-            className={`flex items-center justify-between text-xs cursor-pointer ${
-              appearance === m.id ? 'font-semibold text-foreground bg-muted' : ''
-            }`}
+            className={`flex items-center justify-between text-xs cursor-pointer ${appearance === m.id ? 'font-semibold text-foreground bg-muted' : ''
+              }`}
           >
             <span className="flex items-center gap-2">
               <AppIcon icon={m.icon} size={14} />

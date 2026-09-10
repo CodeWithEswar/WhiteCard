@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { PageContainer } from '../components/layout/page-container'
+import { Upload01Icon } from '@hugeicons/core-free-icons'
+import { PageShell } from '../components/layout/page-shell'
+import { ResponsivePageHeader } from '../components/layout/responsive-page-header'
+import { PageHeaderMeta } from '../components/layout/page-header-meta'
 import { DocumentToolbar } from '../features/documents/components/document-toolbar'
 import { DocumentGrid } from '../features/documents/components/document-grid'
 import { UploadDialog } from '../features/upload/components/upload-dialog'
 import { ShareDialog } from '../features/sharing/components/share-dialog'
 import { DocumentGridSkeleton, DocumentListSkeleton } from '../components/feedback/page-skeleton'
+import { AppIcon } from '../components/icons/app-icon'
+import { Button } from '../components/ui/button'
 import {
   useDocuments,
   useDeleteDocument,
@@ -58,9 +63,9 @@ export function GovernmentDocsPage() {
 
   const [uploadOpen, setUploadOpen] = useState(false)
   const [shareDoc, setShareDoc] = useState<VaultDocument | null>(null)
-  const deleteMutation = useDeleteDocument()
 
-  const { data: documents = [], isPending, isFetching } = useDocuments(filters)
+  const { data: documents = [], isPending } = useDocuments(filters)
+  const deleteMutation = useDeleteDocument()
 
   const handleResetFilters = () => {
     setFilters({
@@ -74,7 +79,7 @@ export function GovernmentDocsPage() {
   }
 
   const handleDelete = (doc: VaultDocument) => {
-    if (confirm(`Remove "${doc.title}" from your Government Documents?`)) {
+    if (confirm(`Permanently delete "${doc.title}"?`)) {
       deleteMutation.mutate(doc.id)
     }
   }
@@ -96,11 +101,43 @@ export function GovernmentDocsPage() {
       (filters.search && filters.search.trim() !== '')
   )
 
+  const pageTitle =
+    categoryParam === 'passport'
+      ? 'Passports & IDs'
+      : categoryParam === 'vehicle'
+      ? 'Vehicle Licences'
+      : 'Government Documents'
+
+  const pageDescription =
+    categoryParam === 'passport'
+      ? 'Keep identity cards, passports, visas, and verified citizenship records organized.'
+      : categoryParam === 'vehicle'
+      ? 'Driving licences, registrations, insurance policies, and vehicular documentation.'
+      : 'Keep official records, identity documents, licences, insurance, and other government-related files organized.'
+
   return (
-    <PageContainer maxWidth="wide">
-      {/* Toolbar with title, count, filters, search, sort, grid/list toggle */}
+    <PageShell
+      maxWidth="wide"
+      header={
+        <ResponsivePageHeader
+          eyebrow="VAULT SPACE"
+          title={pageTitle}
+          description={pageDescription}
+          primaryAction={
+            <Button
+              onClick={() => setUploadOpen(true)}
+              className="h-9 px-3.5 rounded-md font-medium text-xs gap-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-2xs active:scale-[0.985]"
+            >
+              <AppIcon icon={Upload01Icon} size={15} />
+              <span>Upload Document</span>
+            </Button>
+          }
+          metadata={<PageHeaderMeta count={documents.length} />}
+        />
+      }
+    >
+      {/* Search, Filter, Sort & View Mode Toolbar */}
       <DocumentToolbar
-        title="Government Documents"
         totalCount={documents.length}
         filters={filters}
         onFiltersChange={setFilters}
@@ -109,6 +146,7 @@ export function GovernmentDocsPage() {
         onViewModeChange={setViewMode}
         onUploadClick={() => setUploadOpen(true)}
         showSpaceFilter={false}
+        showHeader={false}
       />
 
       {/* Main Documents Grid / List (Cache-first: render skeleton only if no cache exists) */}
@@ -146,6 +184,6 @@ export function GovernmentDocsPage() {
         onOpenChange={(open) => !open && setShareDoc(null)}
         document={shareDoc}
       />
-    </PageContainer>
+    </PageShell>
   )
 }

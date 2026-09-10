@@ -130,19 +130,19 @@ export function UploadDialog({
         step === 5
           ? 'Deposit Complete'
           : step === 4
-          ? 'Depositing to Vault...'
-          : 'Deposit Important Document'
+            ? 'Depositing to Vault...'
+            : 'Deposit Important Document'
       }
       description={
         step === 1
           ? 'Add files to your personal vault'
           : step === 2
-          ? 'Review your selected files'
-          : step === 3
-          ? 'Configure space and details'
-          : step === 4
-          ? 'Encrypting and saving original files'
-          : 'Your documents are safely stored in White Card'
+            ? 'Review your selected files'
+            : step === 3
+              ? 'Configure space and details'
+              : step === 4
+                ? 'Encrypting and saving original files'
+                : 'Your documents are safely stored in White Card'
       }
       maxWidth="lg"
     >
@@ -231,7 +231,7 @@ export function UploadDialog({
         {/* Step 4: Upload Progress */}
         {step === 4 && (
           <div className="py-6 space-y-4">
-            <UploadQueue items={queue} onRemove={() => {}} />
+            <UploadQueue items={queue} onRemove={() => { }} />
             <p className="text-center text-xs text-muted-foreground animate-pulse">
               Encrypting bytes and verifying checksum integrity...
             </p>

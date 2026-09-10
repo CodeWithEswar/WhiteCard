@@ -47,11 +47,10 @@ export function SpaceCard({
           onClick()
         }
       }}
-      className={`group relative flex flex-col justify-between p-6 sm:p-7 rounded-md border transition-all text-left select-none cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring overflow-hidden ${
-        isGov
-          ? 'border-border/90 bg-surface hover:border-border-strong hover:bg-surface-elevated/40'
-          : 'border-border/80 bg-surface/90 hover:border-border-strong hover:bg-surface-elevated/40'
-      }`}
+      className={`group relative flex flex-col justify-between p-6 sm:p-7 rounded-xl border transition-all text-left select-none cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring overflow-hidden ${isGov
+        ? 'border-border/90 bg-surface hover:border-border-strong hover:bg-surface-elevated/40'
+        : 'border-border/80 bg-surface/90 hover:border-border-strong hover:bg-surface-elevated/40'
+        }`}
     >
       {/* Background Micro Grid */}
       <div
@@ -63,20 +62,19 @@ export function SpaceCard({
         {/* Top bar with Space Icon & Count Pill */}
         <div className="flex items-center justify-between gap-3 mb-5">
           <div
-            className={`size-12 rounded-md border flex items-center justify-center shadow-xs transition-transform group-hover:scale-105 ${
-              isGov
-                ? 'border-border bg-surface-muted/90 text-foreground'
-                : 'border-border bg-surface-muted/90 text-foreground'
-            }`}
+            className={`size-12 rounded-xl border flex items-center justify-center shadow-xs transition-transform group-hover:scale-105 ${isGov
+              ? 'border-border bg-surface-muted/90 text-foreground'
+              : 'border-border bg-surface-muted/90 text-foreground'
+              }`}
           >
             <AppIcon icon={icon} size={24} />
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-md bg-surface-muted border border-border text-muted-foreground">
+            <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-xl bg-surface-muted border border-border text-muted-foreground">
               {count} {count === 1 ? 'file' : 'files'}
             </span>
-            <div className="size-8 rounded-md border border-border/80 bg-surface flex items-center justify-center text-muted-foreground group-hover:text-foreground group-hover:translate-x-0.5 transition-all">
+            <div className="size-8 rounded-xl border border-border/80 bg-surface flex items-center justify-center text-muted-foreground group-hover:text-foreground group-hover:translate-x-0.5 transition-all">
               <AppIcon icon={ArrowRight01Icon} size={15} />
             </div>
           </div>
@@ -113,7 +111,7 @@ export function SpaceCard({
             {documents.slice(0, 3).map((d) => (
               <div
                 key={d.id}
-                className="flex-1 p-2 rounded-md border border-border/70 bg-surface-muted/50 truncate text-[11px] font-mono text-muted-foreground"
+                className="flex-1 p-2 rounded-xl border border-border/70 bg-surface-muted/50 truncate text-[11px] font-mono text-muted-foreground"
                 title={d.title}
               >
                 <span className="truncate block font-sans font-medium text-foreground/85">
@@ -122,13 +120,13 @@ export function SpaceCard({
               </div>
             ))}
             {count > 3 && (
-              <div className="px-2.5 py-2 rounded-md border border-border/60 bg-surface-muted/40 text-[11px] font-mono text-muted-foreground flex items-center justify-center">
+              <div className="px-2.5 py-2 rounded-xl border border-border/60 bg-surface-muted/40 text-[11px] font-mono text-muted-foreground flex items-center justify-center">
                 +{count - 3}
               </div>
             )}
           </div>
         ) : (
-          <div className="mt-3 py-2 px-3 rounded-md border border-dashed border-border/60 bg-surface-muted/30 text-xs text-muted-foreground">
+          <div className="mt-3 py-2 px-3 rounded-xl border border-dashed border-border/60 bg-surface-muted/30 text-xs text-muted-foreground">
             Empty space • Click to open and add documents
           </div>
         )}

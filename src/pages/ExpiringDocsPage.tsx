@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import {
   Alert02Icon,
   Calendar03Icon,
-  ArrowLeft01Icon,
   Upload01Icon,
 } from '@hugeicons/core-free-icons'
-import { PageContainer } from '../components/layout/page-container'
+import { PageShell } from '../components/layout/page-shell'
+import { ResponsivePageHeader } from '../components/layout/responsive-page-header'
+import { PageHeaderMeta } from '../components/layout/page-header-meta'
 import { AppIcon } from '../components/icons/app-icon'
 import { Button } from '../components/ui/button'
 import { DocumentGrid } from '../features/documents/components/document-grid'
@@ -56,47 +57,44 @@ export function ExpiringDocsPage() {
   }
 
   return (
-    <PageContainer maxWidth="wide" className="space-y-6">
+    <PageShell
+      maxWidth="wide"
+      header={
+        <ResponsivePageHeader
+          eyebrow="COLLECTION"
+          title="Expiring Soon"
+          description="Documents with expiry dates approaching within your configured review window."
+          icon={Alert02Icon}
+          primaryAction={
+            <Button
+              onClick={() => setUploadOpen(true)}
+              className="h-9 px-3.5 rounded-md font-medium text-xs gap-2 bg-primary text-primary-foreground hover:bg-primary/90 shadow-2xs"
+            >
+              <AppIcon icon={Upload01Icon} size={15} />
+              <span>Upload Document</span>
+            </Button>
+          }
+          metadata={
+            <PageHeaderMeta
+              count={expiringDocs.length}
+              countLabel="expiring documents"
+              badge={
+                expiringDocs.length > 0 ? (
+                  <span className="size-5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/25 text-[10px] font-mono font-bold flex items-center justify-center">
+                    {expiringDocs.length}
+                  </span>
+                ) : undefined
+              }
+            />
+          }
+        />
+      }
+    >
       <PageMeta
         title="White Card — Expiring Documents"
         noIndex={true}
         noFollow={true}
       />
-
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-border/60">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => navigate('/app')}
-              aria-label="Back to vault home"
-              className="p-1 -ml-1 text-muted-foreground hover:text-foreground rounded-md hover:bg-muted/50 transition-colors"
-            >
-              <AppIcon icon={ArrowLeft01Icon} size={18} />
-            </button>
-            <h1 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2.5">
-              <span>Expiring Soon</span>
-              {expiringDocs.length > 0 && (
-                <span className="size-6 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/25 text-xs font-mono font-bold flex items-center justify-center">
-                  {expiringDocs.length}
-                </span>
-              )}
-            </h1>
-          </div>
-          <p className="text-xs sm:text-sm text-muted-foreground">
-            Vault items requiring renewal or attention within the next 30 days.
-          </p>
-        </div>
-
-        <Button
-          onClick={() => setUploadOpen(true)}
-          className="h-9 px-3.5 rounded-md font-medium text-xs gap-2 bg-primary text-primary-foreground hover:bg-primary/90 shadow-2xs"
-        >
-          <AppIcon icon={Upload01Icon} size={15} />
-          <span>Upload Document</span>
-        </Button>
-      </div>
 
       {/* Content: List or Truthful Empty State */}
       {expiringDocs.length > 0 ? (
@@ -109,8 +107,8 @@ export function ExpiringDocsPage() {
           onDownload={handleDownload}
         />
       ) : (
-        <div className="py-16 px-4 rounded-md border border-border/80 bg-surface/40 flex flex-col items-center justify-center text-center space-y-3">
-          <div className="size-12 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+        <div className="py-16 px-4 rounded-xl border border-border/80 bg-surface/40 flex flex-col items-center justify-center text-center space-y-3">
+          <div className="size-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
             <AppIcon icon={Calendar03Icon} size={24} />
           </div>
           <div className="space-y-1 max-w-sm">
@@ -128,6 +126,6 @@ export function ExpiringDocsPage() {
         onOpenChange={(open) => !open && setShareDoc(null)}
         document={shareDoc}
       />
-    </PageContainer>
+    </PageShell>
   )
 }

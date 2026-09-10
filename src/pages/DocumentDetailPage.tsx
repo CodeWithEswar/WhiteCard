@@ -15,7 +15,9 @@ import {
   ViewIcon,
   CursorPointer01Icon,
 } from '@hugeicons/core-free-icons'
-import { PageContainer } from '../components/layout/page-container'
+import { PageShell } from '../components/layout/page-shell'
+import { ResponsivePageHeader } from '../components/layout/responsive-page-header'
+import { PageHeaderMeta } from '../components/layout/page-header-meta'
 import { DocumentPreview } from '../features/documents/components/document-preview'
 import { TagChip } from '../features/tags/components/tag-chip'
 import { ShareDialog } from '../features/sharing/components/share-dialog'
@@ -27,6 +29,7 @@ import {
   useDeleteDocument,
 } from '../features/documents/hooks/use-documents'
 import { ErrorState } from '../components/feedback/error-state'
+import { DocumentGridSkeleton } from '../components/feedback/page-skeleton'
 
 export function DocumentDetailPage() {
   const { id, documentId } = useParams<{ id?: string; documentId?: string }>()
@@ -42,22 +45,44 @@ export function DocumentDetailPage() {
 
   if (isLoading) {
     return (
-      <PageContainer maxWidth="normal" className="py-12 text-center text-xs text-muted-foreground animate-pulse">
-        Decryption in progress...
-      </PageContainer>
+      <PageShell
+        maxWidth="wide"
+        header={
+          <ResponsivePageHeader
+            eyebrow="VAULT DOCUMENT"
+            title="Loading Document..."
+            description="Decrypting document metadata..."
+          />
+        }
+      >
+        <div className="py-8">
+          <DocumentGridSkeleton count={1} />
+        </div>
+      </PageShell>
     )
   }
 
   if (!document) {
     return (
-      <PageContainer maxWidth="reading" className="py-12">
-        <ErrorState
-          title="Document Not Found"
-          description="This file may have been relocated or removed from your vault."
-          retryLabel="Back to Vault"
-          onRetry={() => navigate('/app')}
-        />
-      </PageContainer>
+      <PageShell
+        maxWidth="reading"
+        header={
+          <ResponsivePageHeader
+            eyebrow="ERROR"
+            title="Document Not Found"
+            description="This file may have been relocated or removed from your vault."
+          />
+        }
+      >
+        <div className="py-8">
+          <ErrorState
+            title="Document Not Found"
+            description="This file may have been relocated or removed from your vault."
+            retryLabel="Back to Vault"
+            onRetry={() => navigate('/app')}
+          />
+        </div>
+      </PageShell>
     )
   }
 
@@ -90,8 +115,8 @@ export function DocumentDetailPage() {
 
   const isExpiringSoon = Boolean(
     document.expiryDate &&
-      new Date(document.expiryDate).getTime() - Date.now() < 30 * 24 * 3600 * 1000 &&
-      new Date(document.expiryDate).getTime() > Date.now()
+    new Date(document.expiryDate).getTime() - Date.now() < 30 * 24 * 3600 * 1000 &&
+    new Date(document.expiryDate).getTime() > Date.now()
   )
 
   const formatLongDate = (isoString?: string | null) => {
@@ -105,39 +130,51 @@ export function DocumentDetailPage() {
   }
 
   return (
-    <PageContainer maxWidth="wide" className="space-y-6">
-      {/* Top Breadcrumb / Back Bar */}
-      <div className="flex items-center justify-between gap-4 pb-2">
-        <button
-          type="button"
-          onClick={() => navigate(-1)}
-          className="inline-flex items-center gap-2 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <AppIcon icon={ArrowLeft01Icon} size={16} />
-          <span>Back to documents</span>
-        </button>
-
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setShareOpen(true)}
-            className="h-9 px-3 rounded-xl text-xs gap-1.5 border-border hover:bg-surface-muted"
-          >
-            <AppIcon icon={Share03Icon} size={15} />
-            <span>Share Link</span>
-          </Button>
-
-          <Button
-            size="sm"
-            onClick={handleDownload}
-            className="h-9 px-4 rounded-xl font-semibold text-xs gap-1.5 bg-primary text-primary-foreground hover:bg-primary/90 shadow-xs"
-          >
-            <AppIcon icon={Download01Icon} size={15} />
-            <span>Download</span>
-          </Button>
-        </div>
-      </div>
+    <PageShell
+      maxWidth="wide"
+      header={
+        <ResponsivePageHeader
+          eyebrow={document.space === 'government' ? 'GOVERNMENT SPACE' : 'STUDENT SPACE'}
+          title={document.title}
+          description={`Original file: ${document.originalFilename}`}
+          documentMeta={{
+            title: document.title,
+            space: document.space,
+            category: document.category,
+          }}
+          primaryAction={
+            <Button
+              size="sm"
+              onClick={handleDownload}
+              className="h-9 px-3.5 rounded-md font-medium text-xs gap-1.5 bg-primary text-primary-foreground hover:bg-primary/90 shadow-2xs"
+            >
+              <AppIcon icon={Download01Icon} size={15} />
+              <span>Download</span>
+            </Button>
+          }
+          secondaryActions={
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShareOpen(true)}
+              className="h-9 px-3 rounded-md text-xs gap-1.5 border-border hover:bg-muted/40"
+            >
+              <AppIcon icon={Share03Icon} size={15} />
+              <span>Share</span>
+            </Button>
+          }
+          metadata={
+            <PageHeaderMeta
+              badge={
+                <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-muted text-muted-foreground border border-border">
+                  {document.fileType.toUpperCase()}
+                </span>
+              }
+            />
+          }
+        />
+      }
+    >
 
       {/* Two-Column Detail Grid: Preview on Left, Metadata on Right */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -340,6 +377,6 @@ export function DocumentDetailPage() {
         onOpenChange={setShareOpen}
         document={document}
       />
-    </PageContainer>
+    </PageShell>
   )
 }

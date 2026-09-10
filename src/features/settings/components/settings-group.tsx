@@ -50,11 +50,10 @@ export function SettingsGroup({
               onClick={item.onClick}
               role={isClickable ? 'button' : undefined}
               tabIndex={isClickable ? 0 : undefined}
-              className={`flex items-center justify-between p-4 px-5 gap-4 transition-colors ${
-                isClickable
-                  ? 'hover:bg-surface-muted/60 cursor-pointer select-none'
-                  : ''
-              } ${item.destructive ? 'text-destructive' : ''}`}
+              className={`flex items-center justify-between p-4 px-5 gap-4 transition-colors ${isClickable
+                ? 'hover:bg-surface-muted/60 cursor-pointer select-none'
+                : ''
+                } ${item.destructive ? 'text-destructive' : ''}`}
             >
               <div className="flex items-center gap-3.5 min-w-0 flex-1">
                 {item.icon && (

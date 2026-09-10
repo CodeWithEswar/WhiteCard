@@ -25,7 +25,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, ease: motionEase }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-md border border-border/80 bg-muted/60 text-xs font-medium text-muted-foreground backdrop-blur-xs"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-xl border border-border/80 bg-muted/60 text-xs font-medium text-muted-foreground backdrop-blur-xs"
           >
             <AppIcon icon={ShieldCheckIcon} size={14} className="text-foreground" />
             <span>Personal Document Wallet • Private & Authenticated</span>
@@ -64,7 +64,7 @@ export function HeroSection() {
             <Button
               size="lg"
               render={<Link to="/auth" />}
-              className="w-full sm:w-auto h-11 px-6 rounded-md font-semibold text-sm gap-2 shadow-xs"
+              className="w-full sm:w-auto h-11 px-6 rounded-xl font-semibold text-sm gap-2 shadow-xs"
             >
               <span>Create your White Card</span>
               <AppIcon icon={ArrowRight01Icon} size={16} />
@@ -74,7 +74,7 @@ export function HeroSection() {
               variant="outline"
               size="lg"
               render={<a href="#product" />}
-              className="w-full sm:w-auto h-11 px-5 rounded-md font-medium text-sm gap-2 border-border/80 hover:bg-muted text-foreground"
+              className="w-full sm:w-auto h-11 px-5 rounded-xl font-medium text-sm gap-2 border-border/80 hover:bg-muted text-foreground"
             >
               <span>See how it works</span>
             </Button>

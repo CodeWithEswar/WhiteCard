@@ -56,7 +56,7 @@ export function GoogleAuthSection() {
 
                 {/* Step 2: White Card Account */}
                 <div className="rounded-2xl border border-primary/30 bg-primary/5 p-6 text-left space-y-3 relative">
-                  <div className="size-11 rounded-md bg-background border border-border/60 flex items-center justify-center shadow-2xs">
+                  <div className="size-11 rounded-xl bg-background border border-border/60 flex items-center justify-center shadow-2xs">
                     <WhiteCardLogo size={24} showWordmark={false} />
                   </div>
                   <h3 className="text-sm font-bold text-foreground">

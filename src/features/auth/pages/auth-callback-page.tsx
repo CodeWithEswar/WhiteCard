@@ -77,7 +77,7 @@ export function AuthCallbackPage() {
 
           {error ? (
             <div className="space-y-4">
-              <div className="p-4 rounded-md bg-destructive/10 border border-destructive/20 text-destructive text-xs space-y-2 text-left">
+              <div className="p-4 rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-xs space-y-2 text-left">
                 <div className="flex items-center gap-2 font-semibold">
                   <AppIcon icon={Alert02Icon} size={16} />
                   <span>Authentication Issue</span>

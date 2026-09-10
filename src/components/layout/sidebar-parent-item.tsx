@@ -46,7 +46,7 @@ export function SidebarParentItem({
         type="button"
         onClick={() => item.actionId && onActionClick?.(item.actionId)}
         className={cn(
-          'flex items-center rounded-md text-xs font-medium transition-all duration-150 select-none outline-hidden focus-visible:ring-2 focus-visible:ring-ring',
+          'flex items-center rounded-xl text-xs font-medium transition-all duration-150 select-none outline-hidden focus-visible:ring-2 focus-visible:ring-ring',
           isCollapsed
             ? 'size-9 mx-auto justify-center text-muted-foreground hover:text-foreground hover:bg-muted/40 p-0'
             : 'w-full gap-3 h-10 px-3 text-foreground border border-dashed border-border/80 hover:border-border hover:bg-muted/50'
@@ -78,7 +78,7 @@ export function SidebarParentItem({
         to={item.href}
         aria-current={isParentActive ? 'page' : undefined}
         className={cn(
-          'relative flex items-center h-10 rounded-md text-xs transition-colors duration-150 select-none outline-hidden focus-visible:ring-2 focus-visible:ring-ring group',
+          'relative flex items-center h-10 rounded-xl text-xs transition-colors duration-150 select-none outline-hidden focus-visible:ring-2 focus-visible:ring-ring group',
           isCollapsed
             ? 'size-9 mx-auto justify-center p-0 hover:bg-muted/40'
             : 'w-full gap-3 px-3 hover:bg-muted/30'
@@ -135,7 +135,7 @@ export function SidebarParentItem({
   const parentTrigger = (
     <div
       className={cn(
-        'group flex items-center justify-between h-10 rounded-md text-xs transition-colors duration-150 select-none outline-hidden',
+        'group flex items-center justify-between h-10 rounded-xl text-xs transition-colors duration-150 select-none outline-hidden',
         isCollapsed
           ? 'size-9 mx-auto justify-center p-0 hover:bg-muted/40'
           : 'w-full px-3 hover:bg-muted/30'

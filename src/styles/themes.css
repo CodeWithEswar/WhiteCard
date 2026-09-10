@@ -36,6 +36,16 @@
   --sidebar-accent-foreground: oklch(0.145 0 0);
   --sidebar-border: oklch(0.90 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Navigation & Page Header Semantic Tokens */
+  --topbar-background: var(--background);
+  --topbar-border: var(--border);
+  --breadcrumb-muted: var(--muted-foreground);
+  --page-header-muted: var(--muted-foreground);
+  --navigation-active: var(--primary);
+  --navigation-active-foreground: var(--primary-foreground);
+  --theme-preview-border: var(--border);
+  --theme-preview-selected: var(--ring);
 }
 
 .dark {

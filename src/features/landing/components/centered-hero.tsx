@@ -22,7 +22,7 @@ export function CenteredHero() {
       <div className="relative mx-auto max-w-5xl text-center">
         {/* Official White Card App Logo Emblem */}
         <motion.div {...fade(reduceMotion, 0)} className="flex justify-center mb-6">
-          <div className="p-2 px-3.5 rounded-md border border-border/80 bg-surface/90 shadow-xs backdrop-blur inline-flex items-center gap-3">
+          <div className="p-2 px-3.5 rounded-xl border border-border/80 bg-surface/90 shadow-xs backdrop-blur inline-flex items-center gap-3">
             <WhiteCardLogo size={28} showWordmark={false} />
             <div className="h-4 w-px bg-border/80" />
             <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground">
@@ -39,15 +39,15 @@ export function CenteredHero() {
         </motion.p>
         <motion.div {...fade(reduceMotion, 0.12)} className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <SignInButton className="w-full sm:w-auto" />
-          <Button render={<a href="#product" />} variant="outline" className="h-11 w-full rounded-md px-5 text-sm font-semibold sm:w-auto">See how it works <AppIcon icon={ArrowDown01Icon} size={17} /></Button>
+          <Button render={<a href="#product" />} variant="outline" className="h-11 w-full rounded-xl px-5 text-sm font-semibold sm:w-auto">See how it works <AppIcon icon={ArrowDown01Icon} size={17} /></Button>
         </motion.div>
         <motion.p {...fade(reduceMotion, 0.15)} className="mt-5 text-sm text-muted-foreground">Private storage <span aria-hidden="true">•</span> Owner-controlled access <span aria-hidden="true">•</span> Direct share links</motion.p>
-        <motion.div initial={reduceMotion ? false : { opacity: 0, scale: 0.985 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.45, delay: 0.16 }} className="relative mx-auto mt-12 max-w-4xl rounded-md border border-border bg-surface/80 p-3 shadow-md backdrop-blur sm:p-5">
-          <div className="grid gap-3 rounded-md border border-border/70 bg-background/70 p-3 text-left sm:grid-cols-2 sm:p-5">
+        <motion.div initial={reduceMotion ? false : { opacity: 0, scale: 0.985 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.45, delay: 0.16 }} className="relative mx-auto mt-12 max-w-4xl rounded-xl border border-border bg-surface/80 p-3 shadow-md backdrop-blur sm:p-5">
+          <div className="grid gap-3 rounded-xl border border-border/70 bg-background/70 p-3 text-left sm:grid-cols-2 sm:p-5">
             <VaultSpace icon={Passport01Icon} label="Government Documents" count="8 categories" rows={[["Passport.pdf", "Identity"], ["Driving_Licence.png", "Vehicle"]]} />
             <VaultSpace icon={Certificate01Icon} label="Student Certificates" count="7 categories" rows={[["Degree_Certificate.pdf", "Education"], ["Semester_Marksheets.zip", "Academic"]]} />
           </div>
-          <div className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 rounded-md border border-border/70 bg-surface-muted/55 px-4 py-3 text-sm text-muted-foreground">
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 rounded-xl border border-border/70 bg-surface-muted/55 px-4 py-3 text-sm text-muted-foreground">
             <span className="flex items-center gap-2"><AppIcon icon={Pdf01Icon} size={16} />PDF & images</span>
             <span className="flex items-center gap-2"><AppIcon icon={LockKeyIcon} size={16} />Private by default</span>
             <span className="flex items-center gap-2"><AppIcon icon={File01Icon} size={16} />Original files intact</span>

@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import {
   Upload01Icon,
 } from '@hugeicons/core-free-icons'
-import { PageContainer } from '../components/layout/page-container'
+import { PageShell } from '../components/layout/page-shell'
+import { ResponsivePageHeader } from '../components/layout/responsive-page-header'
+import { PageHeaderMeta } from '../components/layout/page-header-meta'
 import { SpaceCard } from '../features/dashboard/components/space-card'
 import { RecentDocuments } from '../features/dashboard/components/recent-documents'
 import { ExpiringDocuments } from '../features/dashboard/components/expiring-documents'
@@ -63,33 +65,37 @@ export function DashboardPage() {
   }
 
   return (
-    <PageContainer maxWidth="wide" className="space-y-8">
+    <PageShell
+      maxWidth="wide"
+      header={
+        <ResponsivePageHeader
+          eyebrow="WHITE CARD"
+          title="Vault Home"
+          description="Your recent documents, spaces, and important records in one place."
+          primaryAction={
+            <Button
+              onClick={() => handleOpenUploadFor('government')}
+              className="h-9 px-3.5 rounded-md font-medium text-xs gap-2 bg-primary text-primary-foreground hover:bg-primary/90 shadow-2xs transition-all active:scale-[0.985]"
+            >
+              <AppIcon icon={Upload01Icon} size={15} />
+              <span>Upload Document</span>
+            </Button>
+          }
+          metadata={
+            <PageHeaderMeta
+              count={totalCount}
+              formattedSize={totalStorageFormatted}
+              updatedAt={recentDocs.length > 0 ? 'Updated recently' : undefined}
+            />
+          }
+        />
+      }
+    >
       <PageMeta
-        title="White Card — Vault Overview"
+        title="White Card — Vault Home"
         noIndex={true}
         noFollow={true}
       />
-      {/* Welcome & Primary Action Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
-        <div className="space-y-1">
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
-            Personal Vault
-          </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground">
-            Organized personal vault for your government documents and student certificates.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2.5">
-          <Button
-            onClick={() => handleOpenUploadFor('government')}
-            className="h-10 px-4 rounded-md font-semibold text-xs gap-2 bg-primary text-primary-foreground hover:bg-primary/90 shadow-xs transition-all active:scale-[0.985]"
-          >
-            <AppIcon icon={Upload01Icon} size={16} />
-            <span>Upload Document</span>
-          </Button>
-        </div>
-      </div>
 
       {/* Primary Partition: The Two Spaces */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
@@ -171,6 +177,6 @@ export function DashboardPage() {
         onOpenChange={(open) => !open && setShareDoc(null)}
         document={shareDoc}
       />
-    </PageContainer>
+    </PageShell>
   )
 }

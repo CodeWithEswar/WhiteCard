@@ -40,7 +40,7 @@ export function DocumentPreview({
             onClick={handleZoomOut}
             disabled={zoomLevel <= 0.5}
             aria-label="Zoom out"
-            className="p-1.5 rounded-md text-muted-foreground hover:text-foreground disabled:opacity-40 transition-colors"
+            className="p-1.5 rounded-xl text-muted-foreground hover:text-foreground disabled:opacity-40 transition-colors"
           >
             <AppIcon icon={ZoomOutIcon} size={15} />
           </button>
@@ -52,7 +52,7 @@ export function DocumentPreview({
             onClick={handleZoomIn}
             disabled={zoomLevel >= 2.5}
             aria-label="Zoom in"
-            className="p-1.5 rounded-md text-muted-foreground hover:text-foreground disabled:opacity-40 transition-colors"
+            className="p-1.5 rounded-xl text-muted-foreground hover:text-foreground disabled:opacity-40 transition-colors"
           >
             <AppIcon icon={ZoomInIcon} size={15} />
           </button>
@@ -60,7 +60,7 @@ export function DocumentPreview({
             type="button"
             onClick={handleResetZoom}
             aria-label="Reset zoom"
-            className="p-1.5 rounded-md text-muted-foreground hover:text-foreground transition-colors ml-0.5"
+            className="p-1.5 rounded-xl text-muted-foreground hover:text-foreground transition-colors ml-0.5"
           >
             <AppIcon icon={RefreshIcon} size={14} />
           </button>
@@ -115,7 +115,7 @@ export function DocumentPreview({
                     {doc.title}
                   </h3>
                 </div>
-                <div className="size-8 rounded-md bg-surface-muted border border-border flex items-center justify-center">
+                <div className="size-8 rounded-xl bg-surface-muted border border-border flex items-center justify-center">
                   <AppIcon icon={Shield01Icon} size={16} className="text-muted-foreground" />
                 </div>
               </div>

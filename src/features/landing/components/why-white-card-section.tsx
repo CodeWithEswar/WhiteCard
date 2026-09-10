@@ -99,7 +99,7 @@ export function WhyWhiteCardSection() {
                     <span className="text-xs font-mono font-bold text-muted-foreground">
                       {step.num}
                     </span>
-                    <div className="p-2 rounded-md bg-muted text-foreground">
+                    <div className="p-2 rounded-xl bg-muted text-foreground">
                       <AppIcon icon={step.icon} size={16} />
                     </div>
                   </div>

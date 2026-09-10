@@ -193,7 +193,7 @@ export function PrivacyPage() {
           <p>
             If you have questions, inquiries, or feedback regarding this Privacy Policy or the handling of your document data, please contact our support team through our official repository or contact channels:
           </p>
-          <div className="p-4 rounded-md border border-border/70 bg-muted/20 text-xs font-mono space-y-1">
+          <div className="p-4 rounded-xl border border-border/70 bg-muted/20 text-xs font-mono space-y-1">
             <p>Email: privacy@whitecard.app</p>
             <p>Service: White Card Digital Document Vault</p>
           </div>

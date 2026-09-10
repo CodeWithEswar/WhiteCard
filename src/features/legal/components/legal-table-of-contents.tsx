@@ -64,11 +64,10 @@ export function LegalTableOfContents({ items }: LegalTableOfContentsProps) {
                     e.preventDefault()
                     scrollToSection(item.id)
                   }}
-                  className={`group relative flex items-center justify-between py-1.5 px-2.5 rounded-lg transition-colors ${
-                    isActive
-                      ? 'text-foreground font-semibold bg-muted/60'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/30'
-                  }`}
+                  className={`group relative flex items-center justify-between py-1.5 px-2.5 rounded-xl transition-colors ${isActive
+                    ? 'text-foreground font-semibold bg-muted/60'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/30'
+                    }`}
                 >
                   <span className="truncate pr-2">{item.title}</span>
                   <span className="text-[10px] font-mono text-muted-foreground/60 shrink-0">
@@ -100,7 +99,7 @@ export function LegalTableOfContents({ items }: LegalTableOfContentsProps) {
             <select
               value={activeId}
               onChange={(e) => scrollToSection(e.target.value)}
-              className="w-full appearance-none bg-muted/40 border border-border/70 rounded-lg px-3 py-1.5 pr-8 text-xs font-semibold text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              className="w-full appearance-none bg-muted/40 border border-border/70 rounded-xl px-3 py-1.5 pr-8 text-xs font-semibold text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             >
               {items.map((item) => (
                 <option key={item.id} value={item.id}>

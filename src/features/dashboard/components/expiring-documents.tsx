@@ -18,8 +18,8 @@ export function ExpiringDocuments({
 }: ExpiringDocumentsProps) {
   if (documents.length === 0) {
     return (
-      <div className="p-5 rounded-md border border-border/80 bg-surface/60 flex items-center gap-3.5">
-        <div className="size-9 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+      <div className="p-5 rounded-xl border border-border/80 bg-surface/60 flex items-center gap-3.5">
+        <div className="size-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
           <AppIcon icon={Calendar03Icon} size={18} />
         </div>
         <div className="text-xs">
@@ -42,7 +42,7 @@ export function ExpiringDocuments({
             onClick={() => onSelect(doc.id)}
             role="button"
             tabIndex={0}
-            className="flex items-center justify-between p-3.5 px-4 rounded-md border border-amber-500/30 bg-amber-500/5 hover:bg-amber-500/10 transition-colors cursor-pointer select-none"
+            className="flex items-center justify-between p-3.5 px-4 rounded-xl border border-amber-500/30 bg-amber-500/5 hover:bg-amber-500/10 transition-colors cursor-pointer select-none"
           >
             <div className="flex items-center gap-3 min-w-0 flex-1">
               <DocumentTypeIcon type={doc.fileType} size={16} showBadge={false} />

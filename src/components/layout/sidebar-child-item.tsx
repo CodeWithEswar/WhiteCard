@@ -28,7 +28,7 @@ export function SidebarChildItem({ label, href, isActive, onClick }: SidebarChil
         onClick={onClick}
         aria-current={isActive ? 'page' : undefined}
         className={cn(
-          'flex items-center h-8 px-2.5 rounded-md text-xs transition-colors duration-150 select-none outline-hidden focus-visible:ring-2 focus-visible:ring-ring',
+          'flex items-center h-8 px-2.5 rounded-xl text-xs transition-colors duration-150 select-none outline-hidden focus-visible:ring-2 focus-visible:ring-ring',
           isActive
             ? 'font-semibold text-primary' // Clean colored text, no background square
             : 'text-muted-foreground hover:text-foreground hover:bg-muted/30 font-normal'

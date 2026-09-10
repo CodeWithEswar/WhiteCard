@@ -25,7 +25,7 @@ export function AuthCard({ children, className = '' }: AuthCardProps) {
         duration: 0.38,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className={`relative w-full max-w-[440px] rounded-md border border-border/80 bg-card/90 p-6 sm:p-9 shadow-xl shadow-black/5 backdrop-blur-xl space-y-6 ${className}`}
+      className={`relative w-full max-w-[440px] rounded-xl border border-border/80 bg-card/90 p-6 sm:p-9 shadow-xl shadow-black/5 backdrop-blur-xl space-y-6 ${className}`}
     >
       {/* Subtle identity top line accent */}
       <div className="absolute top-0 inset-x-0 flex justify-center pointer-events-none">

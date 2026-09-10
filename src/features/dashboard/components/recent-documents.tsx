@@ -31,7 +31,7 @@ export function RecentDocuments({
   }
 
   return (
-    <div className="rounded-md border border-border/80 bg-surface divide-y divide-border/60 overflow-hidden shadow-xs">
+    <div className="rounded-xl border border-border/80 bg-surface divide-y divide-border/60 overflow-hidden shadow-xs">
       {documents.map((doc) => (
         <DocumentListRow
           key={doc.id}

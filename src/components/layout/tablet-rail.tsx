@@ -62,7 +62,7 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
         <Link
           to="/app"
           aria-label="White Card Vault Home"
-          className="size-9 rounded-md flex items-center justify-center hover:bg-muted/50 transition-colors"
+          className="size-9 rounded-xl flex items-center justify-center hover:bg-muted/50 transition-colors"
         >
           <WhiteCardLogo size={22} showWordmark={false} />
         </Link>
@@ -75,7 +75,7 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
                 type="button"
                 onClick={onOpenUpload}
                 aria-label="Quick Upload document"
-                className="size-9 rounded-md bg-primary text-primary-foreground flex items-center justify-center shadow-2xs hover:bg-primary/90 transition-all active:scale-95 outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+                className="size-9 rounded-xl bg-primary text-primary-foreground flex items-center justify-center shadow-2xs hover:bg-primary/90 transition-all active:scale-95 outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
               />
             }
           >
@@ -98,7 +98,7 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
                 to={item.href}
                 aria-current={isActive ? 'page' : undefined}
                 className={cn(
-                  'relative size-9 rounded-md flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted/40',
+                  'relative size-9 rounded-xl flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted/40',
                   isActive ? 'font-semibold' : ''
                 )}
               >
@@ -124,7 +124,7 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
                       type="button"
                       aria-label={`${item.label} space`}
                       className={cn(
-                        'relative size-9 rounded-md flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted/40',
+                        'relative size-9 rounded-xl flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted/40',
                         isActive ? 'font-semibold' : ''
                       )}
                     >
@@ -160,7 +160,7 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
                   <Link
                     to={expiringItem.href}
                     aria-current={pathname === expiringItem.href ? 'page' : undefined}
-                    className="relative size-9 rounded-md flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted/40"
+                    className="relative size-9 rounded-xl flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted/40"
                   >
                     <AppIcon
                       icon={expiringItem.icon}
@@ -197,7 +197,7 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
                 type="button"
                 onClick={() => setAppearance(isDark ? 'light' : 'dark')}
                 aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-                className="size-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+                className="size-9 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted/50 flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
               />
             }
           >
@@ -217,7 +217,7 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
                 aria-label="Vault settings"
                 aria-current={pathname === '/app/settings' ? 'page' : undefined}
                 className={cn(
-                  'size-9 rounded-md flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted/50',
+                  'size-9 rounded-xl flex items-center justify-center transition-colors outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted/50',
                   pathname === '/app/settings' ? 'font-semibold' : ''
                 )}
               />
@@ -246,13 +246,13 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
               <button
                 type="button"
                 aria-label="User profile and preferences"
-                className="size-9 rounded-md flex items-center justify-center outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+                className="size-9 rounded-xl flex items-center justify-center outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
               />
             }
           >
             <UserIdentity compact={true} />
           </DropdownMenuTrigger>
-          <DropdownMenuContent side="right" align="end" sideOffset={12} className="w-56 rounded-md p-1.5 select-none">
+          <DropdownMenuContent side="right" align="end" sideOffset={12} className="w-56 rounded-xl p-1.5 select-none">
             <div className="p-2 pb-1.5 space-y-1">
               {isBootstrapping ? (
                 <div className="h-3.5 w-28 bg-muted/80 animate-pulse rounded" />
@@ -266,22 +266,22 @@ export function TabletRail({ onOpenUpload }: TabletRailProps) {
               )}
             </div>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => navigate('/app/settings')} className="text-xs gap-2 rounded-md">
+            <DropdownMenuItem onClick={() => navigate('/app/settings')} className="text-xs gap-2 rounded-xl">
               <AppIcon icon={Settings02Icon} size={15} />
               Vault Settings & Themes
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate('/privacy')} className="text-xs gap-2 rounded-md">
+            <DropdownMenuItem onClick={() => navigate('/privacy')} className="text-xs gap-2 rounded-xl">
               <AppIcon icon={Shield01Icon} size={15} />
               Privacy Policy
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate('/terms')} className="text-xs gap-2 rounded-md">
+            <DropdownMenuItem onClick={() => navigate('/terms')} className="text-xs gap-2 rounded-xl">
               <AppIcon icon={HelpCircleIcon} size={15} />
               Terms of Service
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={handleSignOut}
-              className="text-xs gap-2 rounded-md text-destructive hover:text-destructive focus:text-destructive"
+              className="text-xs gap-2 rounded-xl text-destructive hover:text-destructive focus:text-destructive"
             >
               <AppIcon icon={Logout01Icon} size={15} />
               Sign Out

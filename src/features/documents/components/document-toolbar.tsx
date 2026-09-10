@@ -27,15 +27,16 @@ import { ResponsiveDialog } from '../../../components/layout/responsive-dialog'
 import { useIsMobile } from '../../../hooks/use-mobile'
 
 interface DocumentToolbarProps {
-  title: string
-  totalCount: number
+  title?: string
+  totalCount?: number
   filters: DocumentFilterOptions
   onFiltersChange: (newFilters: DocumentFilterOptions) => void
   onResetFilters: () => void
   viewMode: 'grid' | 'list'
   onViewModeChange: (mode: 'grid' | 'list') => void
-  onUploadClick: () => void
+  onUploadClick?: () => void
   showSpaceFilter?: boolean
+  showHeader?: boolean
 }
 
 export function DocumentToolbar({
@@ -48,6 +49,7 @@ export function DocumentToolbar({
   onViewModeChange,
   onUploadClick,
   showSpaceFilter = true,
+  showHeader = false,
 }: DocumentToolbarProps) {
   const isMobile = useIsMobile()
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
@@ -71,28 +73,34 @@ export function DocumentToolbar({
 
   return (
     <div className="space-y-4 mb-6">
-      {/* Top Header Row */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-            {title}
-          </h1>
-          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-surface-muted border border-border text-muted-foreground">
-            {totalCount}
-          </span>
-        </div>
+      {/* Optional Top Header Row (if page does not use ResponsivePageHeader) */}
+      {showHeader && title && (
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+              {title}
+            </h1>
+            {typeof totalCount === 'number' && (
+              <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-surface-muted border border-border text-muted-foreground">
+                {totalCount}
+              </span>
+            )}
+          </div>
 
-        {/* Upload Action */}
-        <div className="flex items-center gap-2">
-          <Button
-            onClick={onUploadClick}
-            className="h-9 px-3.5 rounded-xl font-medium text-xs gap-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-xs active:scale-[0.985]"
-          >
-            <AppIcon icon={Upload01Icon} size={15} />
-            <span>Upload Document</span>
-          </Button>
+          {/* Upload Action */}
+          {onUploadClick && (
+            <div className="flex items-center gap-2">
+              <Button
+                onClick={onUploadClick}
+                className="h-9 px-3.5 rounded-md font-medium text-xs gap-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-2xs active:scale-[0.985]"
+              >
+                <AppIcon icon={Upload01Icon} size={15} />
+                <span>Upload Document</span>
+              </Button>
+            </div>
+          )}
         </div>
-      </div>
+      )}
 
       {/* Toolbar Controls Row: Search + Filter + Sort + Grid/List */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
@@ -131,8 +139,8 @@ export function DocumentToolbar({
               size="sm"
               onClick={() => setMobileFilterOpen(true)}
               className={`h-9 px-3 rounded-xl text-xs gap-1.5 border-border ${activeFilterCount > 0
-                  ? 'border-primary/50 text-primary bg-primary/5'
-                  : 'text-muted-foreground hover:text-foreground'
+                ? 'border-primary/50 text-primary bg-primary/5'
+                : 'text-muted-foreground hover:text-foreground'
                 }`}
             >
               <AppIcon icon={FilterHorizontalIcon} size={15} />
@@ -154,8 +162,8 @@ export function DocumentToolbar({
                     variant="outline"
                     size="sm"
                     className={`h-9 px-3 rounded-xl text-xs gap-1.5 border-border ${activeFilterCount > 0
-                        ? 'border-primary/50 text-primary bg-primary/5'
-                        : 'text-muted-foreground hover:text-foreground'
+                      ? 'border-primary/50 text-primary bg-primary/5'
+                      : 'text-muted-foreground hover:text-foreground'
                       }`}
                   />
                 }
@@ -203,8 +211,8 @@ export function DocumentToolbar({
                     onFiltersChange({ ...filters, sortBy: opt.id })
                   }
                   className={`text-xs ${(filters.sortBy || 'updated_desc') === opt.id
-                      ? 'font-semibold text-primary'
-                      : ''
+                    ? 'font-semibold text-primary'
+                    : ''
                     }`}
                 >
                   {opt.label}
@@ -219,9 +227,9 @@ export function DocumentToolbar({
               type="button"
               onClick={() => onViewModeChange('grid')}
               aria-label="Grid view"
-              className={`p-1.5 rounded-md transition-colors ${viewMode === 'grid'
-                  ? 'bg-surface text-foreground shadow-xs'
-                  : 'text-muted-foreground hover:text-foreground'
+              className={`p-1.5 rounded-xl transition-colors ${viewMode === 'grid'
+                ? 'bg-surface text-foreground shadow-xs'
+                : 'text-muted-foreground hover:text-foreground'
                 }`}
             >
               <AppIcon icon={Grid02Icon} size={15} />
@@ -230,9 +238,9 @@ export function DocumentToolbar({
               type="button"
               onClick={() => onViewModeChange('list')}
               aria-label="List view"
-              className={`p-1.5 rounded-md transition-colors ${viewMode === 'list'
-                  ? 'bg-surface text-foreground shadow-xs'
-                  : 'text-muted-foreground hover:text-foreground'
+              className={`p-1.5 rounded-xl transition-colors ${viewMode === 'list'
+                ? 'bg-surface text-foreground shadow-xs'
+                : 'text-muted-foreground hover:text-foreground'
                 }`}
             >
               <AppIcon icon={ListViewIcon} size={15} />

@@ -10,7 +10,7 @@ export function DocumentGridSkeleton({ count = 6 }: { count?: number }) {
         >
           <div className="flex items-center justify-between">
             <Skeleton className="size-9 rounded-xl" />
-            <Skeleton className="size-6 rounded-md" />
+            <Skeleton className="size-6 rounded-xl" />
           </div>
           <div className="space-y-1.5 pt-1">
             <Skeleton className="h-4 w-3/4 rounded" />
@@ -46,7 +46,7 @@ export function DocumentListSkeleton({ count = 5 }: { count?: number }) {
             <Skeleton className="h-5 w-16 rounded-full" />
             <Skeleton className="h-3 w-14 rounded" />
           </div>
-          <Skeleton className="size-7 rounded-md shrink-0" />
+          <Skeleton className="size-7 rounded-xl shrink-0" />
         </div>
       ))}
     </div>
@@ -57,7 +57,7 @@ export function PageHeaderSkeleton() {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border/60">
       <div className="space-y-1.5">
-        <Skeleton className="h-7 w-48 rounded-md" />
+        <Skeleton className="h-7 w-48 rounded-xl" />
         <Skeleton className="h-4 w-64 rounded" />
       </div>
       <div className="flex items-center gap-2">

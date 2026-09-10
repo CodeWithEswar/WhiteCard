@@ -34,7 +34,7 @@ export function GoogleAuthButton({
       type="button"
       onClick={handleClick}
       disabled={loading}
-      className={`w-full h-12 rounded-md bg-foreground text-background font-semibold text-sm hover:opacity-90 active:scale-[0.985] transition-all cursor-pointer shadow-sm flex items-center justify-center gap-3 disabled:opacity-60 ${className}`}
+      className={`w-full h-12 rounded-xl bg-foreground text-background font-semibold text-sm hover:opacity-90 active:scale-[0.985] transition-all cursor-pointer shadow-sm flex items-center justify-center gap-3 disabled:opacity-60 ${className}`}
     >
       {/* Official Google "G" Brand Vector Mark */}
       <svg className="size-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true">

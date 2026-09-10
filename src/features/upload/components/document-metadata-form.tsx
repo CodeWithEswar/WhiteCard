@@ -37,14 +37,14 @@ export function DocumentMetadataForm({
             type="button"
             onClick={() => onChange({ ...values, space: 'government' })}
             className={`flex items-center gap-2.5 p-3 rounded-xl border text-left transition-all ${values.space === 'government'
-                ? 'border-primary bg-primary/5 ring-1 ring-primary/30 shadow-xs'
-                : 'border-border bg-surface hover:border-border-strong text-muted-foreground'
+              ? 'border-primary bg-primary/5 ring-1 ring-primary/30 shadow-xs'
+              : 'border-border bg-surface hover:border-border-strong text-muted-foreground'
               }`}
           >
             <div
-              className={`p-2 rounded-md border shrink-0 ${values.space === 'government'
-                  ? 'border-primary bg-primary text-primary-foreground'
-                  : 'border-border bg-surface-muted text-foreground'
+              className={`p-2 rounded-xl border shrink-0 ${values.space === 'government'
+                ? 'border-primary bg-primary text-primary-foreground'
+                : 'border-border bg-surface-muted text-foreground'
                 }`}
             >
               <AppIcon icon={Passport01Icon} size={18} />
@@ -59,14 +59,14 @@ export function DocumentMetadataForm({
             type="button"
             onClick={() => onChange({ ...values, space: 'student' })}
             className={`flex items-center gap-2.5 p-3 rounded-xl border text-left transition-all ${values.space === 'student'
-                ? 'border-primary bg-primary/5 ring-1 ring-primary/30 shadow-xs'
-                : 'border-border bg-surface hover:border-border-strong text-muted-foreground'
+              ? 'border-primary bg-primary/5 ring-1 ring-primary/30 shadow-xs'
+              : 'border-border bg-surface hover:border-border-strong text-muted-foreground'
               }`}
           >
             <div
-              className={`p-2 rounded-md border shrink-0 ${values.space === 'student'
-                  ? 'border-primary bg-primary text-primary-foreground'
-                  : 'border-border bg-surface-muted text-foreground'
+              className={`p-2 rounded-xl border shrink-0 ${values.space === 'student'
+                ? 'border-primary bg-primary text-primary-foreground'
+                : 'border-border bg-surface-muted text-foreground'
                 }`}
             >
               <AppIcon icon={Certificate01Icon} size={18} />

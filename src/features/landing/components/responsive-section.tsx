@@ -70,11 +70,11 @@ export function ResponsiveSection() {
                   {/* Left Sidebar */}
                   <div className="w-36 border-r border-border/60 p-3 bg-muted/40 space-y-2 shrink-0">
                     <div className="h-2 w-16 rounded bg-primary/40 mb-3" />
-                    <div className="flex items-center gap-1.5 px-2 py-1.5 rounded-md bg-primary text-primary-foreground text-[10px] font-semibold">
+                    <div className="flex items-center gap-1.5 px-2 py-1.5 rounded-xl bg-primary text-primary-foreground text-[10px] font-semibold">
                       <AppIcon icon={Passport01Icon} size={11} />
                       <span className="truncate">Government</span>
                     </div>
-                    <div className="flex items-center gap-1.5 px-2 py-1.5 rounded-md text-muted-foreground text-[10px] font-medium">
+                    <div className="flex items-center gap-1.5 px-2 py-1.5 rounded-xl text-muted-foreground text-[10px] font-medium">
                       <AppIcon icon={Certificate01Icon} size={11} />
                       <span className="truncate">Student</span>
                     </div>
@@ -90,14 +90,14 @@ export function ResponsiveSection() {
                       <div className="h-5 w-20 rounded bg-muted border border-border/60" />
                     </div>
                     <div className="grid grid-cols-2 gap-2 pt-1">
-                      <div className="p-2.5 rounded-md border border-border/60 bg-card space-y-2 shadow-2xs">
+                      <div className="p-2.5 rounded-xl border border-border/60 bg-card space-y-2 shadow-2xs">
                         <div className="p-1 rounded bg-red-500/10 text-red-500 w-fit">
                           <AppIcon icon={Pdf01Icon} size={12} />
                         </div>
                         <div className="h-1.5 w-16 rounded bg-foreground/60" />
                         <div className="h-1 w-10 rounded bg-muted-foreground/40" />
                       </div>
-                      <div className="p-2.5 rounded-md border border-border/60 bg-card space-y-2 shadow-2xs">
+                      <div className="p-2.5 rounded-xl border border-border/60 bg-card space-y-2 shadow-2xs">
                         <div className="p-1 rounded bg-blue-500/10 text-blue-500 w-fit">
                           <AppIcon icon={Pdf01Icon} size={12} />
                         </div>
@@ -129,7 +129,7 @@ export function ResponsiveSection() {
                   <span className="text-[10px] font-mono">768px – 1024px</span>
                 </div>
 
-                <div className="rounded-md border border-border/60 bg-muted/20 flex h-24 overflow-hidden">
+                <div className="rounded-xl border border-border/60 bg-muted/20 flex h-24 overflow-hidden">
                   {/* Compact Icon Rail */}
                   <div className="w-10 border-r border-border/60 p-2 bg-muted/40 flex flex-col items-center gap-2 shrink-0">
                     <div className="p-1 rounded bg-primary text-primary-foreground">
@@ -171,7 +171,7 @@ export function ResponsiveSection() {
                 </div>
 
                 <div className="rounded-xl border border-border/60 bg-muted/20 p-2.5 space-y-2">
-                  <div className="flex items-center justify-between bg-card p-2 rounded-md border border-border/50 shadow-2xs">
+                  <div className="flex items-center justify-between bg-card p-2 rounded-xl border border-border/50 shadow-2xs">
                     <div className="flex items-center gap-2">
                       <div className="p-1 rounded bg-red-500/10 text-red-500">
                         <AppIcon icon={Pdf01Icon} size={12} />

@@ -78,7 +78,7 @@ export function UploadShowcase() {
                 >
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="size-8 rounded-md bg-surface border border-border flex items-center justify-center text-foreground shrink-0">
+                      <div className="size-8 rounded-xl bg-surface border border-border flex items-center justify-center text-foreground shrink-0">
                         <AppIcon icon={item.icon} size={16} />
                       </div>
                       <div className="min-w-0">

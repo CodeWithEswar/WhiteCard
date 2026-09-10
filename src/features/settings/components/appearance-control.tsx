@@ -35,9 +35,8 @@ export function AppearanceControl() {
               />
             )}
             <span
-              className={`relative z-10 flex items-center gap-1.5 ${
-                active ? 'text-foreground font-semibold' : 'text-muted-foreground'
-              }`}
+              className={`relative z-10 flex items-center gap-1.5 ${active ? 'text-foreground font-semibold' : 'text-muted-foreground'
+                }`}
             >
               <AppIcon icon={opt.icon} size={15} />
               {opt.label}

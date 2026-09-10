@@ -46,7 +46,7 @@ export function LoginPage() {
 
             {/* Error Alert */}
             {error && (
-              <div className="p-3 text-xs rounded-md bg-destructive/10 border border-destructive/20 text-destructive text-left">
+              <div className="p-3 text-xs rounded-xl bg-destructive/10 border border-destructive/20 text-destructive text-left">
                 {error}
               </div>
             )}

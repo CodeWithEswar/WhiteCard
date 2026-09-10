@@ -63,7 +63,7 @@ export function SharingSection() {
               <div className="rounded-3xl border border-border/80 bg-card p-6 sm:p-7 shadow-xl space-y-5 text-left">
                 <div className="flex items-center justify-between border-b border-border/60 pb-3">
                   <div className="flex items-center gap-2">
-                    <div className="p-1.5 rounded-md bg-primary/10 text-primary">
+                    <div className="p-1.5 rounded-xl bg-primary/10 text-primary">
                       <AppIcon icon={Link01Icon} size={16} />
                     </div>
                     <span className="text-sm font-bold text-foreground">
@@ -108,19 +108,19 @@ export function SharingSection() {
                   <div className="grid grid-cols-3 gap-2">
                     <button
                       type="button"
-                      className="py-1.5 px-3 rounded-md border border-border/60 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted text-center"
+                      className="py-1.5 px-3 rounded-xl border border-border/60 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted text-center"
                     >
                       24 Hours
                     </button>
                     <button
                       type="button"
-                      className="py-1.5 px-3 rounded-md border border-primary bg-primary/10 text-xs font-semibold text-primary text-center"
+                      className="py-1.5 px-3 rounded-xl border border-primary bg-primary/10 text-xs font-semibold text-primary text-center"
                     >
                       7 Days
                     </button>
                     <button
                       type="button"
-                      className="py-1.5 px-3 rounded-md border border-border/60 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted text-center"
+                      className="py-1.5 px-3 rounded-xl border border-border/60 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted text-center"
                     >
                       30 Days
                     </button>
@@ -136,7 +136,7 @@ export function SharingSection() {
                     type="button"
                     variant="outline"
                     size="sm"
-                    className="h-8 px-3 rounded-md text-xs font-medium text-red-600 dark:text-red-400 border-red-500/20 hover:bg-red-500/10 gap-1.5"
+                    className="h-8 px-3 rounded-xl text-xs font-medium text-red-600 dark:text-red-400 border-red-500/20 hover:bg-red-500/10 gap-1.5"
                   >
                     <AppIcon icon={Delete02Icon} size={13} />
                     <span>Revoke link</span>

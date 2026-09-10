@@ -90,16 +90,16 @@ export function OrganizationSection() {
                   <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider shrink-0 mr-1">
                     Filters:
                   </span>
-                  <span className="px-3 py-1 rounded-md bg-primary text-primary-foreground font-medium shrink-0">
+                  <span className="px-3 py-1 rounded-xl bg-primary text-primary-foreground font-medium shrink-0">
                     All Spaces
                   </span>
-                  <span className="px-3 py-1 rounded-md border border-border/60 bg-muted/30 text-muted-foreground hover:text-foreground shrink-0">
+                  <span className="px-3 py-1 rounded-xl border border-border/60 bg-muted/30 text-muted-foreground hover:text-foreground shrink-0">
                     Government
                   </span>
-                  <span className="px-3 py-1 rounded-md border border-border/60 bg-muted/30 text-muted-foreground hover:text-foreground shrink-0">
+                  <span className="px-3 py-1 rounded-xl border border-border/60 bg-muted/30 text-muted-foreground hover:text-foreground shrink-0">
                     Student
                   </span>
-                  <span className="px-3 py-1 rounded-md border border-border/60 bg-muted/30 text-muted-foreground hover:text-foreground shrink-0">
+                  <span className="px-3 py-1 rounded-xl border border-border/60 bg-muted/30 text-muted-foreground hover:text-foreground shrink-0">
                     PDF Only
                   </span>
                 </div>
@@ -135,7 +135,7 @@ export function OrganizationSection() {
                       className="flex items-center justify-between p-3.5 rounded-xl border border-border/60 bg-muted/20 hover:bg-muted/40 transition-colors"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-md bg-red-500/10 text-red-600 dark:text-red-400">
+                        <div className="p-2 rounded-xl bg-red-500/10 text-red-600 dark:text-red-400">
                           <AppIcon icon={Pdf01Icon} size={18} />
                         </div>
                         <div>

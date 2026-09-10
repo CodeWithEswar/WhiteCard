@@ -47,9 +47,9 @@ export function HeroDocumentStack() {
             reduceMotion
               ? {}
               : {
-                  x: mouseOffset.x * 0.4,
-                  y: mouseOffset.y * 0.4,
-                }
+                x: mouseOffset.x * 0.4,
+                y: mouseOffset.y * 0.4,
+              }
           }
           transition={{ type: 'spring', damping: 25, stiffness: 200 }}
           className="ml-auto w-11/12 p-3.5 sm:p-4 rounded-2xl border border-border/80 bg-surface/85 backdrop-blur-xl shadow-md flex items-center justify-between"
@@ -76,9 +76,9 @@ export function HeroDocumentStack() {
             reduceMotion
               ? {}
               : {
-                  x: mouseOffset.x * 0.8,
-                  y: mouseOffset.y * 0.8,
-                }
+                x: mouseOffset.x * 0.8,
+                y: mouseOffset.y * 0.8,
+              }
           }
           transition={{ type: 'spring', damping: 25, stiffness: 200 }}
           className="relative z-20 w-full p-4 sm:p-5 rounded-2xl border border-border bg-surface shadow-xl flex flex-col gap-3.5"
@@ -120,9 +120,9 @@ export function HeroDocumentStack() {
             reduceMotion
               ? {}
               : {
-                  x: mouseOffset.x * 0.5,
-                  y: mouseOffset.y * 0.5,
-                }
+                x: mouseOffset.x * 0.5,
+                y: mouseOffset.y * 0.5,
+              }
           }
           transition={{ type: 'spring', damping: 25, stiffness: 200 }}
           className="w-11/12 p-3.5 sm:p-4 rounded-2xl border border-border/80 bg-surface/90 backdrop-blur-xl shadow-md space-y-2.5"
@@ -162,9 +162,9 @@ export function HeroDocumentStack() {
             reduceMotion
               ? {}
               : {
-                  x: mouseOffset.x * 0.25,
-                  y: mouseOffset.y * 0.25,
-                }
+                x: mouseOffset.x * 0.25,
+                y: mouseOffset.y * 0.25,
+              }
           }
           transition={{ type: 'spring', damping: 25, stiffness: 200 }}
           className="ml-auto w-10/12 p-3 px-4 rounded-xl border border-border/60 bg-surface-muted/60 text-xs text-muted-foreground flex items-center justify-between"

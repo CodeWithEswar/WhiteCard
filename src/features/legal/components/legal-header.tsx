@@ -21,7 +21,7 @@ export function LegalHeader() {
         <div className="flex items-center gap-3 sm:gap-6">
           <Link
             to="/"
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors p-1 rounded-md hover:bg-muted"
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors p-1 rounded-xl hover:bg-muted"
             aria-label="Back to Home"
           >
             <AppIcon icon={ArrowLeft01Icon} size={16} />
@@ -36,24 +36,22 @@ export function LegalHeader() {
         </div>
 
         {/* Center: Privacy / Terms Switcher (Desktop) */}
-        <div className="hidden md:flex items-center p-1 rounded-md border border-border/70 bg-muted/40 text-xs font-medium">
+        <div className="hidden md:flex items-center p-1 rounded-xl border border-border/70 bg-muted/40 text-xs font-medium">
           <Link
             to="/privacy"
-            className={`px-3 py-1 rounded-md transition-all ${
-              isPrivacy
-                ? 'bg-background text-foreground font-semibold shadow-xs'
-                : 'text-muted-foreground hover:text-foreground'
-            }`}
+            className={`px-3 py-1 rounded-xl transition-all ${isPrivacy
+              ? 'bg-background text-foreground font-semibold shadow-xs'
+              : 'text-muted-foreground hover:text-foreground'
+              }`}
           >
             Privacy Policy
           </Link>
           <Link
             to="/terms"
-            className={`px-3 py-1 rounded-md transition-all ${
-              !isPrivacy
-                ? 'bg-background text-foreground font-semibold shadow-xs'
-                : 'text-muted-foreground hover:text-foreground'
-            }`}
+            className={`px-3 py-1 rounded-xl transition-all ${!isPrivacy
+              ? 'bg-background text-foreground font-semibold shadow-xs'
+              : 'text-muted-foreground hover:text-foreground'
+              }`}
           >
             Terms of Service
           </Link>
@@ -68,7 +66,7 @@ export function LegalHeader() {
             size="icon"
             aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
             onClick={() => setAppearance(isDark ? 'light' : 'dark')}
-            className="size-8 rounded-md text-muted-foreground hover:text-foreground"
+            className="size-8 rounded-xl text-muted-foreground hover:text-foreground"
           >
             <AppIcon icon={isDark ? Sun01Icon : Moon02Icon} size={15} />
           </Button>
@@ -79,7 +77,7 @@ export function LegalHeader() {
             variant="outline"
             size="sm"
             render={<Link to="/auth" />}
-            className="h-8 px-3 text-xs font-medium rounded-md"
+            className="h-8 px-3 text-xs font-medium rounded-xl"
           >
             Sign In
           </Button>

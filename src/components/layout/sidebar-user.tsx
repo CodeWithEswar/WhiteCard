@@ -48,7 +48,7 @@ export function SidebarUser({ isCollapsed = false, className }: SidebarUserProps
               type="button"
               aria-label="User profile and settings"
               className={cn(
-                'flex items-center rounded-md text-left outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted/50 transition-colors',
+                'flex items-center rounded-xl text-left outline-hidden focus-visible:ring-2 focus-visible:ring-ring hover:bg-muted/50 transition-colors',
                 isCollapsed ? 'size-10 mx-auto justify-center p-0' : 'w-full justify-between p-1.5 gap-2'
               )}
             />
@@ -65,7 +65,7 @@ export function SidebarUser({ isCollapsed = false, className }: SidebarUserProps
           align={isCollapsed ? 'start' : 'end'}
           side={isCollapsed ? 'right' : 'top'}
           sideOffset={8}
-          className="w-56 rounded-md p-1.5 select-none"
+          className="w-56 rounded-xl p-1.5 select-none"
         >
           <div className="p-2 pb-1.5 space-y-1">
             {isBootstrapping ? (
@@ -86,7 +86,7 @@ export function SidebarUser({ isCollapsed = false, className }: SidebarUserProps
 
           <DropdownMenuItem
             onClick={() => navigate('/app/settings')}
-            className="text-xs gap-2 rounded-md"
+            className="text-xs gap-2 rounded-xl"
           >
             <AppIcon icon={Settings02Icon} size={15} />
             <span>Vault Settings & Themes</span>
@@ -94,7 +94,7 @@ export function SidebarUser({ isCollapsed = false, className }: SidebarUserProps
 
           <DropdownMenuItem
             onClick={() => setAppearance(isDark ? 'light' : 'dark')}
-            className="text-xs gap-2 rounded-md"
+            className="text-xs gap-2 rounded-xl"
           >
             <AppIcon icon={isDark ? Sun01Icon : Moon02Icon} size={15} />
             <span>{isDark ? 'Switch to Light' : 'Switch to Dark'}</span>
@@ -102,7 +102,7 @@ export function SidebarUser({ isCollapsed = false, className }: SidebarUserProps
 
           <DropdownMenuItem
             onClick={() => navigate('/privacy')}
-            className="text-xs gap-2 rounded-md"
+            className="text-xs gap-2 rounded-xl"
           >
             <AppIcon icon={Shield01Icon} size={15} />
             <span>Privacy Policy</span>
@@ -110,7 +110,7 @@ export function SidebarUser({ isCollapsed = false, className }: SidebarUserProps
 
           <DropdownMenuItem
             onClick={() => navigate('/terms')}
-            className="text-xs gap-2 rounded-md"
+            className="text-xs gap-2 rounded-xl"
           >
             <AppIcon icon={HelpCircleIcon} size={15} />
             <span>Terms of Service</span>
@@ -120,7 +120,7 @@ export function SidebarUser({ isCollapsed = false, className }: SidebarUserProps
 
           <DropdownMenuItem
             onClick={handleSignOut}
-            className="text-xs gap-2 rounded-md text-destructive hover:text-destructive focus:text-destructive"
+            className="text-xs gap-2 rounded-xl text-destructive hover:text-destructive focus:text-destructive"
           >
             <AppIcon icon={Logout01Icon} size={15} />
             <span>Sign Out</span>

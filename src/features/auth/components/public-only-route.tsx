@@ -8,7 +8,7 @@ export function PublicOnlyRoute() {
   if (status === 'initializing') {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-background">
-        <div className="size-8 rounded-md bg-muted animate-pulse" />
+        <div className="size-8 rounded-xl bg-muted animate-pulse" />
       </div>
     )
   }

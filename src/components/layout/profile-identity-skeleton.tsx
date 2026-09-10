@@ -9,7 +9,7 @@ export function ProfileIdentitySkeleton({ compact = false, className }: ProfileI
   if (compact) {
     return (
       <div
-        className={cn('size-8 rounded-md bg-muted/70 animate-pulse shrink-0', className)}
+        className={cn('size-8 rounded-xl bg-muted/70 animate-pulse shrink-0', className)}
         aria-hidden="true"
       />
     )
@@ -20,8 +20,8 @@ export function ProfileIdentitySkeleton({ compact = false, className }: ProfileI
       className={cn('flex items-center gap-2.5 p-1 w-full select-none', className)}
       aria-hidden="true"
     >
-      {/* 32px rounded-md avatar placeholder */}
-      <div className="size-8 rounded-md bg-muted/70 animate-pulse shrink-0" />
+      {/* 32px rounded-xl avatar placeholder */}
+      <div className="size-8 rounded-xl bg-muted/70 animate-pulse shrink-0" />
 
       {/* Name and email text lines with exact vertical rhythm */}
       <div className="space-y-1.5 flex-1 min-w-0">

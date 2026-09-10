@@ -227,7 +227,7 @@ export function PublicSharePage() {
             >
               {/* Space badge */}
               <div className="flex items-center justify-between gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-muted text-muted-foreground border border-border">
+                <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-xl bg-muted text-muted-foreground border border-border">
                   {data.space === 'student' ? 'Student Certificate' : 'Government Document'}
                 </span>
 
@@ -254,7 +254,7 @@ export function PublicSharePage() {
               {/* File details card */}
               <div className="p-4 rounded-xl bg-muted/40 border border-border/80 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3 overflow-hidden">
-                  <div className="w-10 h-10 rounded-md bg-primary/10 text-primary border border-primary/20 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary border border-primary/20 flex items-center justify-center shrink-0">
                     <AppIcon icon={File01Icon} size={20} />
                   </div>
                   <div className="overflow-hidden">
@@ -275,7 +275,7 @@ export function PublicSharePage() {
               {/* Metrics bar: Views and Clicks */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3 rounded-xl bg-background border border-border/70 flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-md bg-muted flex items-center justify-center text-muted-foreground">
+                  <div className="w-7 h-7 rounded-xl bg-muted flex items-center justify-center text-muted-foreground">
                     <AppIcon icon={ViewIcon} size={14} />
                   </div>
                   <div>
@@ -285,7 +285,7 @@ export function PublicSharePage() {
                 </div>
 
                 <div className="p-3 rounded-xl bg-background border border-border/70 flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-md bg-muted flex items-center justify-center text-muted-foreground">
+                  <div className="w-7 h-7 rounded-xl bg-muted flex items-center justify-center text-muted-foreground">
                     <AppIcon icon={CursorPointer01Icon} size={14} />
                   </div>
                   <div>

@@ -57,11 +57,10 @@ export function UploadDropzone({
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      className={`relative flex flex-col items-center justify-center p-8 sm:p-12 rounded-2xl border-2 transition-all duration-200 text-center pattern-grid-micro ${
-        isDragging
-          ? 'border-primary bg-primary/5 scale-[0.99]'
-          : 'border-dashed border-border/90 bg-surface hover:border-border-strong'
-      } ${disabled ? 'opacity-50 pointer-events-none' : ''} ${className}`}
+      className={`relative flex flex-col items-center justify-center p-8 sm:p-12 rounded-2xl border-2 transition-all duration-200 text-center pattern-grid-micro ${isDragging
+        ? 'border-primary bg-primary/5 scale-[0.99]'
+        : 'border-dashed border-border/90 bg-surface hover:border-border-strong'
+        } ${disabled ? 'opacity-50 pointer-events-none' : ''} ${className}`}
     >
       <input
         ref={fileInputRef}
@@ -74,11 +73,10 @@ export function UploadDropzone({
       />
 
       <div
-        className={`size-14 rounded-2xl border flex items-center justify-center mb-4 transition-all ${
-          isDragging
-            ? 'border-primary bg-primary text-primary-foreground scale-110 shadow-md'
-            : 'border-border bg-surface-muted/80 text-foreground'
-        }`}
+        className={`size-14 rounded-2xl border flex items-center justify-center mb-4 transition-all ${isDragging
+          ? 'border-primary bg-primary text-primary-foreground scale-110 shadow-md'
+          : 'border-border bg-surface-muted/80 text-foreground'
+          }`}
       >
         <AppIcon
           icon={isDragging ? FileValidationIcon : Upload01Icon}

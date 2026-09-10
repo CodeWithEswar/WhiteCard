@@ -69,7 +69,7 @@ export function DocumentCard({
           onSelect(doc.id)
         }
       }}
-      className="group relative flex flex-col justify-between p-4 rounded-md border border-border/80 bg-surface hover:border-border-strong/90 hover:bg-surface-elevated/40 hover:shadow-sm transition-colors text-left select-none cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+      className="group relative flex flex-col justify-between p-4 rounded-xl border border-border/80 bg-surface hover:border-border-strong/90 hover:bg-surface-elevated/40 hover:shadow-sm transition-colors text-left select-none cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
     >
       <div>
         {/* Card Header: Type Icon & More Actions */}
@@ -83,7 +83,7 @@ export function DocumentCard({
             {isExpiringSoon && (
               <span
                 title="Expires within 30 days"
-                className="inline-flex items-center gap-1 text-[10px] font-medium text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded-md border border-amber-500/20"
+                className="inline-flex items-center gap-1 text-[10px] font-medium text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded-xl border border-amber-500/20"
               >
                 <AppIcon icon={Alert02Icon} size={11} />
                 Expiring
@@ -96,7 +96,7 @@ export function DocumentCard({
                   <Button
                     variant="ghost"
                     size="icon-xs"
-                    className="size-7 rounded-md text-muted-foreground hover:text-foreground hover:bg-surface-muted transition-colors opacity-70 group-hover:opacity-100"
+                    className="size-7 rounded-xl text-muted-foreground hover:text-foreground hover:bg-surface-muted transition-colors opacity-70 group-hover:opacity-100"
                     aria-label="Document options"
                   />
                 }

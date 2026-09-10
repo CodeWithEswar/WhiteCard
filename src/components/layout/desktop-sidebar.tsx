@@ -70,7 +70,7 @@ export function DesktopSidebar({ onOpenUpload }: DesktopSidebarProps) {
             to="/app"
             aria-label="White Card Vault Home"
             className={cn(
-              'flex items-center outline-hidden focus-visible:ring-2 focus-visible:ring-ring rounded-md py-1',
+              'flex items-center outline-hidden focus-visible:ring-2 focus-visible:ring-ring rounded-xl py-1',
               isCollapsed ? 'size-9 justify-center mx-auto' : 'gap-2.5'
             )}
           >

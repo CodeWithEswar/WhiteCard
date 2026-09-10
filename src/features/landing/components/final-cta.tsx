@@ -53,7 +53,7 @@ export function FinalCta() {
               <Button
                 size="lg"
                 render={<Link to="/auth" />}
-                className="w-full sm:w-auto h-11 px-7 rounded-md font-semibold text-sm gap-2 shadow-xs"
+                className="w-full sm:w-auto h-11 px-7 rounded-xl font-semibold text-sm gap-2 shadow-xs"
               >
                 <span>Get Started with Google</span>
                 <AppIcon icon={ArrowRight01Icon} size={16} />

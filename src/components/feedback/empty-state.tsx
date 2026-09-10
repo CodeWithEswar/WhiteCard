@@ -59,7 +59,7 @@ export function EmptyState({
 
   return (
     <div
-      className={`relative flex flex-col items-center justify-center text-center p-8 sm:p-12 rounded-md border border-border/70 bg-surface/40 backdrop-blur-sm overflow-hidden min-h-[300px] ${className}`}
+      className={`relative flex flex-col items-center justify-center text-center p-8 sm:p-12 rounded-xl border border-border/70 bg-surface/40 backdrop-blur-sm overflow-hidden min-h-[300px] ${className}`}
     >
       {/* Local subtle dotted field */}
       <div
@@ -68,7 +68,7 @@ export function EmptyState({
       />
 
       {/* Tactile Icon Container */}
-      <div className="relative mb-4 flex items-center justify-center size-14 rounded-md border border-border bg-surface-muted/90 shadow-2xs">
+      <div className="relative mb-4 flex items-center justify-center size-14 rounded-xl border border-border bg-surface-muted/90 shadow-2xs">
         <AppIcon icon={defaultIcon} size={26} className="text-foreground" />
       </div>
 
@@ -83,7 +83,7 @@ export function EmptyState({
         <div className="mt-6 relative z-10">
           <Button
             onClick={onAction}
-            className="h-10 px-4 rounded-md font-medium text-xs sm:text-sm gap-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-2xs active:scale-[0.985]"
+            className="h-10 px-4 rounded-xl font-medium text-xs sm:text-sm gap-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-2xs active:scale-[0.985]"
           >
             <AppIcon icon={Upload01Icon} size={16} />
             {finalAction}

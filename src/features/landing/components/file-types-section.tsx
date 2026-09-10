@@ -131,7 +131,7 @@ export function FileTypesSection() {
                 </p>
               </div>
             </div>
-            <div className="inline-flex items-center gap-1.5 text-[11px] font-mono text-muted-foreground px-3 py-1.5 rounded-md bg-background border border-border/60 shrink-0">
+            <div className="inline-flex items-center gap-1.5 text-[11px] font-mono text-muted-foreground px-3 py-1.5 rounded-xl bg-background border border-border/60 shrink-0">
               <AppIcon icon={Download01Icon} size={13} />
               <span>Byte-Exact Retention</span>
             </div>

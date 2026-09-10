@@ -56,7 +56,7 @@ export function SpacesShowcase() {
                   (c) => (
                     <span
                       key={c}
-                      className="text-[11px] font-medium px-2.5 py-1 rounded-md bg-surface-muted/80 border border-border/70 text-foreground/80"
+                      className="text-[11px] font-medium px-2.5 py-1 rounded-xl bg-surface-muted/80 border border-border/70 text-foreground/80"
                     >
                       {c}
                     </span>
@@ -127,7 +127,7 @@ export function SpacesShowcase() {
                   (c) => (
                     <span
                       key={c}
-                      className="text-[11px] font-medium px-2.5 py-1 rounded-md bg-surface-muted/80 border border-border/70 text-foreground/80"
+                      className="text-[11px] font-medium px-2.5 py-1 rounded-xl bg-surface-muted/80 border border-border/70 text-foreground/80"
                     >
                       {c}
                     </span>

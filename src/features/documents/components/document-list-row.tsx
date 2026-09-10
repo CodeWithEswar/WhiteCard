@@ -133,7 +133,7 @@ export function DocumentListRow({
                 <Button
                   variant="ghost"
                   size="icon-xs"
-                  className="size-7 rounded-md text-muted-foreground hover:text-foreground hover:bg-surface-muted"
+                  className="size-7 rounded-xl text-muted-foreground hover:text-foreground hover:bg-surface-muted"
                   aria-label="More options"
                 />
               }
