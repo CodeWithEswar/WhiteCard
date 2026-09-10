@@ -16,7 +16,11 @@ import { WhiteCardLogo } from '../components/brand/white-card-logo'
 import { AppIcon } from '../components/icons/app-icon'
 import { RadialGridBackground } from '../components/backgrounds/radial-grid-background'
 import { vaultStore, isSupabaseConfigured, supabase } from '../lib/supabase'
-import { fetchDocumentByShareTokenFromSupabase } from '@/features/documents/documents.api'
+import {
+  fetchDocumentByShareTokenFromSupabase,
+  recordShareView,
+  recordShareDownload,
+} from '@/features/documents/documents.api'
 import { PageMeta } from '../components/seo/page-meta'
 
 interface ResolvedShareData {
@@ -66,13 +70,8 @@ export function PublicSharePage() {
                 return
               }
 
-              // Safely increment share view count
-              try {
-                await supabase.rpc('increment_share_view', { p_token_hash: token })
-              } catch {}
-
-              const newViewCount =
-                (supabaseDoc.sharedDirectLink?.viewCount || supabaseDoc.viewCount || 0) + 1
+              // Safely increment share view count across Supabase & local vault
+              const metrics = await recordShareView(token)
 
               setData({
                 title: supabaseDoc.title,
@@ -84,9 +83,8 @@ export function PublicSharePage() {
                 space: supabaseDoc.space,
                 fileUrl: supabaseDoc.fileUrl || '#',
                 expiresAt: supabaseDoc.sharedDirectLink?.expiresAt || '',
-                viewCount: newViewCount,
-                clickCount:
-                  supabaseDoc.sharedDirectLink?.clickCount || supabaseDoc.clickCount || 0,
+                viewCount: metrics.viewCount,
+                clickCount: metrics.clickCount,
               })
               setLoading(false)
               return
@@ -113,7 +111,7 @@ export function PublicSharePage() {
         }
 
         // Increment view count locally
-        vaultStore.incrementViewCount(localDoc.id)
+        const metrics = await recordShareView(token)
 
         setData({
           title: localDoc.title,
@@ -125,8 +123,8 @@ export function PublicSharePage() {
           space: localDoc.space,
           fileUrl: localDoc.fileUrl || '#',
           expiresAt: localDoc.sharedDirectLink.expiresAt,
-          viewCount: (localDoc.viewCount || 0) + 1,
-          clickCount: localDoc.clickCount || 0,
+          viewCount: metrics.viewCount,
+          clickCount: metrics.clickCount,
         })
       } catch (err: any) {
         console.error('Failed to resolve share token:', err)
@@ -139,22 +137,14 @@ export function PublicSharePage() {
     resolveToken()
   }, [token])
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (!data) return
     setDownloading(true)
 
     // Update click count in Supabase and locally
     if (token) {
-      if (isSupabaseConfigured && supabase) {
-        Promise.resolve(supabase.rpc('increment_share_click', { p_token_hash: token }))
-          .then(() => {})
-          .catch(() => {})
-      }
-      const localDoc = vaultStore.getDocumentByShareToken(token)
-      if (localDoc) {
-        vaultStore.incrementClickCount(localDoc.id)
-      }
-      setData((prev) => (prev ? { ...prev, clickCount: prev.clickCount + 1 } : null))
+      const metrics = await recordShareDownload(token)
+      setData((prev) => (prev ? { ...prev, clickCount: metrics.clickCount } : null))
     }
 
     // Trigger download

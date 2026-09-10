@@ -895,6 +895,88 @@ export async function recordDocumentDownload(
 }
 
 /**
+ * Records a view on a shared link by its token, updating share_links and documents.
+ */
+export async function recordShareView(
+  token: string
+): Promise<{ viewCount: number; clickCount: number }> {
+  const client = supabase
+  let viewCount = 1
+  let clickCount = 0
+
+  if (isSupabaseConfigured && client && token) {
+    try {
+      // Try RPC first
+      await client.rpc('increment_share_view', { p_token_hash: token })
+
+      const { data: link } = await client
+        .from('share_links')
+        .select('id, document_id, view_count, click_count')
+        .eq('token_hash', token)
+        .maybeSingle()
+
+      if (link) {
+        viewCount = link.view_count || 1
+        clickCount = link.click_count || 0
+      }
+    } catch (e) {
+      console.warn('Error recording share view:', e)
+    }
+  }
+
+  // Update local store
+  const localDoc = vaultStore.getDocumentByShareToken(token)
+  if (localDoc) {
+    vaultStore.incrementViewCount(localDoc.id)
+    viewCount = localDoc.viewCount || viewCount
+    clickCount = localDoc.clickCount || clickCount
+  }
+
+  return { viewCount, clickCount }
+}
+
+/**
+ * Records a download click on a shared link by its token, updating share_links, documents, and audit logs.
+ */
+export async function recordShareDownload(
+  token: string
+): Promise<{ viewCount: number; clickCount: number }> {
+  const client = supabase
+  let viewCount = 1
+  let clickCount = 1
+
+  if (isSupabaseConfigured && client && token) {
+    try {
+      // Try RPC first
+      await client.rpc('increment_share_click', { p_token_hash: token })
+
+      const { data: link } = await client
+        .from('share_links')
+        .select('id, document_id, view_count, click_count')
+        .eq('token_hash', token)
+        .maybeSingle()
+
+      if (link) {
+        viewCount = link.view_count || 1
+        clickCount = link.click_count || 1
+      }
+    } catch (e) {
+      console.warn('Error recording share download click:', e)
+    }
+  }
+
+  // Update local store
+  const localDoc = vaultStore.getDocumentByShareToken(token)
+  if (localDoc) {
+    vaultStore.incrementClickCount(localDoc.id)
+    viewCount = localDoc.viewCount || viewCount
+    clickCount = localDoc.clickCount || clickCount
+  }
+
+  return { viewCount, clickCount }
+}
+
+/**
  * Executes a browser download for the given document, preserving originalFilename,
  * fetching authorized storage blob or using signed URL, and falling back gracefully.
  */

@@ -26,6 +26,18 @@ create policy "Users can view own documents"
   on public.documents for select
   using (user_id = auth.uid());
 
+create policy "Public can view documents with active share link"
+  on public.documents for select
+  to anon, authenticated
+  using (
+    exists (
+      select 1 from public.share_links sl
+      where sl.document_id = documents.id
+        and sl.revoked_at is null
+        and sl.expires_at > now()
+    )
+  );
+
 create policy "Users can insert own documents"
   on public.documents for insert
   with check (user_id = auth.uid());
@@ -94,10 +106,15 @@ create policy "Users can delete own document tags"
     )
   );
 
--- 6. Share Links Policies (Owner only)
+-- 6. Share Links Policies (Owner only, plus public active token resolution)
 create policy "Owners can view own share links"
   on public.share_links for select
   using (owner_id = auth.uid());
+
+create policy "Public can view active share links by token"
+  on public.share_links for select
+  to anon, authenticated
+  using (revoked_at is null and expires_at > now());
 
 create policy "Owners can create own share links"
   on public.share_links for insert

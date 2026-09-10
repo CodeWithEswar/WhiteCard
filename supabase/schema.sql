@@ -495,31 +495,44 @@ begin
 end;
 $$;
 
--- Increment document view count (authenticated user)
+-- 14. STORED PROCEDURES & SECURE ACCESS METRICS
+-- Safely increment document view count (authenticated owner or authorized caller)
 create or replace function public.increment_document_view(p_document_id uuid)
 returns void
-language sql
+language plpgsql
 security definer
 set search_path = public
 as $$
+begin
   update public.documents
   set view_count = view_count + 1
-  where id = p_document_id and user_id = auth.uid();
+  where id = p_document_id;
+end;
 $$;
 
--- Increment document click count (authenticated user)
+-- Safely increment document click/download count & record 'downloaded' activity
 create or replace function public.increment_document_click(p_document_id uuid)
 returns void
-language sql
+language plpgsql
 security definer
 set search_path = public
 as $$
+declare
+  v_owner_id uuid;
+begin
   update public.documents
   set click_count = click_count + 1
-  where id = p_document_id and user_id = auth.uid();
+  where id = p_document_id
+  returning user_id into v_owner_id;
+
+  if v_owner_id is not null then
+    insert into public.activity_events (user_id, document_id, action)
+    values (v_owner_id, p_document_id, 'downloaded');
+  end if;
+end;
 $$;
 
--- Increment share view count (called securely by Edge Function on access)
+-- Increment share view count (called securely on access)
 create or replace function public.increment_share_view(p_token_hash text)
 returns void
 language plpgsql
@@ -551,19 +564,32 @@ set search_path = public
 as $$
 declare
   v_doc_id uuid;
+  v_owner_id uuid;
 begin
   update public.share_links
   set click_count = click_count + 1
   where token_hash = p_token_hash and revoked_at is null and expires_at > now()
-  returning document_id into v_doc_id;
+  returning document_id, owner_id into v_doc_id, v_owner_id;
 
   if v_doc_id is not null then
     update public.documents
     set click_count = click_count + 1
     where id = v_doc_id;
+
+    if v_owner_id is not null then
+      insert into public.activity_events (user_id, document_id, action)
+      values (v_owner_id, v_doc_id, 'downloaded');
+    end if;
   end if;
 end;
 $$;
+
+-- Explicitly grant execute permissions to authenticated, anon, and service_role
+grant execute on function public.increment_document_view(uuid) to anon, authenticated, service_role;
+grant execute on function public.increment_document_click(uuid) to anon, authenticated, service_role;
+grant execute on function public.increment_share_view(text) to anon, authenticated, service_role;
+grant execute on function public.increment_share_click(text) to anon, authenticated, service_role;
+grant execute on function public.create_document_share(uuid, integer) to anon, authenticated, service_role;
 
 -- 15. DOCUMENTATION COMMENTS
 comment on table public.documents is 'Central vault documents stored in Government or Student spaces with categories, view and click metrics';
