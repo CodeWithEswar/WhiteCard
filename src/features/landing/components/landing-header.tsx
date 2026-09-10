@@ -191,15 +191,7 @@ export function LandingHeader() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Desktop Sign In link */}
-          <Link
-            to="/login"
-            className="hidden sm:inline-flex items-center justify-center px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            Sign In
-          </Link>
-
-          {/* Create White Card CTA button */}
+          {/* Single Primary Action Button */}
           <Button
             type="button"
             render={<Link to="/signup" />}
