@@ -1,0 +1,57 @@
+import { defaultSchema } from 'rehype-sanitize'
+
+export const markdownSanitizeSchema = {
+  ...defaultSchema,
+  tagNames: [
+    ...(defaultSchema.tagNames || []),
+    'details',
+    'summary',
+    'kbd',
+    'sub',
+    'sup',
+    'div',
+    'span',
+    'p',
+    'picture',
+    'source',
+  ],
+  attributes: {
+    ...defaultSchema.attributes,
+    '*': [
+      ...(defaultSchema.attributes?.['*'] || []),
+      'align',
+      'id',
+      'className',
+      'class',
+      'data-brand',
+      'data-variant',
+    ],
+    details: ['open'],
+    img: [
+      ...(defaultSchema.attributes?.img || []),
+      'src',
+      'alt',
+      'title',
+      'width',
+      'height',
+      'align',
+      'loading',
+    ],
+    a: [
+      ...(defaultSchema.attributes?.a || []),
+      'href',
+      'title',
+      'target',
+      'rel',
+    ],
+    div: ['align'],
+    p: ['align'],
+    td: ['align', 'valign'],
+    th: ['align', 'valign'],
+  },
+  protocols: {
+    ...defaultSchema.protocols,
+    href: ['http', 'https', 'mailto', 'tel', '#'],
+    src: ['http', 'https', 'data'],
+  },
+}
